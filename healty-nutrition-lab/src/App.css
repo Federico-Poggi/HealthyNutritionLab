@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;600;700;800&display=swap');
+
+
+/*NAVBAR STYLE*/
+
+#navbar{
+    width: 100vw;
+    border-bottom:1px solid rgba(114, 114, 114, 0.32);
+}
+#navbar-brand{
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+   /* padding: 0 40px;*/
+}
+#navigation-option{
+    font-family: 'Inter', sans-serif;
+}
+#navigation-option p{
+    padding: 0 20px;
+    font-weight: 600;
+}
+#navigation-option p:hover{
+    color: #C9F31D;
+    cursor: pointer;
+    scale: 1.2;
+    transition: all 0.1s linear;
+}
+#registration-login button{
+    font-family: 'Inter', sans-serif;
+    font-size: 17px;
+    font-weight: 600;
+    margin:0 20px;
+}
