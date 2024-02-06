@@ -7,19 +7,19 @@ import Home from "./component/Home.tsx";
 
 
 function App() {
-const counter=useSelector((state:RootState)=>state.counter.count)
-console.log(counter+1)
+    const counter = useSelector((state: RootState) => state.counter.count)
+    console.log(counter + 1)
     /*const dispatch= useDispatch();*/
-/*const handleClick=()=>{
-    dispatch({type:INCREMENT})
-}*/
+    /*const handleClick=()=>{
+        dispatch({type:INCREMENT})
+    }*/
     return (
         <>
-           <Routes>
-               <Route path={"/"} element={<Layout/>}>
-                <Route path={"/"} index element={<Home/>}/>
-               </Route>
-           </Routes>
+            <Routes>
+                <Route path = {"/"} element = {<Layout/>}>
+                    <Route path = {"/"} index element = {<Home/>}/>
+                </Route>
+            </Routes>
         </>
     )
 }

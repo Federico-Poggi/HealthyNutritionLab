@@ -4,8 +4,10 @@ import {Outlet} from "react-router-dom";
 function Layout() {
     return (
         <>
-            <Nav/>
-            <main>
+
+                <Nav/>
+
+            <main className = {"h-[100%]"}>
                 <Outlet/>
             </main>
         </>

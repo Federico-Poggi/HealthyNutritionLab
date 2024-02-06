@@ -1,7 +1,8 @@
+
 function Nav() {
     return (
         <>
-            <nav id = {"navbar"} className = {"w-[100vw] bg-[#121212ff] flex text-white py-5"}>
+            <nav id = {"navbar"} className = {"bg-[#121212ff] flex text-white py-5"}>
                 <div id = {"navbar-brand"}
                      className = {"desktop:w-2/12 tablet:w-3/12 items-center desktop:text-[30px] tablet:text-[20px] px-4"}>
                     <img className = {"brand-img"}/>
@@ -16,8 +17,8 @@ function Nav() {
                 <div id = {"registration-login"}
                      className = {"desktop:2/12 tablet:w-3/12 phone:hidden tablet:flex desktop:flex justify-center items-center"}>
                 <span className = {"flex items-center"}>
-                    <button>Register</button>
-                    <button>Login</button>
+                    <button className={"mx-4"}>Register</button>
+                    <button className={"mx-4"}>Login</button>
                 </span>
                 </div>
                 <div className = {"desktop:hidden tablet:hidden phone:flex"}>
