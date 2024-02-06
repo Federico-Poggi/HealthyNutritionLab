@@ -31,3 +31,13 @@
     font-weight: 600;
     margin:0 20px;
 }
+/*HOME PAGE*/
+#title-home{
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+}
+#header-home p{
+    color: #8C8C8C;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+}
