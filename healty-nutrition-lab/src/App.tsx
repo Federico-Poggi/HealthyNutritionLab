@@ -13,9 +13,9 @@ function App() {
 const counter=useSelector((state:RootState)=>state.counter.count)
 console.log(counter+1)
     const dispatch= useDispatch();
-const handleClick=()=>{
+/*const handleClick=()=>{
     dispatch({type:INCREMENT})
-}
+}*/
     return (
         <>
            <Routes>
