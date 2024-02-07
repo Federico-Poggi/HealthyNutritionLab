@@ -4,8 +4,8 @@ export default {
   theme: {
     extend: {
       screens:{
-        'desktop':{'min':'1024px' },
-        'tablet':{'min':'768px', 'max':'1023px'},
+        'desktop':{'min':'1241px' },
+        'tablet':{'min':'768px', 'max':'1240px'},
         'phone':{'max': '767px'}
       }
     },

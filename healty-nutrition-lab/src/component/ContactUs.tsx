@@ -3,22 +3,26 @@ import { GiLifeBar } from "react-icons/gi";
 export function ContactUs() {
     return (
         <>
-            <div className = {"desktop:w-1/2 bg-[#1F1F1F] desktop:h-full flex flex-col items-center mx-auto rounded-[20px]"}>
+            <div className = {"desktop:w-1/2 bg-[#1F1F1F] desktop:h-full tablet:h-[250px] flex flex-col items-center mx-auto rounded-[20px]"}>
                 <div className = {"text-center"}>
                     <h2 id = {"contact-space"} className = {"desktop:text-[30px] pt-10"}>Contact us for a first
                                                                                          consultancy</h2>
                     <p className = {"contact-us desktop:text-[15px]"}>Start your journey with HealthyNutritionLab
                                                                       now</p>
                 </div>
-                <div className={"flex my-10"}>
-                    <div className={"flex flex-col items-center mx-10"}>
-                        <FaUserDoctor className={""}/>
-                        <p className={"contact-p"}>Certificated Doctor</p>
+                <div className = {"flex desktop:my-10 tablet:my-7"}>
+                    <div className = {"flex flex-col items-center mx-10"}>
+                        <FaUserDoctor size = {25} className = {"icon-section"}/>
+                        <p className = {"contact-p desktop:text-[12px] tablet:text-[11px]"}>Certificated Doctor</p>
                     </div>
-                    <div className={"flex flex-col items-center mx-10"}>
-                        <GiLifeBar className={""}/>
-                        <p className={"contact-p"}>Better LifeTime</p>
+                    <div className = {"flex flex-col items-center mx-10"}>
+                        <GiLifeBar size = {25} className = {"icon-section"}/>
+                        <p className = {"contact-p desktop:text-[12px] tablet:text-[11px]"}>Better Lifestyle</p>
                     </div>
+
+                </div>
+                <div>
+                    <button className={"btn-home mx-10 px-5 py-2 desktop:w-[200px] tablet:text-[10px] tablet:w-[150px] phone:w-[150px] phone:mt-2  phone:text-[12px]"}>Contact Us</button>
                 </div>
             </div>
         </>

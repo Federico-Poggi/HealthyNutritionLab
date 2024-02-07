@@ -9,7 +9,7 @@ function Home() {
     return (
         <>
             <header id = {"header-home"}
-                    className = {"desktop:h-[700px] desktop:w-[900px] tablet:h-[600px] tablet:w-[600px] phone:h-[400px] phone:w-[250px] flex flex-col items-center justify-center mt-10 mx-auto m-0 max-w-[100vw]"}>
+                    className = {"desktop:h-[700px] desktop:w-[900px] tablet:h-[600px] tablet:w-[600px] phone:h-[400px] phone:w-[250px] flex flex-col items-center justify-center mt-10 mx-auto m-0 "}>
                 <span className = {"mb-10"}>
 
                     <h1 id = {"title-home"}
@@ -17,7 +17,7 @@ function Home() {
                         HealthyNutritionLab
                     </h1>
                     <p id = {"slogan"}
-                       className = {"text-center leading-6 tablet:text-[15px] phone:text-[10px] phone:leading-4 max-w-[100vw]"}>
+                       className = {"text-center leading-6 tablet:text-[15px] phone:text-[10px] phone:leading-4 "}>
                         Fuel Your Body, Maximize Your Potential <br/>
                         In HealthyNutritionLab, we care for your well-being.
                     </p>
@@ -35,7 +35,7 @@ function Home() {
             <CollabSec/>
             <hr className = {"w-2/3 mt-5 mx-auto opacity-10"}/>
             <Service/>
-            <div className={"desktop:my-40 desktop:h-[300px]"}>
+            <div className={"desktop:my-40 desktop:h-[300px] tablet:w-8/12 mx-auto tablet:mt-20"}>
                 <ContactUs/>
             </div>
             <div className={"mt-28 mb-28"}>

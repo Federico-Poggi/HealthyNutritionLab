@@ -7,7 +7,7 @@ function Layout() {
         <>
             <Nav/>
 
-            <main className = {"h-[100%]"}>
+            <main className={""}>
                 <Outlet/>
             </main>
             <hr className={"my-12 opacity-5"}/>

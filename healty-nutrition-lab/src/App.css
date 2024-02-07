@@ -182,5 +182,7 @@
     font-family: 'Inter', sans-serif;
     font-weight: 600;
     color: #c9c9c9;
-    filter: drop-shadow(0 0 30px rgba(146, 255, 30, 0.70));
+}
+.icon-section{
+    color: #c5f5b7;
 }
