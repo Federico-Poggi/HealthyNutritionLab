@@ -1,8 +1,11 @@
+import SectionHomeService from "./SectionHomeService.tsx";
+
 function Service() {
     return (
         <>
             <div className = {"max-w-[100vw]"}>
-                <p>ciao</p>
+                <SectionHomeService/>
+
             </div>
         </>
     )

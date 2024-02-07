@@ -30,7 +30,9 @@ function Home() {
                 <button className = {"btn-home mx-10 px-5 py-2 desktop:w-[250px] tablet:w-[220px] phone:w-[200px] phone:mt-2 phone:text-[12px]"}>Contattaci</button>
             </div>
             <CollabSec/>
+            <hr className={"w-2/3 mt-10 mx-auto opacity-10"}/>
             <Service/>
+
         </>
     )
 }
