@@ -50,6 +50,10 @@
     font-weight: 600;
 }
 
+#logoipsum{
+    color: #757575;
+}
+
 /*@media screen and (min-width:1440px ){
     #header-home {
         border-radius: 10px;
@@ -148,4 +152,35 @@
     font-family: 'Inter', sans-serif;
     color: #757575;
     font-weight: 700;
+}
+
+#learn-section{
+    color:#c4c4c4;
+    font-weight: 700;
+}
+#learn-section p{
+    color: #505050;
+    font-weight: 500;
+}
+
+.title-card{
+    font-weight:700;
+}
+
+#contact-space{
+    font-family: 'Inter', sans-serif;
+    color: #c9c9c9;
+    font-weight: 700;
+}
+.contact-us{
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    color: #4b4a4a;
+}
+
+.contact-p{
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    color: #c9c9c9;
+    filter: drop-shadow(0 0 30px rgba(146, 255, 30, 0.70));
 }

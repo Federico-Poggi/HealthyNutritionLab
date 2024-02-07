@@ -1,6 +1,8 @@
 import imgP from "../assets/Risorsa 1@2x.png"
 import CollabSec from "./CollabSec.tsx";
 import Service from "./Service.tsx";
+import {ArticlesHome} from "./ArticlesHome.tsx";
+import {ContactUs} from "./ContactUs.tsx";
 
 
 function Home() {
@@ -12,7 +14,6 @@ function Home() {
 
                     <h1 id = {"title-home"}
                         className = {"text-center text-white desktop:text-[50px] tablet:text-[35px] phone:text-[20px]"}>
-
                         HealthyNutritionLab
                     </h1>
                     <p id = {"slogan"}
@@ -32,9 +33,14 @@ function Home() {
                 <button className = {"btn-home mx-10 px-5 py-2 desktop:w-[250px] tablet:w-[220px] phone:w-[200px] phone:mt-2 phone:text-[12px]"}>Contattaci</button>
             </div>
             <CollabSec/>
-            <hr className = {"w-2/3 mt-10 mx-auto opacity-10"}/>
+            <hr className = {"w-2/3 mt-5 mx-auto opacity-10"}/>
             <Service/>
-
+            <div className={"desktop:my-40 desktop:h-[300px]"}>
+                <ContactUs/>
+            </div>
+            <div className={"mt-28 mb-28"}>
+                <ArticlesHome/>
+            </div>
         </>
     )
 }
