@@ -10,7 +10,6 @@
     width: 100vw;
 }
 
-
 #navbar {
     border-bottom: 1px solid rgba(114, 114, 114, 0.32);
 }
@@ -126,4 +125,27 @@
     font-family: 'Inter', sans-serif;
     color: rgba(104, 238, 9, 0.75);
     font-weight: 600;
+}
+#footer-icon{
+    color: #2c2c2c;
+}
+#footer-brand{
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    color: #c4c4c4;
+}
+#footer-slogan{
+    font-family: 'Inter', sans-serif;
+    color: #3f3f3f;
+    font-weight: 500;
+}
+
+.icon-social{
+    margin: 0 5px;
+}
+
+.footer-link{
+    font-family: 'Inter', sans-serif;
+    color: #757575;
+    font-weight: 700;
 }
