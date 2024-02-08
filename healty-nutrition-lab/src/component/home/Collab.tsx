@@ -1,4 +1,4 @@
-import logo from "../assets/LogoIpsum.svg";
+import logo from "../../assets/LogoIpsum.svg";
 function Collab(){
     return(
 

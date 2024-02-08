@@ -1,6 +1,6 @@
+/*
 import {UnknownAction} from "@reduxjs/toolkit";
 
-import {DECREMENT, INCREMENT} from "../action";
 
 interface CounterState {
     count: number
@@ -26,10 +26,10 @@ export default function counterReducer(state = initialState, action: UnknownActi
         default:
             return {
                 ...state,
-
             };
     }
 }
+*/
 
 
 

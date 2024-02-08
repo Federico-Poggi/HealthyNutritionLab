@@ -1,5 +1,15 @@
 import Logo from '../assets/Logo.svg'
+import {useNavigate} from "react-router-dom";
+
+import {LoginPage} from "./login/LoginPage.tsx";
+import {useState} from "react";
+
 function Nav() {
+
+    const navigate=useNavigate();
+    const [isOpen,setIsOpen]=useState(false)
+    /*const isOpen=useSelector((state:RootState)=>{return state.loginModalState.isOpen})*/
+
     return (
         <>
             <nav id={"navbar"} className={"bg-[#121212ff] flex text-white py-5"}>
@@ -10,15 +20,21 @@ function Nav() {
                 </div>
                 <div id={"navigation-option"}
                     className={"phone:hidden desktop:w-8/12 desktop:flex tablet:flex tablet:w-6/12 tablet:text-[16px] items-center justify-center font-medium"}>
-                    <p>Home</p>
-                    <p>Articles</p>
+                    <p
+                        onClick={()=>navigate("/")}
+                    >Home</p>
+                    <p
+                    onClick={()=>navigate("/articles")}
+                    >Articles</p>
                     <p>Contact</p>
                 </div>
                 <div id={"registration-login"}
                     className={"desktop:2/12 tablet:w-3/12 phone:hidden tablet:flex desktop:flex justify-center items-center"}>
                     <span className={"flex items-center"}>
-                        <button className={"mx-4"}>Register</button>
-                        <button className={"mx-4"}>Login</button>
+                        <button className={"mx-4"} onClick={()=>{
+                            navigate("")
+                        }}>Register</button>
+                        <button className={"mx-4"} onClick={()=>setIsOpen(true)}>Login</button>
                     </span>
                 </div>
                 <div className={"desktop:hidden tablet:hidden phone:flex"}>
@@ -27,6 +43,7 @@ function Nav() {
                     </span>
                 </div>
             </nav>
+            <LoginPage isOpen={isOpen} setIsOpen={setIsOpen}/>
         </>
     )
 }

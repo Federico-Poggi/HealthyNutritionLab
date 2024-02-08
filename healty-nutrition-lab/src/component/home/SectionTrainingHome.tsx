@@ -1,6 +1,6 @@
 import {TiTick} from "react-icons/ti";
 import {HiArrowNarrowRight} from "react-icons/hi";
-import sportImg from "../assets/Sport.png";
+import sportImg from "../../assets/Sport.png";
 
 export function SectionTrainingHome() {
     return (

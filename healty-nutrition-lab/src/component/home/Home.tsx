@@ -1,4 +1,4 @@
-import imgP from "../assets/Risorsa 1@2x.png"
+import imgP from "../../assets/Risorsa 1@2x.png"
 import CollabSec from "./CollabSec.tsx";
 import Service from "./Service.tsx";
 import {ArticlesHome} from "./ArticlesHome.tsx";
@@ -35,10 +35,10 @@ function Home() {
             <CollabSec/>
             <hr className = {"w-2/3 mt-5 mx-auto opacity-10"}/>
             <Service/>
-            <div className={"desktop:my-40 desktop:h-[300px] tablet:w-8/12 mx-auto tablet:mt-20"}>
+            <div className = {"desktop:my-40 desktop:h-[300px] tablet:w-8/12 mx-auto tablet:mt-20"}>
                 <ContactUs/>
             </div>
-            <div className={"mt-28 mb-28"}>
+            <div className = {"mt-28 mb-28"}>
                 <ArticlesHome/>
             </div>
         </>

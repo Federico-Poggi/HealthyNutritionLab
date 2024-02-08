@@ -1,14 +1,14 @@
 import './App.css'
-import {useSelector} from "react-redux";
-import {RootState} from "./redux/store";
-import {Route, Routes} from "react-router-dom";
+
+import { Route, Routes } from "react-router-dom";
 import Layout from "./component/Layout.tsx";
-import Home from "./component/Home.tsx";
+import Home from "./component/home/Home.tsx";
+import { Articles } from "./component/articles/Articles.tsx";
+import { LoginPage } from './component/login/LoginPage.tsx';
 
 
 function App() {
-    const counter = useSelector((state: RootState) => state.counter.count)
-    console.log(counter + 1)
+
     /*const dispatch= useDispatch();*/
     /*const handleClick=()=>{
         dispatch({type:INCREMENT})
@@ -16,8 +16,9 @@ function App() {
     return (
         <>
             <Routes>
-                <Route path = {"/"} element = {<Layout/>}>
-                    <Route path = {"/"} index element = {<Home/>}/>
+                <Route path={"/"} element={<Layout />}>
+                    <Route path={"/"} index element={<Home />} />
+                    <Route path={"/articles"} element={<LoginPage />} />
                 </Route>
             </Routes>
         </>

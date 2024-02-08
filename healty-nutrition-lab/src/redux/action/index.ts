@@ -1,10 +1,16 @@
 
-export const INCREMENT: string = "INCREMENT";
-export const DECREMENT: string = "DECREMENT";
+export const OPEN:string="OPEN";
+export const CLOSE:string="CLOSE";
 
-export const incrementAction=()=>{
+
+export const openAction=()=>{
     return{
-        type:INCREMENT,
+        type:OPEN,
+    }
+}
+export const closeAction=()=>{
+    return{
+        type:CLOSE,
     }
 }
 

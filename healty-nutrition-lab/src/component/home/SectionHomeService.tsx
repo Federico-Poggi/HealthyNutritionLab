@@ -1,4 +1,4 @@
-import sportImg from '../assets/foodSm.png'
+import sportImg from '../../assets/foodSm.png'
 import {TiTick} from "react-icons/ti";
 import {HiArrowNarrowRight} from "react-icons/hi";
 

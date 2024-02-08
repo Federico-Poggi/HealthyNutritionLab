@@ -187,3 +187,83 @@
 .icon-section{
     color: #c5f5b7;
 }
+
+/*LOGIN*/
+.input-container {
+    width: 100%;
+    z-index: 2;
+    @supports (mix-blend-mode: darken) {
+        position: relative;
+        mix-blend-mode: lighten;
+        .label-form {
+            position: absolute;
+            left: 1rem;
+            top: -0.40rem;
+            background: #000;
+        }
+    }
+}
+    .label-form {
+        padding: 0 0.2em;
+        margin-bottom: 0.9em;
+        text-transform: uppercase;
+        font-size: 0.5rem;
+        letter-spacing: 0.1em;
+        color: #ccd;
+        color: rgba(255,220,255,0.6);
+        cursor: pointer;
+    }
+.input-form {
+    color: rgba(201, 243, 29, 0.87);
+    font-size: 0.8rem;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    line-height: 1;
+    outline: none;
+    height: calc(1em + 1.6em + 0.5em);
+    padding: 0.5em 1em;
+    border: 0.1em solid transparent;
+    background-image: linear-gradient(#000, #000),
+    linear-gradient(120deg, #1ad0ac 0%, #0e4a85 50%, #99ff00 100%);
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+    border-radius: 10px;
+    background-size: 200% 100%;
+    transition: background-position 0.8s ease-in-out;
+
+    &:hover {
+        background-position: 100% 0;
+    }
+
+    &:focus {
+        outline: 1px dashed #C9F31D;
+        outline-offset: 0.2em;
+    }
+}
+
+#login-brand{
+    background-image: url("./assets/loinimg.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(99, 100, 99, 0.27);
+    }
+
+}
+
+#name-brand {
+    font-family:'Inter', sans-serif;;
+    font-weight: 600;
+    position: relative;
+    color: #8e8f8d;
+    letter-spacing: 2px;
+
+}
