@@ -7,7 +7,7 @@ function Layout() {
         <>
             <Nav/>
 
-            <main className={""}>
+            <main className={"relative"}>
                 <Outlet/>
             </main>
             {/*<hr className={"my-12 opacity-5"}/>

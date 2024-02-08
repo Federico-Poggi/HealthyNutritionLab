@@ -8,6 +8,34 @@
     margin: 0;
     padding: 0;
     width: 100vw;
+
+}
+
+.modal-open{
+    overflow: hidden;
+}
+
+
+
+@keyframes slideIn {
+    from {
+        transform: translateY(100%);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+.modal{
+    animation: slideIn 1.2s forwards, fadeIn 0.8s forwards;
 }
 
 #navbar {
@@ -210,7 +238,7 @@
         font-size: 0.5rem;
         letter-spacing: 0.1em;
         color: #ccd;
-        color: rgba(255,220,255,0.6);
+        color: rgba(255, 255, 255, 0.89);
         cursor: pointer;
     }
 .input-form {
