@@ -288,10 +288,18 @@
 }
 
 #name-brand {
-    font-family:'Inter', sans-serif;;
+    font-family:'Inter', sans-serif;
     font-weight: 600;
     position: relative;
     color: #8e8f8d;
     letter-spacing: 2px;
 
+}
+
+/*REGISTRATION FORM*/
+#registration-form{
+    font-family:'Inter', sans-serif;
+}
+#registration-form h2{
+    font-weight: 700;
 }

@@ -32,7 +32,7 @@ function Nav() {
                     className={"desktop:2/12 tablet:w-3/12 phone:hidden tablet:flex desktop:flex justify-center items-center"}>
                     <span className={"flex items-center"}>
                         <button className={"mx-4"} onClick={()=>{
-                            navigate("")
+                            navigate("/register")
                         }}>Register</button>
                         <button className={"mx-4"} onClick={()=>setIsOpen(true)}>Login</button>
                     </span>
