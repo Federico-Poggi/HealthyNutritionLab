@@ -20,14 +20,15 @@ export function RegisterForm() {
                     </div>
                     <div className = {"flex flex-col desktop:w-[250px] items-start"}>
                     <span className = {"flex"}>
-                        <input placeholder = {"repeat password"} type = {"checkbox"}/>
+                        <input required = {true} placeholder = {"repeat password"} type = {"checkbox"}/>
                         <p className = {"text-[#FFFF] desktop:text-[12px] font-normal desktop:ml-2"}>Accetta i termini e condizioni</p>
                     </span>
                         <span className = {"flex"}>
-                        <input required = {true} placeholder = {"repeat password"} type = {"checkbox"}/>
+                        <input  placeholder = {"repeat password"} type = {"checkbox"}/>
                         <p className = {"text-[#FFFF] desktop:text-[12px] font-normal desktop:ml-2"}>Aggiungimi alla mailing list</p>
                     </span>
                     </div>
+                    <button>Register</button>
                 </form>
             </div>
         </>
