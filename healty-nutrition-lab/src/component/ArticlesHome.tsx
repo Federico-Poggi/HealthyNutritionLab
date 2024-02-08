@@ -10,7 +10,7 @@ export function ArticlesHome() {
                 <p>
                     Read about nutrition from our articles section
                 </p>
-                <div className={"flex w-2/3 mx-auto justify-evenly mt-16"}>
+                <div className={"flex phone:flex-col desktop:w-2/3 tablet:w-full mx-auto justify-evenly mt-16"}>
                     <CardArticleHome/>
                     <CardArticleHome/>
                     <CardArticleHome/>

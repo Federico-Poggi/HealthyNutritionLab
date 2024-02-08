@@ -9,14 +9,14 @@ export function Footer() {
     const year:number=date.getFullYear();
     return (
         <>
-            <div className = {"flex justify-evenly desktop:p-12 desktop:h-[200px]"}>
-                <div className = {"w-2/12 "}>
+            <div className = {"flex desktop:justify-evenly desktop:p-12 h-[200px]"}>
+                <div className = {"desktop:w-2/12 "}>
                     <span className={"flex"}>
-                        <img src={Logo} alt={"logo"} className={"desktop:w-[20px] mr-2"}/>
+                        <img src={Logo} alt={"logo"} className={"desktop:w-[20px] tablet:w-[20px] mr-2"}/>
                     <h4 id = {"footer-brand"}
-                        className = {"desktop:text-[20px] tablet: phone:"}>HealthyNutritionLab</h4>
+                        className = {"desktop:text-[20px] tablet:text-[20px] tablet: phone:"}>HealthyNutritionLab</h4>
                         </span>
-                    <p id = {"footer-slogan"} className = {"desktop:text-[12px] py-2  tablet: phone:"}>Fuel Your Body,
+                    <p id = {"footer-slogan"} className = {"desktop:text-[12px] tablet:text-[12px] py-2 phone:"}>Fuel Your Body,
                                                                                                        Maximize Your
                                                                                                        Potential</p>
                     <span id = {"footer-icon"} className = {"flex"}>
@@ -26,20 +26,20 @@ export function Footer() {
                         <FaLinkedin size = {20} className = {"icon-social"}/>
                     </span>
                 </div>
-                <div className = {"desktop:text-[15px] footer-link w-1/6"}>
+                <div className = {"desktop:text-[15px] tablet:text-[15px] footer-link w-1/6"}>
                     <h4>Services</h4>
                 </div>
-                <div className = {"desktop:text-[15px] footer-link w-1/6"}>
+                <div className = {"desktop:text-[15px] tablet:text-[15px] footer-link w-1/6"}>
                     <h4>Company</h4>
-                    <ul className = {"desktop:text-[10px] text-[#c4c4c4] leading-5"}>
+                    <ul className = {"desktop:text-[10px] tablet:text-[10px] text-[#c4c4c4] leading-5"}>
                         <li>About</li>
                         <li>Contact</li>
                         <li>Articles</li>
                     </ul>
                 </div>
-                <div className = {"desktop:text-[15px] footer-link w-1/6"}>
+                <div className = {"desktop:text-[15px]  tablet:text-[15px] footer-link w-1/6"}>
                     <h4>Info</h4>
-                    <ul className = {"desktop:text-[10px] text-[#c4c4c4] leading-5"}>
+                    <ul className = {"desktop:text-[10px]  tablet:text-[10px] text-[#c4c4c4] leading-5"}>
                         <li>Privacy&policy</li>
                         <li>Terms and Condition</li>
                     </ul>
