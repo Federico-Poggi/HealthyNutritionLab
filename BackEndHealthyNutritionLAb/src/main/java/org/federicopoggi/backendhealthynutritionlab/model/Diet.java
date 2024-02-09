@@ -1,4 +1,4 @@
-package org.federicopoggi.backendhealthynutritionlab.entities;
+package org.federicopoggi.backendhealthynutritionlab.model;
 
 import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
