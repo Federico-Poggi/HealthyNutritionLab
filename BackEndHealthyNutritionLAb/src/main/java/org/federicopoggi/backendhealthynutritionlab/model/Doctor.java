@@ -1,11 +1,13 @@
 package org.federicopoggi.backendhealthynutritionlab.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Inheritance;
-import jakarta.persistence.InheritanceType;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import lombok.Getter;
 
-@Entity
-@Table(name = "doctors")
-@Inheritance(strategy = InheritanceType.JOINED)
-public class Doctor extends User{}
+import java.util.List;
+
+@MappedSuperclass
+@Getter
+public class Doctor extends User {
+    @OneToMany
+    List<Customer> customers;
+}

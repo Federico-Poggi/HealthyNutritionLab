@@ -10,7 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Alimenti {
+public class Alimento {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long idAlimento;

@@ -5,11 +5,10 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.federicopoggi.backendhealthynutritionlab.model.Alimenti;
+import org.federicopoggi.backendhealthynutritionlab.model.Alimento;
 import org.federicopoggi.backendhealthynutritionlab.model.Exercice;
 import org.federicopoggi.backendhealthynutritionlab.repository.AlimentoDAO;
 import org.federicopoggi.backendhealthynutritionlab.repository.EsercizioDAO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.*;
@@ -42,7 +41,7 @@ public class CsvReader {
             Cell lipidiTot = row.getCell(9);
             Cell lipidiSat = row.getCell(10);
             Cell lipidiMono = row.getCell(11);
-            Alimenti al = new Alimenti();
+            Alimento al = new Alimento();
             al.setName(nameAlimento.getStringCellValue());
             al.setParteEdibile((int) edibile.getNumericCellValue());
             al.setKcal((int) kcal.getNumericCellValue());

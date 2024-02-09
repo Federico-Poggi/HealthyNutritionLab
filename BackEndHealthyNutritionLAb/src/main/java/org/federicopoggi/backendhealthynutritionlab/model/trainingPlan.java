@@ -8,6 +8,8 @@ import org.federicopoggi.backendhealthynutritionlab.model.Enum.Actually;
 import org.federicopoggi.backendhealthynutritionlab.model.Enum.Duration;
 
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 
 @Entity
 @Table(name = "training_plans")
@@ -32,5 +34,15 @@ public class trainingPlan {
     @Column(name = "inUse")
     @Enumerated(EnumType.STRING)
     Actually actually;
+
+    @ManyToOne
+    private Customer customer;
+
+    @ElementCollection
+    @CollectionTable(
+            name = "training_plan_esercizi_ripetizioni", joinColumns = @JoinColumn(name = "id_esercizio"))
+    @MapKeyJoinColumn(name = "esercizio_id")
+    @Column(name = "ripetizioni")
+    private Map<Exercice, String> eserciziRipetizioni = new HashMap<>();
 
 }

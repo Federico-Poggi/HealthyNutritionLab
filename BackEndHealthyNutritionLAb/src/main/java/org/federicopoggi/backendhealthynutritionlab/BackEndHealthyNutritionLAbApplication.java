@@ -1,5 +1,7 @@
 package org.federicopoggi.backendhealthynutritionlab;
 
+import org.federicopoggi.backendhealthynutritionlab.model.Doctor;
+import org.federicopoggi.backendhealthynutritionlab.model.PersonalTrainer;
 import org.federicopoggi.backendhealthynutritionlab.repository.AlimentoDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -14,7 +16,6 @@ public class BackEndHealthyNutritionLAbApplication {
     public static void main(String[] args) throws IOException {
 
         SpringApplication.run(BackEndHealthyNutritionLAbApplication.class, args);
-
     }
 
 }

@@ -9,7 +9,4 @@ import java.util.List;
 @Entity
 @Table(name = "personal_trainers")
 public class PersonalTrainer extends Doctor{
-
-    @OneToMany
-    List<Customer> customers;
 }
