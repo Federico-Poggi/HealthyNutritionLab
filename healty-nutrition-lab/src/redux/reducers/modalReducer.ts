@@ -1,24 +1,25 @@
-import {OPEN, CLOSE} from "../action";
+import {OPEN, CLOSE} from "../action/index.js";
 import {Action} from "@reduxjs/toolkit";
 
-interface LoginModal {
-    isOpen: boolean
+interface Open {
+    isOpened: boolean
 }
 
-const initialState:LoginModal = {
-    isOpen: false
-} as LoginModal
-export default function loginReducer(state:LoginModal = initialState, action: Action):LoginModal {
+
+const initialState = {
+    isOpened: false
+} as Open
+export default function loginReducer(state: Open = initialState, action: Action) {
     switch (action.type) {
         case OPEN:
             return {
                 ...state,
-                isOpen: true
+                isOpened: true
             }
         case CLOSE:
             return {
                 ...state,
-                isOpen: false
+                isOpened: false
             }
         default:
             return state;

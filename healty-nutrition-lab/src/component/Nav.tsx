@@ -1,14 +1,14 @@
 import Logo from '../assets/Logo.svg'
 import {useNavigate} from "react-router-dom";
 
-import {LoginPage} from "./login/LoginPage.tsx";
-import {useState} from "react";
+import {useDispatch} from "react-redux";
+import {openAction} from "../redux/action";
 
 function Nav() {
 
     const navigate=useNavigate();
-    const [isOpen,setIsOpen]=useState(false)
     /*const isOpen=useSelector((state:RootState)=>{return state.loginModalState.isOpen})*/
+    const dispatch=useDispatch();
 
     return (
         <>
@@ -34,7 +34,7 @@ function Nav() {
                         <button className={"mx-4"} onClick={()=>{
                             navigate("/register")
                         }}>Register</button>
-                        <button className={"mx-4"} onClick={()=>setIsOpen(true)}>Login</button>
+                        <button className={"mx-4"} onClick={()=>dispatch(openAction())}>Login</button>
                     </span>
                 </div>
                 <div className={"desktop:hidden tablet:hidden phone:flex"}>
@@ -43,7 +43,6 @@ function Nav() {
                     </span>
                 </div>
             </nav>
-            <LoginPage isOpen={isOpen} setIsOpen={setIsOpen}/>
         </>
     )
 }

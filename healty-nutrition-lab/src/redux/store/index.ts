@@ -1,15 +1,15 @@
 import {combineReducers, configureStore} from '@reduxjs/toolkit';
-import loginReducer from "../reducers/modalReducer";
+import loginReducer from "../reducers/modalReducer.js";
+
+
+
 
 const bigReducer = combineReducers({
-        loginModalState:loginReducer,
+    loginModalState:loginReducer,
 })
 
-const store=configureStore({
-    reducer:bigReducer
-})
+ const store = configureStore({
+    reducer: bigReducer,
+});
+
 export default store;
-
-
-/*export type AppDispatch=typeof store.dispatch
-export type RootState=ReturnType<typeof store.getState>*/
