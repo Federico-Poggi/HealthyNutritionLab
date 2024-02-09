@@ -1,9 +1,15 @@
 package org.federicopoggi.backendhealthynutritionlab.security;
 
 import org.federicopoggi.backendhealthynutritionlab.model.User;
+import org.jose4j.jwa.AlgorithmConstraints;
 import org.jose4j.jwk.RsaJsonWebKey;
 import org.jose4j.jwk.RsaJwkGenerator;
+import org.jose4j.jws.AlgorithmIdentifiers;
+import org.jose4j.jws.JsonWebSignature;
 import org.jose4j.jwt.JwtClaims;
+import org.jose4j.jwt.consumer.InvalidJwtException;
+import org.jose4j.jwt.consumer.JwtConsumer;
+import org.jose4j.jwt.consumer.JwtConsumerBuilder;
 import org.jose4j.lang.JoseException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -14,14 +20,35 @@ public class JWTools {
     private String secret;
 
 
-    public void generateTokenForUser(User user) throws JoseException {
-        RsaJsonWebKey rsaJsonWebKey= RsaJwkGenerator.generateJwk(2048);
+    public String generateToken(User user) throws JoseException {
+        RsaJsonWebKey rsaJsonWebKey = RsaJwkGenerator.generateJwk(2048);
         rsaJsonWebKey.setKeyId(secret);
-        JwtClaims jwtClaims=new JwtClaims();
-        jwtClaims.setExpirationTimeMinutesInTheFuture(60*24*7);
+        JwtClaims jwtClaims = new JwtClaims();
+        jwtClaims.setExpirationTimeMinutesInTheFuture(60 * 24 * 7);
         jwtClaims.setGeneratedJwtId();
         jwtClaims.setIssuedAtToNow();
         jwtClaims.setSubject(String.valueOf(user.getUserId()));
 
+        JsonWebSignature jws = new JsonWebSignature();
+        jws.setPayload(jwtClaims.toJson());
+        jws.setKey(rsaJsonWebKey.getPrivateKey());
+        jws.setKeyIdHeaderValue(rsaJsonWebKey.getKeyId());
+        jws.setAlgorithmHeaderValue(AlgorithmIdentifiers.RSA_USING_SHA256);
+        String jwt = jws.getCompactSerialization();
+        return jwt;
     }
+
+    public JwtClaims validateToken(String token) throws JoseException, InvalidJwtException {
+        RsaJsonWebKey rsaJsonWebKey = RsaJwkGenerator.generateJwk(2048);
+        rsaJsonWebKey.setKeyId(secret);
+        JwtConsumer jwtConsumer = new JwtConsumerBuilder().setRequireExpirationTime()
+                                                          .setAllowedClockSkewInSeconds(30)
+                                                          .setRequireSubject()
+                                                          .setVerificationKey(rsaJsonWebKey.getKey())
+                                                          .setJwsAlgorithmConstraints(AlgorithmConstraints.ConstraintType.PERMIT,
+                                                                                      AlgorithmIdentifiers.RSA_USING_SHA256)
+                                                          .build();
+        return jwtConsumer.processToClaims(token);
+    }
+
 }
