@@ -12,17 +12,25 @@ import org.jose4j.jwt.consumer.JwtConsumer;
 import org.jose4j.jwt.consumer.JwtConsumerBuilder;
 import org.jose4j.lang.JoseException;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2ResourceServerProperties;
 import org.springframework.stereotype.Component;
+
+import javax.crypto.spec.SecretKeySpec;
+import java.security.Key;
 
 @Component
 public class JWTools {
     @Value("${spring.jwt.secret}")
-    private String secret;
+    private String secretK;
+    private RsaJsonWebKey rsaJsonWebKey;
+
+    public JWTools() throws JoseException {
+        rsaJsonWebKey=RsaJwkGenerator.generateJwk(2048);
+        rsaJsonWebKey.setKeyId(secretK);
+    }
 
 
     public String generateToken(User user) throws JoseException {
-        RsaJsonWebKey rsaJsonWebKey = RsaJwkGenerator.generateJwk(2048);
-        rsaJsonWebKey.setKeyId(secret);
         JwtClaims jwtClaims = new JwtClaims();
         jwtClaims.setExpirationTimeMinutesInTheFuture(60 * 24 * 7);
         jwtClaims.setGeneratedJwtId();
@@ -39,8 +47,8 @@ public class JWTools {
     }
 
     public JwtClaims validateToken(String token) throws JoseException, InvalidJwtException {
-        RsaJsonWebKey rsaJsonWebKey = RsaJwkGenerator.generateJwk(2048);
-        rsaJsonWebKey.setKeyId(secret);
+        /*RsaJsonWebKey rsaJsonWebKey = RsaJwkGenerator.generateJwk(2048);
+        rsaJsonWebKey.setKeyId(secretK);*/
         JwtConsumer jwtConsumer = new JwtConsumerBuilder().setRequireExpirationTime()
                                                           .setAllowedClockSkewInSeconds(30)
                                                           .setRequireSubject()
@@ -50,5 +58,4 @@ public class JWTools {
                                                           .build();
         return jwtConsumer.processToClaims(token);
     }
-
 }

@@ -1,6 +1,4 @@
 import {useState} from "react";
-import {Simulate} from "react-dom/test-utils";
-
 
 interface Register {
     name: string
@@ -13,6 +11,10 @@ interface Register {
 interface Login {
     email: string
     password: string
+}
+
+interface DataLoginResponse {
+    token: string
 }
 
 export function RegisterForm() {
@@ -37,51 +39,51 @@ export function RegisterForm() {
             [name]: value
         }))
     }
-
-    async function registerFetch(): Promise<undefined> {
-        try {
-            const response: Response = await fetch(APIUrl,
-                {
-                    method: "POST",
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(registerForm)
-                });
-            if (!response.ok) {
-                throw response;
-            } else {
-                console.log(await response.json())
+    const registerFunction = () => {
+        fetch(APIUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(registerForm)
+        })
+            .then((res:Response)=>{
+                if(res.ok){
+                    return res.json();
+                }
+            })
+            .then((data)=>{
+                console.log(data)
                 setLogin({
-                    email:registerForm.mail,
-                    password:registerForm.password
+                    email: registerForm.mail,
+                    password: registerForm.password
                 })
-                await loginAfterRegister();
-            }
-        } catch (err) {
-            console.log(await (err as Response).json());
-        }
-
+                loginFunctin();
+            })
+            .catch((Err:Error)=>{
+                console.log(Err);
+            })
     }
 
-    async function loginAfterRegister(): Promise<undefined> {
-        try {
-            const response: Response = await fetch(APIUrlLogin, {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body:JSON.stringify(login)
-            });
-            if(!response.ok){
-                throw response;
-            }else{
-                console.log(await response.json())
-            }
-
-        } catch (err) {
-            console.log(await (err as Response).json())
-        }
+    const loginFunctin = () => {
+        fetch(APIUrlLogin, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(login)
+        })
+            .then((response: Response) => {
+                if (response.ok) {
+                    return response.json();
+                }
+            })
+            .then((data: DataLoginResponse) => {
+                localStorage.setItem("token", data.token);
+            })
+            .catch((error: Error) => {
+                console.log(error);
+            })
     }
 
 
@@ -145,7 +147,7 @@ export function RegisterForm() {
                     </div>
                     <button onClick = {(e) => {
                         e.preventDefault();
-                        registerFetch()
+                        registerFunction()
                     }} type = {"submit"}>Register
                     </button>
                 </form>

@@ -2,20 +2,32 @@
 import Logo from '../../assets/Logo.svg'
 import imgLogin from '../../assets/loinimg.jpg'
 import { RxCross2 } from "react-icons/rx";
-import { useEffect } from "react";
+import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from 'react-redux';
-import {closeAction} from "../../redux/action";
+import {closeAction, loggedUserAction} from "../../redux/action";
+import {NavigateFunction, useNavigate} from "react-router-dom";
 
 interface StateLogin{
     loginModalState:{
         isOpened:boolean
     }
 }
-
+interface Login {
+    email: string
+    password: string
+}
+interface DataLoginResponse {
+    token: string
+}
 export function LoginPage() {
-
+    const APIUrlLogin = "http://localhost:5174/auth/login";
     const dispatch=useDispatch();
     const opened = useSelector((state: StateLogin) => state.loginModalState.isOpened)
+    const [login, setLogin] = useState<Login>({
+        email: "",
+        password: ""
+    })
+    const navigate:NavigateFunction=useNavigate();
     useEffect(() => {
 
         //Funzione per rendere lo scroll del body di sfondo non scrollabile
@@ -29,6 +41,38 @@ export function LoginPage() {
             document.body.classList.remove('modal-open');
         };
     }, [opened])
+
+    const changeRegister = (event: React.ChangeEvent<HTMLInputElement>, name: keyof Login) => {
+        const value = event.target.value;
+        setLogin((prevState) => ({
+            ...prevState,
+            [name]: value
+        }))
+    }
+
+    const loginFunctin = () => {
+        fetch(APIUrlLogin, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(login)
+        })
+            .then((response: Response) => {
+                if (response.ok) {
+                    return response.json();
+                }
+            })
+            .then((data: DataLoginResponse) => {
+                localStorage.setItem("token", data.token);
+                navigate("/personalArea")
+                dispatch(closeAction())
+                dispatch(loggedUserAction())
+            })
+            .catch((error: Error) => {
+                console.log(error);
+            })
+    }
 
     return (
         <>
@@ -52,18 +96,26 @@ export function LoginPage() {
                             <span className="input-container desktop:w-[300px] mx-auto flex flex-col mt-10 phone:mt-16 relative ">
                                 <label className="label-form ">Email</label>
                                 <input
-                                    name="username"
+                                    name="email"
                                     className=" input-form"
-                                    type="text" />
+                                    type="text"
+                                    onChange = {(e) => {
+                                        changeRegister(e, 'email');
+                                    }}/>
                             </span>
                             <span className="input-container desktop:w-[300px] mx-auto flex flex-col mt-10 phone:mt-5 tablet:mt-6 relative">
                                 <label className="label-form ">Password</label>
                                 <input
                                     name="password"
                                     className="input-form font-bold"
-                                    type="password" />
+                                    type="password"
+                                    onChange = {(e) => {
+                                        changeRegister(e, 'password');
+                                    }}/>
                             </span>
-                            <button className={"btn-home mx-auto mt-10 px-5 py-1 desktop:w-[150px] tablet:w-[220px] phone:w-[200px] phone:mt-14 phone:py-3 phone:text-[12px] desktop:text-[15px]"}>Login</button>
+                            <button
+                                onClick={loginFunctin}
+                                className={"btn-home mx-auto mt-10 px-5 py-1 desktop:w-[150px] tablet:w-[220px] phone:w-[200px] phone:mt-14 phone:py-3 phone:text-[12px] desktop:text-[15px]"}>Login</button>
                         </div>
 
                     </div>

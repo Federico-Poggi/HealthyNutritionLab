@@ -4,7 +4,6 @@ import Service from "./Service.tsx";
 import {ArticlesHome} from "./ArticlesHome.tsx";
 import {ContactUs} from "./ContactUs.tsx";
 
-
 function Home() {
     return (
         <>

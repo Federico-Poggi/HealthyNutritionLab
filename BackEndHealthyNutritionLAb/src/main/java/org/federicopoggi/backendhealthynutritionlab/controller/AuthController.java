@@ -5,9 +5,12 @@ import org.federicopoggi.backendhealthynutritionlab.DTOResponse.RegisterResponse
 import org.federicopoggi.backendhealthynutritionlab.DTOResponse.UserLoginResponse;
 import org.federicopoggi.backendhealthynutritionlab.DtoPayload.RegisterUserPayload;
 import org.federicopoggi.backendhealthynutritionlab.DtoPayload.UserPayload;
+import org.federicopoggi.backendhealthynutritionlab.DtoPayload.ValidationTokenDTO;
 import org.federicopoggi.backendhealthynutritionlab.Exception.BadRequestException;
 import org.federicopoggi.backendhealthynutritionlab.Exception.ValidationErrorMessage;
 import org.federicopoggi.backendhealthynutritionlab.service.AuthService;
+import org.jose4j.jwt.MalformedClaimException;
+import org.jose4j.jwt.consumer.InvalidJwtException;
 import org.jose4j.lang.JoseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -44,6 +47,12 @@ public class AuthController {
         }else {
             return authService.login(usp);
         }
+    }
+
+    @PostMapping("/verifyToken")
+    @ResponseStatus(HttpStatus.OK)
+    public void verificaToken(@RequestBody ValidationTokenDTO token) throws InvalidJwtException, JoseException, MalformedClaimException {
+        authService.verifyToken(token.token());
     }
 
 }

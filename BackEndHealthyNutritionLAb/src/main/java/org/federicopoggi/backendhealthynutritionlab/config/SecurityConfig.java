@@ -1,7 +1,10 @@
 package org.federicopoggi.backendhealthynutritionlab.config;
 
 import org.federicopoggi.backendhealthynutritionlab.security.JwtFilter;
+import org.jose4j.jwt.consumer.JwtConsumer;
+import org.jose4j.jwt.consumer.JwtConsumerBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -18,6 +21,8 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import javax.crypto.spec.SecretKeySpec;
+import java.security.Key;
 import java.util.Arrays;
 
 @Configuration
@@ -27,6 +32,7 @@ public class SecurityConfig {
 
     @Autowired
     JwtFilter jwtFilter;
+
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
@@ -55,6 +61,8 @@ public class SecurityConfig {
     PasswordEncoder getPwEncoder(){
         return new BCryptPasswordEncoder(11);
     }
+
+
 
 
 }

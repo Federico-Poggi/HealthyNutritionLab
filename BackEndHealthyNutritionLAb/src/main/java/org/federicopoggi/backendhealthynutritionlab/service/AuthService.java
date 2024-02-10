@@ -11,6 +11,10 @@ import org.federicopoggi.backendhealthynutritionlab.model.Role;
 import org.federicopoggi.backendhealthynutritionlab.model.User;
 import org.federicopoggi.backendhealthynutritionlab.repository.UserDAO;
 import org.federicopoggi.backendhealthynutritionlab.security.JWTools;
+import org.jose4j.jwt.JwtClaims;
+import org.jose4j.jwt.MalformedClaimException;
+import org.jose4j.jwt.NumericDate;
+import org.jose4j.jwt.consumer.InvalidJwtException;
 import org.jose4j.lang.JoseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -74,6 +78,20 @@ public class AuthService {
             throw new BadRequestException("Rieffettuare il login");
         }
         return null;
+    }
+
+    public boolean verifyToken(String token) throws InvalidJwtException, JoseException, MalformedClaimException {
+        NumericDate n=NumericDate.now();
+        System.out.println(n);
+        try{
+            System.out.println(token);
+            jwTools.validateToken(token);
+            return true;
+        }catch (RuntimeException e){
+            System.out.println(e.getMessage());
+            return false;
+        }
+
     }
 }
 

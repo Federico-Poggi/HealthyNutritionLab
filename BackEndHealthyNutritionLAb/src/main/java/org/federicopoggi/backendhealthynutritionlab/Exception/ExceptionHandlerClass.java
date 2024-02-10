@@ -31,6 +31,10 @@ public class ExceptionHandlerClass {
         return new ErrorMessage(e.getMessage(), LocalDate.now(),HttpStatus.BAD_REQUEST);
     }
 
+/*    @ExceptionHandler({InvalidJwtException.class,JoseException.class})
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ErrorMessage errorAut( )*/
+
     /*@ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<Map<String, Object>> handleConstraintViolationException(ConstraintViolationException ex) {
         Map<String, Object> response = new HashMap<>();
