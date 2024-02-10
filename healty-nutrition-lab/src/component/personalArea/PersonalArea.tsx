@@ -1,10 +1,11 @@
+import {SideBarUser} from "../userDir/SideBarUser.tsx";
+
 export function PersonalArea() {
     return (
         <>
-            <h2>
-                Benvenuto + nome
-            </h2>
-
+            <div className={"relative"}>
+            <SideBarUser/>
+            </div>
         </>
     );
 }

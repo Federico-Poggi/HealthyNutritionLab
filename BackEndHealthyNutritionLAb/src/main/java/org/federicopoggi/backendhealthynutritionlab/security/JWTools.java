@@ -13,10 +13,14 @@ import org.jose4j.jwt.consumer.JwtConsumerBuilder;
 import org.jose4j.lang.JoseException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2ResourceServerProperties;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.spec.SecretKeySpec;
 import java.security.Key;
+import java.util.Collection;
+import java.util.List;
 
 @Component
 public class JWTools {
@@ -31,10 +35,12 @@ public class JWTools {
 
 
     public String generateToken(User user) throws JoseException {
+
         JwtClaims jwtClaims = new JwtClaims();
         jwtClaims.setExpirationTimeMinutesInTheFuture(60 * 24 * 7);
         jwtClaims.setGeneratedJwtId();
         jwtClaims.setIssuedAtToNow();
+        jwtClaims.setClaim("Role",user.getRole().name());
         jwtClaims.setSubject(String.valueOf(user.getUserId()));
 
         JsonWebSignature jws = new JsonWebSignature();
