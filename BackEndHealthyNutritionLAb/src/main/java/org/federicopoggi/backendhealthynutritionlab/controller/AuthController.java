@@ -2,10 +2,13 @@ package org.federicopoggi.backendhealthynutritionlab.controller;
 
 import jakarta.validation.ConstraintViolationException;
 import org.federicopoggi.backendhealthynutritionlab.DTOResponse.RegisterResponse;
+import org.federicopoggi.backendhealthynutritionlab.DTOResponse.UserLoginResponse;
 import org.federicopoggi.backendhealthynutritionlab.DtoPayload.RegisterUserPayload;
+import org.federicopoggi.backendhealthynutritionlab.DtoPayload.UserPayload;
 import org.federicopoggi.backendhealthynutritionlab.Exception.BadRequestException;
 import org.federicopoggi.backendhealthynutritionlab.Exception.ValidationErrorMessage;
 import org.federicopoggi.backendhealthynutritionlab.service.AuthService;
+import org.jose4j.lang.JoseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
@@ -25,11 +28,6 @@ public class AuthController {
     @ResponseStatus(HttpStatus.OK)
     public RegisterResponse registerUser(@RequestBody @Validated RegisterUserPayload rup, BindingResult bd){
         if(bd.hasErrors()){
-            Map<String, String> errors = new HashMap<>();
-            for (FieldError error : bd.getFieldErrors()) {
-                errors.put(error.getField(), error.getDefaultMessage());
-            }
-            /*return new ValidationErrorMessage(HttpStatus.BAD_REQUEST.toString(),"Controlla i campi inseriti",errors);*/
             FieldError error=bd.getFieldErrors().get(0);
            throw new BadRequestException(error.getDefaultMessage());
         }else{
@@ -37,6 +35,15 @@ public class AuthController {
         }
     }
 
-
+    @PostMapping("/login")
+    @ResponseStatus(HttpStatus.OK)
+    public UserLoginResponse login(@RequestBody @Validated UserPayload usp, BindingResult b) throws JoseException {
+        if(b.hasErrors()){
+            FieldError error=b.getFieldErrors().get(0);
+            throw new BadRequestException(error.getDefaultMessage());
+        }else {
+            return authService.login(usp);
+        }
+    }
 
 }
