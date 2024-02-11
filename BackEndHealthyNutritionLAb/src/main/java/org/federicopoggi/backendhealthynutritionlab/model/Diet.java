@@ -53,5 +53,9 @@ public class Diet {
     @ManyToOne
     Customer customer;
 
+    @Lob
+    @Column(name = "diet_file")
+    private byte[] pdfDiet;
+
 }
 

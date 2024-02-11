@@ -30,7 +30,7 @@ public class UserController {
 
     /*POST MAPPING*/
 
-    @PostMapping("/doctor")
+    @PostMapping("/newDoctor")
     @PreAuthorize("hasAuthority('ADMIN')")
     @ResponseStatus(HttpStatus.OK)
     public ResponseDoctor saveDoctor(@RequestBody @Validated DoctorPaylodSave dps, BindingResult bd) throws AccessDeniedException{

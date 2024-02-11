@@ -2,30 +2,38 @@ package org.federicopoggi.backendhealthynutritionlab.service;
 
 import org.federicopoggi.backendhealthynutritionlab.DTOResponse.ResponseDoctor;
 import org.federicopoggi.backendhealthynutritionlab.DtoPayload.DoctorPaylodSave;
+import org.federicopoggi.backendhealthynutritionlab.Exception.NotFoundException;
 import org.federicopoggi.backendhealthynutritionlab.Exception.UnauthorizedException;
+import org.federicopoggi.backendhealthynutritionlab.model.Customer;
 import org.federicopoggi.backendhealthynutritionlab.model.Nutritionist;
 import org.federicopoggi.backendhealthynutritionlab.model.PersonalTrainer;
 import org.federicopoggi.backendhealthynutritionlab.model.Role;
 import org.federicopoggi.backendhealthynutritionlab.repository.NutritionistDAO;
 import org.federicopoggi.backendhealthynutritionlab.repository.PersonalTrainerDAO;
+import org.federicopoggi.backendhealthynutritionlab.repository.UserDAO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 
 @Service
 public class DoctorService {
     NutritionistDAO nutritionistDAO;
-
     PersonalTrainerDAO pt;
     PasswordEncoder bc;
+    UserDAO ud;
 
     @Autowired
-    public DoctorService(NutritionistDAO nutritionistDAO, PersonalTrainerDAO pt,PasswordEncoder bc) {
+    public DoctorService(NutritionistDAO nutritionistDAO, PersonalTrainerDAO pt,PasswordEncoder bc,UserDAO ud) {
         this.nutritionistDAO = nutritionistDAO;
         this.pt = pt;
         this.bc=bc;
+        this.ud=ud;
     }
 
     public ResponseDoctor saveDoctor(DoctorPaylodSave dps) throws AccessDeniedException {
@@ -59,5 +67,16 @@ public class DoctorService {
             throw new AccessDeniedException(e.getMessage()) ;
         }
         return null;
+    }
+
+    public Page<Customer> getAllNutritionPatient(Long id ,int page, int size, String sortedBy){
+        if(size>30){
+            size=30;
+        }
+        Nutritionist n=nutritionistDAO.findById(id).orElseThrow(()-> {throw new NotFoundException("Nutrizionista non trovato");});
+        Pageable p=PageRequest.of(page,size,Sort.by(sortedBy));
+        List<Customer> customers= n.getCustomers();
+        Page<Customer> customerPage=new PageImpl<>(customers,p, customers.size());
+        return customerPage;
     }
 }

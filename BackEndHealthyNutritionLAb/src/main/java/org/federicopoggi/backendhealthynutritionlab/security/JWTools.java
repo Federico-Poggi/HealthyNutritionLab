@@ -12,15 +12,7 @@ import org.jose4j.jwt.consumer.JwtConsumer;
 import org.jose4j.jwt.consumer.JwtConsumerBuilder;
 import org.jose4j.lang.JoseException;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2ResourceServerProperties;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
-
-import javax.crypto.spec.SecretKeySpec;
-import java.security.Key;
-import java.util.Collection;
-import java.util.List;
 
 @Component
 public class JWTools {
@@ -53,8 +45,6 @@ public class JWTools {
     }
 
     public JwtClaims validateToken(String token) throws JoseException, InvalidJwtException {
-        /*RsaJsonWebKey rsaJsonWebKey = RsaJwkGenerator.generateJwk(2048);
-        rsaJsonWebKey.setKeyId(secretK);*/
         JwtConsumer jwtConsumer = new JwtConsumerBuilder().setRequireExpirationTime()
                                                           .setAllowedClockSkewInSeconds(30)
                                                           .setRequireSubject()
