@@ -7,17 +7,32 @@ import org.federicopoggi.backendhealthynutritionlab.service.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/doctor")
 public class DoctorController {
     @Autowired
     DoctorService docS;
+
+    @GetMapping("/me")
+    public ResponseEntity<?> getMe(@AuthenticationPrincipal UserDetails userDetails){
+        if(userDetails!=null){
+            return ResponseEntity.of(Optional.ofNullable(userDetails));
+        }else {
+            return ResponseEntity.status(401).body("Utente non autenticato effettuare il login");
+        }
+
+    }
 
 
     @GetMapping("/nutritionist/{idNutrizionista}/patients")

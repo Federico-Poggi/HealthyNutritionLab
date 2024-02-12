@@ -11,15 +11,14 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
 
-/*@Entity
-@Table(name = "nutritionist")*/
+
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 public class Nutritionist extends Doc{
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     @JsonManagedReference
     List<Customer> customers = new ArrayList<>();
 

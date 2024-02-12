@@ -20,21 +20,15 @@ public class UserRunner implements CommandLineRunner {
     public void run(String... args) throws Exception {
 
        /* us.deleteAll();*/
-        Doc admin=new Doc();
+       /* Doc admin=new Doc();
         admin.setName("admin");
         admin.setSurname("admin");
         admin.setEmail("admin@admin.com");
         admin.setPassword(bp.encode("admin123"));
         admin.setRole(Role.ADMIN);
-        dc.save(admin);
+        dc.save(admin)*/;
 
-        /*User user=new User();
-        user.setName("Admin");
-        user.setSurname("Admin");
-        user.setEmail("admin@admin.com");
-        user.setPassword(bp.encode("1234"));
-        user.setRole(Role.ADMIN);
-        us.save(user);*/
+
 
     }
 }

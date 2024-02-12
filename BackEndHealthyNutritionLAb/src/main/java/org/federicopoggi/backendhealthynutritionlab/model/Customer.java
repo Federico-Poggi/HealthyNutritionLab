@@ -52,8 +52,10 @@ public class Customer implements UserDetails {
     @JsonBackReference
     private Nutritionist nutritionist;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     List<Diet> diets;
+    @OneToMany(fetch = FetchType.EAGER)
+    List<TrainingPlan> trainingPlans;
 
 
     @Override

@@ -1,5 +1,6 @@
 package org.federicopoggi.backendhealthynutritionlab.service;
 
+import jakarta.mail.MessagingException;
 import org.federicopoggi.backendhealthynutritionlab.DTOResponse.RegisterResponse;
 import org.federicopoggi.backendhealthynutritionlab.DTOResponse.UserLoginResponse;
 import org.federicopoggi.backendhealthynutritionlab.DtoPayload.RegisterUserPayload;
@@ -20,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.Optional;
 
 @Service
@@ -35,6 +37,9 @@ public class AuthService {
 
     @Autowired
     DocDAO dc;
+
+    @Autowired
+    EmailService mailservice;
 
     public RegisterResponse registerUser(RegisterUserPayload rup) throws BadRequestException {
 
@@ -59,10 +64,15 @@ public class AuthService {
                 newUser.setRole(Role.CUSTOMER);
 
                 cs.save(newUser);
+                mailservice.sendEmail(rup.mail());
                 return new RegisterResponse("User registrato con successo", newUser.getIdCliente());
             }
         } catch (RuntimeException e) {
             throw new BadRequestException(e.getMessage());
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
 
     }

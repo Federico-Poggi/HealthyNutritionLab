@@ -10,7 +10,7 @@ import java.util.Properties;
 
 @Configuration
 public class MailSenderConfig {
-    @Bean
+    @Bean(name = "google_mail_sender")
     JavaMailSender getJavaMailSender(@Value("${spring.mail.host}") String host,
                                      @Value("${spring.mail.port}") int port,
                                      @Value("${spring.mail.username}") String email,
@@ -30,4 +30,7 @@ public class MailSenderConfig {
 
         return mailSender;
     }
+
+
+
 }
