@@ -26,20 +26,29 @@ import java.util.Optional;
 
 @Service
 public class AuthService {
-    @Autowired
+
     CustomerDAO cs;
 
-    @Autowired
     PasswordEncoder psEncoder;
 
-    @Autowired
     JWTools jwTools;
 
-    @Autowired
     DocDAO dc;
 
-    @Autowired
     EmailService mailservice;
+
+    @Autowired
+    public AuthService(CustomerDAO cs,
+                       PasswordEncoder psEncoder,
+                       JWTools jwTools,
+                       DocDAO dc,
+                       EmailService mailservice) {
+        this.cs = cs;
+        this.psEncoder = psEncoder;
+        this.jwTools = jwTools;
+        this.dc = dc;
+        this.mailservice = mailservice;
+    }
 
     public RegisterResponse registerUser(RegisterUserPayload rup) throws BadRequestException {
 

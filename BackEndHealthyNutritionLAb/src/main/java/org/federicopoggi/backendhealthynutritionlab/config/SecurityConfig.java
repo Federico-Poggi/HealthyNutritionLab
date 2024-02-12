@@ -1,5 +1,6 @@
 package org.federicopoggi.backendhealthynutritionlab.config;
 
+import org.federicopoggi.backendhealthynutritionlab.security.FilterForSwagger;
 import org.federicopoggi.backendhealthynutritionlab.security.JwtFilter;
 import org.jose4j.jwt.consumer.JwtConsumer;
 import org.jose4j.jwt.consumer.JwtConsumerBuilder;
@@ -32,7 +33,8 @@ public class SecurityConfig {
 
     @Autowired
     JwtFilter jwtFilter;
-
+    @Autowired
+    FilterForSwagger filterForSwagger;
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
@@ -40,6 +42,7 @@ public class SecurityConfig {
         httpSecurity.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         httpSecurity.csrf(AbstractHttpConfigurer::disable);
         httpSecurity.cors(Customizer.withDefaults());
+        httpSecurity.addFilterBefore(filterForSwagger,UsernamePasswordAuthenticationFilter.class);
         httpSecurity.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
         httpSecurity.authorizeHttpRequests(request -> request.requestMatchers("/**")
                                                              .permitAll());
