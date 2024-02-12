@@ -1,14 +1,26 @@
 package org.federicopoggi.backendhealthynutritionlab.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "nutritionist")
-public class Nutritionist extends Doctor{
+@Getter
+@Setter
+@NoArgsConstructor
+public class Nutritionist extends Doctor {
+
+
     @OneToMany
-    List<Customer> customers;
+    @JsonManagedReference
+    List<Customer> customers = new ArrayList<>();
+
 }

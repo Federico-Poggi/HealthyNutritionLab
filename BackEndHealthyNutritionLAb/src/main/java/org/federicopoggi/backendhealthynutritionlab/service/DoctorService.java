@@ -4,10 +4,7 @@ import org.federicopoggi.backendhealthynutritionlab.DTOResponse.ResponseDoctor;
 import org.federicopoggi.backendhealthynutritionlab.DtoPayload.DoctorPaylodSave;
 import org.federicopoggi.backendhealthynutritionlab.Exception.NotFoundException;
 import org.federicopoggi.backendhealthynutritionlab.Exception.UnauthorizedException;
-import org.federicopoggi.backendhealthynutritionlab.model.Customer;
-import org.federicopoggi.backendhealthynutritionlab.model.Nutritionist;
-import org.federicopoggi.backendhealthynutritionlab.model.PersonalTrainer;
-import org.federicopoggi.backendhealthynutritionlab.model.Role;
+import org.federicopoggi.backendhealthynutritionlab.model.*;
 import org.federicopoggi.backendhealthynutritionlab.repository.NutritionistDAO;
 import org.federicopoggi.backendhealthynutritionlab.repository.PersonalTrainerDAO;
 import org.federicopoggi.backendhealthynutritionlab.repository.UserDAO;
@@ -17,6 +14,8 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -73,10 +72,11 @@ public class DoctorService {
         if(size>30){
             size=30;
         }
-        Nutritionist n=nutritionistDAO.findById(id).orElseThrow(()-> {throw new NotFoundException("Nutrizionista non trovato");});
+        Nutritionist n=nutritionistDAO.findById(id).orElseThrow(()-> new NotFoundException("Nutrizionista non trovato"));
+        System.out.println(n.toString());
         Pageable p=PageRequest.of(page,size,Sort.by(sortedBy));
-        List<Customer> customers= n.getCustomers();
-        Page<Customer> customerPage=new PageImpl<>(customers,p, customers.size());
-        return customerPage;
+        List<Customer> customers= n.getCustomers() != null? n.getCustomers(): Collections.emptyList();
+        long sizeList= customers.size();
+        return new PageImpl<>(customers, p, sizeList);
     }
 }

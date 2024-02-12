@@ -8,6 +8,4 @@ import java.util.List;
 @MappedSuperclass
 @Getter
 public class Doctor extends User {
-    @OneToMany
-    List<Customer> customers;
 }

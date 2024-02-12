@@ -32,6 +32,14 @@ public class ExceptionHandlerClass {
                                 LocalDate.now(),
                                 HttpStatus.FORBIDDEN);
     }
+
+    @ExceptionHandler(AlreadyAssignException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorMessage alreadyAssign(AlreadyAssignException e){
+        return new ErrorMessage("L'utente ha gia un dottore assegnato",
+                                LocalDate.now(),
+                                HttpStatus.BAD_REQUEST);
+    }
 }
 
 
