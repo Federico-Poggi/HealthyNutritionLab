@@ -5,7 +5,11 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.federicopoggi.backendhealthynutritionlab.Exception.NotFoundException;
-import org.federicopoggi.backendhealthynutritionlab.model.User;
+import org.federicopoggi.backendhealthynutritionlab.model.Customer;
+import org.federicopoggi.backendhealthynutritionlab.model.Doc;
+import org.federicopoggi.backendhealthynutritionlab.repository.DocDAO;
+import org.federicopoggi.backendhealthynutritionlab.service.AuthService;
+import org.federicopoggi.backendhealthynutritionlab.service.DoctorService;
 import org.federicopoggi.backendhealthynutritionlab.service.UserSevice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -25,6 +29,11 @@ public class JwtFilter extends OncePerRequestFilter {
     @Autowired
     UserSevice userSevice;
 
+    @Autowired
+    DocDAO docd;
+
+
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException, NotFoundException {
@@ -37,18 +46,34 @@ public class JwtFilter extends OncePerRequestFilter {
             try {
                 String id = jwTools.validateToken(token)
                                    .getSubject();
-                User user = userSevice.findById(Long.parseLong(id));
-                Authentication authentication = new UsernamePasswordAuthenticationToken(user,
-                                                                                        null,
-                                                                                        user.getAuthorities());
-                SecurityContextHolder.getContext()
-                                     .setAuthentication(authentication);
+
+                String userType=jwTools.validateToken(token).getClaimValueAsString("userType");
+                System.out.println(userType);
+
+                if(userType.equals("doctor")){
+                    Doc d= docd.findById(Long.parseLong(id)).orElseThrow(()->new NotFoundException("non esiste il dottore con l'id inserito"));
+                    Authentication authentication = new UsernamePasswordAuthenticationToken(d,
+                                                                                            null,
+                                                                                            d.getAuthorities());
+                    SecurityContextHolder.getContext()
+                                         .setAuthentication(authentication);
+                }else if(userType.equals("customer")){
+                    Customer user = userSevice.findById(Long.parseLong(id));
+                    Authentication authentication = new UsernamePasswordAuthenticationToken(user,
+                                                                                            null,
+                                                                                            user.getAuthorities());
+                    SecurityContextHolder.getContext()
+                                         .setAuthentication(authentication);
+                }
+
                 filterChain.doFilter(request, response);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         }
     }
+
+
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {

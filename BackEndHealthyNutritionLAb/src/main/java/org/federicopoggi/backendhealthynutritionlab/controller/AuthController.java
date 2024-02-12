@@ -2,18 +2,23 @@ package org.federicopoggi.backendhealthynutritionlab.controller;
 
 import jakarta.validation.ConstraintViolationException;
 import org.federicopoggi.backendhealthynutritionlab.DTOResponse.RegisterResponse;
+import org.federicopoggi.backendhealthynutritionlab.DTOResponse.ResponseDoctor;
 import org.federicopoggi.backendhealthynutritionlab.DTOResponse.UserLoginResponse;
+import org.federicopoggi.backendhealthynutritionlab.DtoPayload.DoctorPaylodSave;
 import org.federicopoggi.backendhealthynutritionlab.DtoPayload.RegisterUserPayload;
 import org.federicopoggi.backendhealthynutritionlab.DtoPayload.UserPayload;
 import org.federicopoggi.backendhealthynutritionlab.DtoPayload.ValidationTokenDTO;
 import org.federicopoggi.backendhealthynutritionlab.Exception.BadRequestException;
 import org.federicopoggi.backendhealthynutritionlab.Exception.ValidationErrorMessage;
 import org.federicopoggi.backendhealthynutritionlab.service.AuthService;
+import org.federicopoggi.backendhealthynutritionlab.service.DoctorService;
 import org.jose4j.jwt.MalformedClaimException;
 import org.jose4j.jwt.consumer.InvalidJwtException;
 import org.jose4j.lang.JoseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
@@ -27,6 +32,7 @@ import java.util.Map;
 public class AuthController {
     @Autowired
     AuthService authService;
+
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.OK)
     public RegisterResponse registerUser(@RequestBody @Validated RegisterUserPayload rup, BindingResult bd){
@@ -37,6 +43,8 @@ public class AuthController {
             return authService.registerUser(rup);
         }
     }
+
+
 
     @PostMapping("/login")
     @ResponseStatus(HttpStatus.OK)

@@ -34,16 +34,6 @@ public class UserController {
 
     /*POST MAPPING*/
 
-    @PostMapping("/newDoctor")
-    @PreAuthorize("hasAuthority('ADMIN')")
-    @ResponseStatus(HttpStatus.OK)
-    public ResponseDoctor saveDoctor(@RequestBody @Validated DoctorPaylodSave dps, BindingResult bd) throws AccessDeniedException{
-        if (!bd.hasErrors()) {
-            return doctorService.saveDoctor(dps);
-        }else {
-            throw new IllegalArgumentException("Invalid doctor data");
-        }
-    }
 
     @PutMapping("assign/{userId}")
     @ResponseStatus(HttpStatus.OK)

@@ -1,34 +1,33 @@
 package org.federicopoggi.backendhealthynutritionlab.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-@Entity
-@Table(name = "users")
 @Getter
 @Setter
-@Inheritance(strategy = InheritanceType.JOINED)
-@NoArgsConstructor
-public class User implements UserDetails {
-
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@Entity
+@Table(name = "doctors")
+public class Doc implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
-    private Long userId;
+    @Column(name = "id_doctor")
+    private Long idDoctor;
 
-    @Column(name = "user_name")
+    @Column(name = "name")
     private String name;
 
-    @Column(name = "user_surname")
+    @Column(name = "surname")
     private String surname;
 
     @Column(name = "cell_number")
@@ -40,14 +39,9 @@ public class User implements UserDetails {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "birthday")
-    private LocalDate birthday;
-
     @Column(name = "user_role")
     @Enumerated(EnumType.STRING)
     Role role;
-
-
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -60,28 +54,32 @@ public class User implements UserDetails {
     }
 
     @Override
+    @JsonIgnore
     public String getUsername() {
         return null;
     }
 
     @Override
+    @JsonIgnore
     public boolean isAccountNonExpired() {
         return false;
     }
 
     @Override
+    @JsonIgnore
     public boolean isAccountNonLocked() {
         return false;
     }
 
     @Override
+    @JsonIgnore
     public boolean isCredentialsNonExpired() {
         return false;
     }
 
     @Override
+    @JsonIgnore
     public boolean isEnabled() {
         return false;
     }
 }
-

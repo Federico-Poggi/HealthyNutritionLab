@@ -1,6 +1,7 @@
 package org.federicopoggi.backendhealthynutritionlab.security;
 
-import org.federicopoggi.backendhealthynutritionlab.model.User;
+import org.federicopoggi.backendhealthynutritionlab.model.Customer;
+import org.federicopoggi.backendhealthynutritionlab.model.Doc;
 import org.jose4j.jwa.AlgorithmConstraints;
 import org.jose4j.jwk.RsaJsonWebKey;
 import org.jose4j.jwk.RsaJwkGenerator;
@@ -26,14 +27,16 @@ public class JWTools {
     }
 
 
-    public String generateToken(User user) throws JoseException {
+
+    public String generateToken(Customer user) throws JoseException {
 
         JwtClaims jwtClaims = new JwtClaims();
         jwtClaims.setExpirationTimeMinutesInTheFuture(60 * 24 * 7);
         jwtClaims.setGeneratedJwtId();
         jwtClaims.setIssuedAtToNow();
         jwtClaims.setClaim("Role",user.getRole().name());
-        jwtClaims.setSubject(String.valueOf(user.getUserId()));
+        jwtClaims.setClaim("userType", "customer");
+        jwtClaims.setSubject(String.valueOf(user.getIdCliente()));
 
         JsonWebSignature jws = new JsonWebSignature();
         jws.setPayload(jwtClaims.toJson());
@@ -42,6 +45,23 @@ public class JWTools {
         jws.setAlgorithmHeaderValue(AlgorithmIdentifiers.RSA_USING_SHA256);
         String jwt = jws.getCompactSerialization();
         return jwt;
+    }
+    public String generateTokenForDoc(Doc doctor) throws JoseException{
+        JwtClaims jwtClaims = new JwtClaims();
+        jwtClaims.setExpirationTimeMinutesInTheFuture(60 * 24 * 7);
+        jwtClaims.setGeneratedJwtId();
+        jwtClaims.setIssuedAtToNow();
+        jwtClaims.setClaim("Role",doctor.getRole().name());
+        jwtClaims.setClaim("userType", "doctor");
+        jwtClaims.setSubject(String.valueOf(doctor.getIdDoctor()));
+
+        JsonWebSignature jws = new JsonWebSignature();
+        jws.setPayload(jwtClaims.toJson());
+        jws.setKey(rsaJsonWebKey.getPrivateKey());
+        jws.setKeyIdHeaderValue(rsaJsonWebKey.getKeyId());
+        jws.setAlgorithmHeaderValue(AlgorithmIdentifiers.RSA_USING_SHA256);
+        String docJwt = jws.getCompactSerialization();
+        return docJwt;
     }
 
     public JwtClaims validateToken(String token) throws JoseException, InvalidJwtException {

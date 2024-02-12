@@ -5,13 +5,13 @@ import org.federicopoggi.backendhealthynutritionlab.DTOResponse.UserLoginRespons
 import org.federicopoggi.backendhealthynutritionlab.DtoPayload.RegisterUserPayload;
 import org.federicopoggi.backendhealthynutritionlab.DtoPayload.UserPayload;
 import org.federicopoggi.backendhealthynutritionlab.Exception.BadRequestException;
-import org.federicopoggi.backendhealthynutritionlab.Exception.ValidationErrorMessage;
+import org.federicopoggi.backendhealthynutritionlab.Exception.NotFoundException;
 import org.federicopoggi.backendhealthynutritionlab.model.Customer;
+import org.federicopoggi.backendhealthynutritionlab.model.Doc;
 import org.federicopoggi.backendhealthynutritionlab.model.Role;
-import org.federicopoggi.backendhealthynutritionlab.model.User;
-import org.federicopoggi.backendhealthynutritionlab.repository.UserDAO;
+import org.federicopoggi.backendhealthynutritionlab.repository.CustomerDAO;
+import org.federicopoggi.backendhealthynutritionlab.repository.DocDAO;
 import org.federicopoggi.backendhealthynutritionlab.security.JWTools;
-import org.jose4j.jwt.JwtClaims;
 import org.jose4j.jwt.MalformedClaimException;
 import org.jose4j.jwt.NumericDate;
 import org.jose4j.jwt.consumer.InvalidJwtException;
@@ -20,13 +20,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Map;
 import java.util.Optional;
 
 @Service
 public class AuthService {
     @Autowired
-    UserDAO userDAO;
+    CustomerDAO cs;
 
     @Autowired
     PasswordEncoder psEncoder;
@@ -34,10 +33,13 @@ public class AuthService {
     @Autowired
     JWTools jwTools;
 
+    @Autowired
+    DocDAO dc;
+
     public RegisterResponse registerUser(RegisterUserPayload rup) throws BadRequestException {
 
         try {
-            Optional<User> user = userDAO.findByEmail(rup.mail());
+            Optional<Customer> user = cs.findByEmail(rup.mail());
             if (user.isPresent()) {
                 throw new BadRequestException("User con email: " + rup.mail() + " esiste già");
             } else {
@@ -54,10 +56,10 @@ public class AuthService {
                 newUser.setSurname(rup.surname());
                 newUser.setEmail(rup.mail());
                 newUser.setPassword(psEncoder.encode(rup.password()));
-                newUser.setRole(Role.USER);
+                newUser.setRole(Role.CUSTOMER);
 
-                userDAO.save(newUser);
-                return new RegisterResponse("User registrato con successo", newUser.getUserId());
+                cs.save(newUser);
+                return new RegisterResponse("User registrato con successo", newUser.getIdCliente());
             }
         } catch (RuntimeException e) {
             throw new BadRequestException(e.getMessage());
@@ -65,29 +67,49 @@ public class AuthService {
 
     }
 
-    public UserLoginResponse login(UserPayload userLogin) throws JoseException, BadRequestException{
-        boolean foundUser = userDAO.findByEmail(userLogin.email())
-                                   .isPresent();
+    public UserLoginResponse login(UserPayload userLogin) throws JoseException, BadRequestException {
+
+        boolean foundUser = cs.findByEmail(userLogin.email())
+                              .isPresent();
+        System.out.println(foundUser);
+        boolean foundDoc = dc.findByEmail(userLogin.email())
+                             .isPresent();
         if (foundUser) {
-            User found = userDAO.findByEmail(userLogin.email())
-                                .orElseThrow(() -> new BadRequestException("User non trovato"));
+            Customer found = cs.findByEmail(userLogin.email())
+                               .orElseThrow(() -> new BadRequestException("User non trovato"));
             if (psEncoder.matches(userLogin.password(), found.getPassword())) {
                 return new UserLoginResponse(jwTools.generateToken(found));
             }
+        } else if (foundDoc) {
+            System.out.println("presente");
+            Doc doc = dc.findByEmail(userLogin.email())
+                        .orElseThrow(() -> new NotFoundException("Dottore non trovato"));
+            if (psEncoder.matches(userLogin.password(), doc.getPassword())) {
+                UserLoginResponse us = new UserLoginResponse(jwTools.generateTokenForDoc(doc));
+                System.out.println(us.token());
+                return us;
+            } else {
+                throw new BadRequestException("Credenziali non valide");
+            }
         } else {
-            throw new BadRequestException("Rieffettuare il login");
+            throw new BadRequestException("Nessun utente con questa email trovato");
         }
         return null;
     }
 
+    public Doc findById(Long id) {
+        return dc.findById(id)
+                 .orElseThrow(() -> new NotFoundException("Dottore non trovato"));
+    }
+
     public boolean verifyToken(String token) throws InvalidJwtException, JoseException, MalformedClaimException {
-        NumericDate n=NumericDate.now();
+        NumericDate n = NumericDate.now();
         System.out.println(n);
-        try{
+        try {
             System.out.println(token);
             jwTools.validateToken(token);
             return true;
-        }catch (RuntimeException e){
+        } catch (RuntimeException e) {
             System.out.println(e.getMessage());
             return false;
         }
