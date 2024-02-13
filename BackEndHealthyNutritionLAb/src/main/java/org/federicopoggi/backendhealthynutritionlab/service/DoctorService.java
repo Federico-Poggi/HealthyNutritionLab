@@ -1,10 +1,15 @@
 package org.federicopoggi.backendhealthynutritionlab.service;
 
+import org.federicopoggi.backendhealthynutritionlab.DTOResponse.DietResponse;
 import org.federicopoggi.backendhealthynutritionlab.DTOResponse.ResponseDoctor;
+import org.federicopoggi.backendhealthynutritionlab.DtoPayload.DietPayload;
 import org.federicopoggi.backendhealthynutritionlab.DtoPayload.DoctorPaylodSave;
 import org.federicopoggi.backendhealthynutritionlab.Exception.BadRequestException;
 import org.federicopoggi.backendhealthynutritionlab.Exception.NotFoundException;
 import org.federicopoggi.backendhealthynutritionlab.model.*;
+import org.federicopoggi.backendhealthynutritionlab.model.Enum.Actually;
+import org.federicopoggi.backendhealthynutritionlab.model.Enum.DietType;
+import org.federicopoggi.backendhealthynutritionlab.model.Enum.Duration;
 import org.federicopoggi.backendhealthynutritionlab.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
@@ -12,6 +17,8 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -30,19 +37,24 @@ public class DoctorService {
 
     AlimentoDAO al;
 
+    DietDAO dt;
+
+
     @Autowired
     public DoctorService(NutritionistDAO nutritionistDAO,
                          PersonalTrainerDAO pt,
                          PasswordEncoder bc,
                          CustomerDAO cs,
                          DocDAO dc,
-                         AlimentoDAO al) {
+                         AlimentoDAO al,
+                         DietDAO dt) {
         this.nutritionistDAO = nutritionistDAO;
         this.pt = pt;
         this.bc = bc;
         this.cs = cs;
         this.dc = dc;
         this.al = al;
+        this.dt = dt;
     }
 
 
@@ -120,5 +132,29 @@ public class DoctorService {
 
         Pageable p = PageRequest.of(page, size, Sort.by(sortedBy));
         return al.findAll(p);
+    }
+
+    public DietResponse createDiet(Long idCustomer, DietPayload dp) throws NotFoundException {
+        Customer c = cs.findById(idCustomer)
+                       .orElseThrow(() -> new NotFoundException("Utente non trovato"));
+        List<AlimentoAndQuantita> alimentoAndQuantitaList = Arrays.asList(dp.alimentoAndQuantita());
+        Diet newDiet = new Diet();
+        newDiet.setDietType(DietType.valueOf(dp.dietType()));
+        newDiet.setActually(Actually.IN_USE);
+        newDiet.setDuration(Duration.valueOf(dp.duration()));
+        newDiet.setIssueDate(LocalDate.now());
+        newDiet.setExpirationDate(dp.expirationDate());
+        newDiet.setCustomer(c);
+        for (AlimentoAndQuantita alimentoAndQuantita : alimentoAndQuantitaList) {
+            Alimento a = al.findById(alimentoAndQuantita.getIdAlimento())
+                           .orElseThrow(() -> new NotFoundException("Alimento non trovato reinserisci nuovamente"));
+            newDiet.getAlimentiQuantita()
+                   .put(a.getName(), alimentoAndQuantita.getQuantita());
+        }
+
+
+        dt.save(newDiet);
+        c.getDiets().add(newDiet);
+        return new DietResponse(c.getIdCliente(), newDiet.getDietId());
     }
 }

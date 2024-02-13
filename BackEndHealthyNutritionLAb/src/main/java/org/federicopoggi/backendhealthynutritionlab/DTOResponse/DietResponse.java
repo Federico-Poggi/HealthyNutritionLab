@@ -1,3 +1,3 @@
 package org.federicopoggi.backendhealthynutritionlab.DTOResponse;
 
-public record DietResponse(Long idCustomer, Long idDiet,) {}
+public record DietResponse(Long idCustomer, Long idDiet) {}

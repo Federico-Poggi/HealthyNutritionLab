@@ -13,6 +13,8 @@ import org.federicopoggi.backendhealthynutritionlab.repository.PersonalTrainerDA
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserSevice {
 
@@ -32,6 +34,10 @@ public class UserSevice {
     public Customer findById(Long id) throws NotFoundException {
         return cs.findById(id)
                       .orElseThrow(() -> new NotFoundException("Utente con id " + id + " non trovato"));
+    }
+
+    public List<Customer> getAll(){
+        return cs.findAll();
     }
 
     public void assignDoctor(Long userId, Long doctorId) {

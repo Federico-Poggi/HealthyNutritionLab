@@ -2,6 +2,7 @@ package org.federicopoggi.backendhealthynutritionlab.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -52,8 +53,10 @@ public class Customer implements UserDetails {
     @JsonBackReference
     private Nutritionist nutritionist;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "customer")
+    @JsonManagedReference
     List<Diet> diets;
+
     @OneToMany(fetch = FetchType.EAGER)
     List<TrainingPlan> trainingPlans;
 

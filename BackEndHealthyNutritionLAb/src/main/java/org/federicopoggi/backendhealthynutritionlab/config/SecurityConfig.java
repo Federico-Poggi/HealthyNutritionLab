@@ -1,6 +1,6 @@
 package org.federicopoggi.backendhealthynutritionlab.config;
 
-import org.federicopoggi.backendhealthynutritionlab.security.FilterForSwagger;
+/*import org.federicopoggi.backendhealthynutritionlab.security.FilterForSwagger;*/
 import org.federicopoggi.backendhealthynutritionlab.security.JwtFilter;
 import org.jose4j.jwt.consumer.JwtConsumer;
 import org.jose4j.jwt.consumer.JwtConsumerBuilder;
@@ -34,12 +34,12 @@ import java.util.Arrays;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
-public class SecurityConfig implements WebSecurityCustomizer {
+public class SecurityConfig{
 
     @Autowired
     JwtFilter jwtFilter;
-    @Autowired
-    FilterForSwagger filterForSwagger;
+    /*@Autowired
+    FilterForSwagger filterForSwagger;*/
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
@@ -70,8 +70,8 @@ public class SecurityConfig implements WebSecurityCustomizer {
     }
 
 
-    @Override
+    /*@Override
     public void customize(WebSecurity web) {
         web.ignoring().requestMatchers("/v2/api-docs", "/configuration/**", "/swagger-resources/**",  "/swagger-ui.html", "/webjars/**", "/api-docs/**");
-    }
+    }*/
 }

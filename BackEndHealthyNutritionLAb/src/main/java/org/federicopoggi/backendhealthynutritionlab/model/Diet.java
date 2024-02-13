@@ -1,5 +1,6 @@
 package org.federicopoggi.backendhealthynutritionlab.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,6 +32,7 @@ public class Diet {
 
     @Column
     LocalDate expirationDate;
+
     @Column
     @Enumerated(EnumType.STRING)
     Duration duration;
@@ -46,16 +48,18 @@ public class Diet {
     @ElementCollection
     @CollectionTable(
             name = "dieta_alimento_quantita", joinColumns = @JoinColumn(name = "dieta_id"))
-    @MapKeyJoinColumn(name = "alimento_id")
+    @MapKeyJoinColumn(name = "alimento_name")
     @Column(name = "quantita")
-    private Map<Alimento, Integer> alimentiQuantita = new HashMap<>();
+    private Map<String, Integer> alimentiQuantita = new HashMap<>();
 
     @ManyToOne
+    @JsonBackReference
     Customer customer;
 
     @Lob
     @Column(name = "diet_file")
     private byte[] pdfDiet;
+
 
 }
 

@@ -5,6 +5,7 @@ import org.federicopoggi.backendhealthynutritionlab.DtoPayload.DoctorPaylodSave;
 import org.federicopoggi.backendhealthynutritionlab.Exception.AlreadyAssignException;
 import org.federicopoggi.backendhealthynutritionlab.Exception.BadRequestException;
 import org.federicopoggi.backendhealthynutritionlab.Exception.UnauthorizedException;
+import org.federicopoggi.backendhealthynutritionlab.model.Customer;
 import org.federicopoggi.backendhealthynutritionlab.service.DoctorService;
 import org.federicopoggi.backendhealthynutritionlab.service.UserSevice;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/user")
@@ -29,7 +32,11 @@ public class UserController {
     }
     /*GETT MAPPING*/
 
-
+    //Funzione da modificare
+    @GetMapping
+    public List<Customer> getall(){
+        return us.getAll();
+    }
 
 
     /*POST MAPPING*/
