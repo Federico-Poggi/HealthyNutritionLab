@@ -21,6 +21,13 @@ import java.util.List;
 @RestController
 @RequestMapping("/user")
 public class UserController {
+    /*
+    * TODO:
+    *  - Modificare funzione getAll e impaginarla
+    *  - Da aggiungere Get per visualizzare le proprie diete o schede di allenamento
+    *  - AGGIUNGERE POSSIBILITA DI UN IMMAGINE PROFILO
+    *  .....
+    * */
 
     DoctorService doctorService;
     UserSevice us;
@@ -42,10 +49,6 @@ public class UserController {
     /*POST MAPPING*/
 
 
-    @PutMapping("assign/{userId}")
-    @ResponseStatus(HttpStatus.OK)
-    public void assignDoctor(@PathVariable Long userId, @RequestParam(required = true) Long doctorId) throws AlreadyAssignException {
-        us.assignDoctor(userId,doctorId);
-    }
+
 
 }

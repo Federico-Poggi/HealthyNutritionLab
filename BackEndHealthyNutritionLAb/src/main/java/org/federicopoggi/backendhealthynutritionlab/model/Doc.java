@@ -50,6 +50,7 @@ public class Doc implements UserDetails {
     }
 
     @Override
+    @JsonIgnore
     public String getPassword() {
         return this.password;
     }
@@ -57,7 +58,7 @@ public class Doc implements UserDetails {
     @Override
     @JsonIgnore
     public String getUsername() {
-        return null;
+        return this.email;
     }
 
     @Override

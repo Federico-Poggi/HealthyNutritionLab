@@ -34,8 +34,15 @@ import java.util.Map;
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
-    @Autowired
+
     AuthService authService;
+    @Autowired
+    public AuthController(AuthService authService) {
+        this.authService = authService;
+    }
+
+    /* -------------- REGISTRAZIONE UTENTE ----------- */
+
 
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.OK)
@@ -48,7 +55,7 @@ public class AuthController {
         }
     }
 
-
+    /* ---------- LOGIN UTENTE E DOC ------------- */
 
     @PostMapping("/login")
     @ResponseStatus(HttpStatus.OK)
@@ -60,6 +67,8 @@ public class AuthController {
             return authService.login(usp);
         }
     }
+
+    /* ---------- VERIFICA TOKEN PER RUOLI NEL FRONTEND ------------ */
 
     @PostMapping("/verifyToken")
     @ResponseStatus(HttpStatus.OK)

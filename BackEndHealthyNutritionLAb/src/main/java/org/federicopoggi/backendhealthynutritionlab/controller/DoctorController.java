@@ -29,9 +29,26 @@ import java.util.Optional;
 @RequestMapping("/doctor")
 /*@Api(tags = "prova controller",value = "Controller operazioni doc")*/
 public class DoctorController {
-    @Autowired
-    DoctorService docS;
+    /*
+    * TODO:
+    *  1- GET PER OTTENERE LE DIETE ASSEGNATE AD UN CERTO CLIENTE PER COORDINARE IL LAVORO CON I PERSONAL TRAINER
+    *  2- POST PER INSERIRE UN PROGRAMMA D'ALLENAMENTO FAX SIMILE DELLE DIETE
+    *  3- AGGIUNGERE LA POSSIBILITA DI INSERIRE UN PDF CON LA DIET/SCHEDA ALLENAMENTO CHE VERRA SPEDITO VIA MAIL AL CLIENTE
+    *  4- AGGIUNGERE CONTROLLI O SULLA DIETA E SULLA SCHEDA DI ALLENAMENTO PER SCADENZE (QUANDO SCADE CAMBIARE LO STATO IN EXPIRED)
+    *  5- CONTROLLARE FORMATO DATE
+    * */
 
+
+    DoctorService docS;
+    @Autowired
+    public DoctorController(DoctorService docS) {
+        this.docS = docS;
+    }
+
+    // GETMAPPING
+
+
+    /* ------- GET PER OTTENERE DATI PROFILO LOGGATO ------- */
     @GetMapping("/me")
     public ResponseEntity<?> getMe(@AuthenticationPrincipal UserDetails userDetails) {
         if (userDetails != null) {
@@ -43,18 +60,17 @@ public class DoctorController {
 
     }
 
-
-    @GetMapping("/nutritionist/{idNutrizionista}/patients")
-    @PreAuthorize("hasAuthority('NUTRITIONIST')")
+    /* ---- GET PER OTTENERE TUTTI I PAZIENTI DI UN DETERMINATO DOTTORE -------*/
+    @GetMapping("/me/patients")
     @ResponseStatus(HttpStatus.OK)
-    public Page<Customer> getAllNutritionPatient(@PathVariable Long idNutrizionista,
+    public Page<Customer> getAllNutritionPatient(@AuthenticationPrincipal UserDetails us,
                                                  @RequestParam(defaultValue = "0") int page,
                                                  @RequestParam(defaultValue = "10") int size,
                                                  @RequestParam(defaultValue = "userId") String sortedBy) {
 
-        return docS.getAllNutritionPatient(idNutrizionista, page, size, sortedBy);
+        return docS.getAllPatient(us,page, size, sortedBy);
     }
-
+    /* ---- GET PER I NUTRIZIONISTI PER AVERE UNA TABELLA DEGLI ALIMENTI -----*/
     @GetMapping("/nutritionist/aliments")
     @PreAuthorize("hasAuthority('NUTRITIONIST')")
     @ResponseStatus(HttpStatus.OK)
@@ -63,20 +79,13 @@ public class DoctorController {
                                          @RequestParam(defaultValue = "idAlimento") String sortedBy) {
         return docS.getAllAliments(page, size, sortedBy);
     }
+    /* ---- GET PER I PERSONALTRAINER PER AVERE UNA TABELLA DEGLI ESERCIZI ------ */
 
 
 
+    // POST
 
-
-    @GetMapping("/personalTrainer/{idPersonalTrainer}/patients")
-    @PreAuthorize("hasAuthority('PERSONAL_TRAINER')")
-    @ResponseStatus(HttpStatus.OK)
-    public Page<Customer> getAllPersonalCustomer(@PathVariable Long idPersonalTrainer,
-                                                 @RequestParam(defaultValue = "0") int page,
-                                                 @RequestParam(defaultValue = "10") int size,
-                                                 @RequestParam(defaultValue = "userId") String sortedBy) {
-        return docS.getAllPersonalCustomer(idPersonalTrainer, page, size, sortedBy);
-    }
+    /* ---- ASSEGNARE UNA DIETA SOLO PER NUTRIZIONISTI -----*/
 
     @PostMapping("/me/diet")
     @PreAuthorize("hasAuthority('NUTRITIONIST')")
@@ -86,17 +95,17 @@ public class DoctorController {
         return docS.createDiet(idCustomer,dp);
 
     }
-    @PostMapping("/newDoctor")
-    @PreAuthorize("hasAuthority('ADMIN')")
-    @ResponseStatus(HttpStatus.OK)
-    public ResponseDoctor saveDoctor(@RequestBody @Validated DoctorPaylodSave dps, BindingResult bd)
-            throws AccessDeniedException {
-        if (!bd.hasErrors()) {
-            return docS.saveDoctor(dps);
-        } else {
-            throw new IllegalArgumentException("Invalid doctor data");
-        }
-    }
 
+    /* ---- Da testare e vedere se funziona con l'endpoint /me ----- */
+
+    /*@GetMapping("/personalTrainer/{idPersonalTrainer}/patients")
+    @PreAuthorize("hasAuthority('PERSONAL_TRAINER')")
+    @ResponseStatus(HttpStatus.OK)
+    public Page<Customer> getAllPersonalCustomer(@PathVariable Long idPersonalTrainer,
+                                                 @RequestParam(defaultValue = "0") int page,
+                                                 @RequestParam(defaultValue = "10") int size,
+                                                 @RequestParam(defaultValue = "userId") String sortedBy) {
+        return docS.getAllPersonalCustomer(idPersonalTrainer, page, size, sortedBy);
+    }*/
 
 }

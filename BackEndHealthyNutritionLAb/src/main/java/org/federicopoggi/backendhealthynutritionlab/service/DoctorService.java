@@ -14,6 +14,7 @@ import org.federicopoggi.backendhealthynutritionlab.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -98,22 +99,21 @@ public class DoctorService {
     }
 
     //CLIENTI DEL NUTRIZIONISTA
-    public Page<Customer> getAllNutritionPatient(Long id, int page, int size, String sortedBy) {
+    public Page<Customer> getAllPatient(UserDetails us, int page, int size, String sortedBy) {
         if (size > 30) {
             size = 30;
         }
-        Nutritionist n = nutritionistDAO.findById(id)
-                                        .orElseThrow(() -> new NotFoundException("Nutrizionista non trovato"));
-        System.out.println(n.toString());
+        List<Customer> customers = nutritionistDAO.getAllPatient(us.getUsername());
+
         Pageable p = PageRequest.of(page, size, Sort.by(sortedBy));
-        List<Customer> customers = n.getCustomers() != null ? n.getCustomers() : Collections.emptyList();
+        /*List<Customer> customers = n.getCustomers() != null ? n.getCustomers() : Collections.emptyList();*/
         long sizeList = customers.size();
         return new PageImpl<>(customers, p, sizeList);
     }
 
     //CLIENTI DEL PERSONAL TRAINER
 
-    public Page<Customer> getAllPersonalCustomer(Long id, int page, int size, String sortedBy) {
+   /* public Page<Customer> getAllPersonalCustomer(Long id, int page, int size, String sortedBy) {
         if (size > 30) {
             size = 30;
         }
@@ -123,7 +123,7 @@ public class DoctorService {
         List<Customer> customers = n.getCustomers() != null ? n.getCustomers() : Collections.emptyList();
         long sizeList = customers.size();
         return new PageImpl<>(customers, p, sizeList);
-    }
+    }*/
 
     public Page<Alimento> getAllAliments(int page, int size, String sortedBy) {
         if (size > 30) {
