@@ -3,6 +3,7 @@ package org.federicopoggi.backendhealthynutritionlab.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.Operation;
+import org.federicopoggi.backendhealthynutritionlab.DTOResponse.DietResponse;
 import org.federicopoggi.backendhealthynutritionlab.DTOResponse.ResponseDoctor;
 import org.federicopoggi.backendhealthynutritionlab.DtoPayload.DoctorPaylodSave;
 import org.federicopoggi.backendhealthynutritionlab.model.Alimento;
@@ -63,6 +64,9 @@ public class DoctorController {
     }
 
 
+
+
+
     @GetMapping("/personalTrainer/{idPersonalTrainer}/patients")
     @PreAuthorize("hasAuthority('PERSONAL_TRAINER')")
     @ResponseStatus(HttpStatus.OK)
@@ -73,6 +77,11 @@ public class DoctorController {
         return docS.getAllPersonalCustomer(idPersonalTrainer, page, size, sortedBy);
     }
 
+    @PostMapping("/diet/{idCustomer}")
+    @PreAuthorize("hasAuthority('NUTRITIONIST')")
+    public DietResponse assignDiet(){
+
+    }
 
     @PostMapping("/newDoctor")
     @PreAuthorize("hasAuthority('ADMIN')")

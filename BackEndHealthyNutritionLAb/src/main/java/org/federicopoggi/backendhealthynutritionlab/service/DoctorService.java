@@ -2,6 +2,7 @@ package org.federicopoggi.backendhealthynutritionlab.service;
 
 import org.federicopoggi.backendhealthynutritionlab.DTOResponse.ResponseDoctor;
 import org.federicopoggi.backendhealthynutritionlab.DtoPayload.DoctorPaylodSave;
+import org.federicopoggi.backendhealthynutritionlab.Exception.BadRequestException;
 import org.federicopoggi.backendhealthynutritionlab.Exception.NotFoundException;
 import org.federicopoggi.backendhealthynutritionlab.model.*;
 import org.federicopoggi.backendhealthynutritionlab.repository.*;
@@ -45,7 +46,12 @@ public class DoctorService {
     }
 
 
-    public ResponseDoctor saveDoctor(DoctorPaylodSave dps) throws AccessDeniedException {
+    public ResponseDoctor saveDoctor(DoctorPaylodSave dps) throws AccessDeniedException, BadRequestException {
+        boolean isPresent = dc.findByEmail(dps.email())
+                              .isPresent();
+        if (isPresent) {
+            throw new BadRequestException("Utente con email " + dps.email() + " esiste già");
+        }
         String role = dps.role()
                          .toUpperCase();
         try {
@@ -80,7 +86,6 @@ public class DoctorService {
     }
 
     //CLIENTI DEL NUTRIZIONISTA
-
     public Page<Customer> getAllNutritionPatient(Long id, int page, int size, String sortedBy) {
         if (size > 30) {
             size = 30;
