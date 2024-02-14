@@ -16,16 +16,18 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/admin")
 public class AdminController {
-
     DoctorService docS;
+
     UserSevice us;
+
     @Autowired
-    public AdminController(DoctorService docS,UserSevice us) {
+    public AdminController(DoctorService docS, UserSevice us) {
         this.docS = docS;
-        this.us=us;
+        this.us = us;
     }
 
     /* --- SALVARE UN DOTTORE SOLO ADMIN --- */
+
     @PostMapping("/newDoctor")
     @PreAuthorize("hasAuthority('ADMIN')")
     @ResponseStatus(HttpStatus.OK)
@@ -43,8 +45,9 @@ public class AdminController {
     @PutMapping("assign/{userId}")
     @PreAuthorize("hasAuthority('ADMIN')")
     @ResponseStatus(HttpStatus.OK)
-    public void assignDoctor(@PathVariable Long userId, @RequestParam(required = true) Long doctorId) throws AlreadyAssignException {
-        us.assignDoctor(userId,doctorId);
+    public void assignDoctor(@PathVariable Long userId, @RequestParam(required = true) Long doctorId)
+            throws AlreadyAssignException {
+        us.assignDoctor(userId, doctorId);
     }
 
 }

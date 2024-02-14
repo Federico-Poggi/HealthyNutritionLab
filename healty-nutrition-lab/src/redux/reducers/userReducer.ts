@@ -1,4 +1,4 @@
-import {Action} from "@reduxjs/toolkit";
+
 import {SET_USER_LOGGED, SET_USER_NOT_LOGGED} from "../action";
 
 interface User {
@@ -10,17 +10,29 @@ const userState: User = {
     logged: false,
     role: "",
 }
-export default function userReducer(state: User = userState, action: Action) {
+interface LoggedUserAction {
+    type: typeof SET_USER_LOGGED
+    payload:string
+}
+
+interface NotLoggedAction {
+    type: typeof SET_USER_NOT_LOGGED
+    payload: ""
+}
+
+type UserAction = LoggedUserAction | NotLoggedAction;
+export default function userReducer(state: User = userState, action: UserAction) {
     switch (action.type) {
         case SET_USER_LOGGED:
             return {
                 ...state,
-                logged:true
+                logged:true,
+                role:action.payload
             }
         case SET_USER_NOT_LOGGED:
             return {
                 ...state,
-                logged: false
+                logged: false,
             }
 
         default:

@@ -7,6 +7,7 @@ import {openAction} from "../redux/action";
 interface StateLog {
     user: {
         logged: boolean
+        role:string
     }
 }
 

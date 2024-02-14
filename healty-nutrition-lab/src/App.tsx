@@ -1,6 +1,6 @@
 import './App.css'
 
-import {Route, Routes} from "react-router-dom";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Layout from "./component/Layout.tsx";
 import Home from "./component/home/Home.tsx";
 import {Articles} from "./component/articles/Articles.tsx";
@@ -11,6 +11,7 @@ import {useEffect} from "react";
 import {loggedUserAction, notLoggedAction} from "./redux/action";
 import {jwtDecode} from "jwt-decode";
 import {LayoutDoctor} from "./component/LayoutDoctor.tsx";
+import {TabelleNutrizionali} from "./component/doctor/TabelleNutrizionali.tsx";
 
 
 interface TokenString {
@@ -63,7 +64,7 @@ function App() {
                 if (response.status === 200) {
                     console.log(response.status)
                     console.log("valid Token")
-                    dispatch(loggedUserAction())
+                    dispatch(loggedUserAction(role))
                 } else {
                     dispatch(notLoggedAction())
                     throw new Error("Rieffettua il login")
@@ -86,42 +87,18 @@ function App() {
         }
     }
     return (
-        <>
-            {
-                role === 'USER' ? <Routes>
-                        <Route path = {"/"} element = {<Layout/>}>
-                            <Route path = {"/"} index element = {<Home/>}/>
-                            <Route path = {"/articles"} element = {<Articles/>}/>
-                            <Route path = {"/register"} element = {<RegisterForm/>}/>
-                            <Route path = {"/personalArea"} element = {<PersonalArea/>}/>
-                        </Route>
-                    </Routes> :
-                    role === "NUTRITIONIST" ? <Routes>
-                        <Route path = {"/"} element = {<LayoutDoctor/>}>
-                            <Route path = {"/"} index element = {<Home/>}/>
-                            <Route path = {"/articles"} element = {<Articles/>}/>
-                            <Route path = {"/register"} element = {<RegisterForm/>}/>
-                            <Route path = {"/personalArea"} element = {<PersonalArea/>}/>
-                        </Route>
-                    </Routes> : role === "PERSONAL_TRAINER" ? <Routes>
-                        <Route path = {"/"} element = {<LayoutDoctor/>}>
-                            <Route path = {"/"} index element = {<Home/>}/>
-                            <Route path = {"/articles"} element = {<Articles/>}/>
-                            <Route path = {"/register"} element = {<RegisterForm/>}/>
-                            <Route path = {"/personalArea"} element = {<PersonalArea/>}/>
-                        </Route>
-                    </Routes> : <Routes>
-                        <Route path = {"/"} element = {<LayoutDoctor/>}>
-                            <Route path = {"/"} index element = {<Home/>}/>
-                            <Route path = {"/articles"} element = {<Articles/>}/>
-                            <Route path = {"/register"} element = {<RegisterForm/>}/>
-                            <Route path = {"/personalArea"} element = {<PersonalArea/>}/>
-                        </Route>
-                    </Routes>
-            }
-
-
-        </>
+        <BrowserRouter>
+            <Routes>
+                <Route path = {"/"} element = {<LayoutDoctor/>}>
+                    <Route path = {"/"} index element = {<Home/>}/>
+                    <Route path = {"articles"} element = {<Articles/>}/>
+                    <Route path = {"register"} element = {<RegisterForm/>}/>
+                    <Route path = {"personalArea"} element = {<PersonalArea/>}>
+                        <Route path = {"tabelle-nutrizionali"} element = {<TabelleNutrizionali/>}/>
+                    </Route>
+                </Route>
+            </Routes>
+        </BrowserRouter>
     )
 }
 

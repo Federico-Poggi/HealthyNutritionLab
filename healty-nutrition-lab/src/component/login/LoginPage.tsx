@@ -18,6 +18,7 @@ interface Login {
 }
 interface DataLoginResponse {
     token: string
+    role:string
 }
 export function LoginPage() {
     const APIUrlLogin = "http://localhost:5174/auth/login";
@@ -65,9 +66,10 @@ export function LoginPage() {
             })
             .then((data: DataLoginResponse) => {
                 localStorage.setItem("token", data.token);
+                localStorage.setItem("Role", data.role)
                 navigate("/personalArea")
                 dispatch(closeAction())
-                dispatch(loggedUserAction())
+                dispatch(loggedUserAction(data.role))
             })
             .catch((error: Error) => {
                 console.log(error);

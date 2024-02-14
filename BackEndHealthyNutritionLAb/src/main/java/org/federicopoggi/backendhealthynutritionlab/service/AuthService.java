@@ -97,14 +97,14 @@ public class AuthService {
             Customer found = cs.findByEmail(userLogin.email())
                                .orElseThrow(() -> new BadRequestException("User non trovato"));
             if (psEncoder.matches(userLogin.password(), found.getPassword())) {
-                return new UserLoginResponse(jwTools.generateToken(found));
+                return new UserLoginResponse(jwTools.generateToken(found),found.getRole().name());
             }
         } else if (foundDoc) {
             System.out.println("presente");
             Doc doc = dc.findByEmail(userLogin.email())
                         .orElseThrow(() -> new NotFoundException("Dottore non trovato"));
             if (psEncoder.matches(userLogin.password(), doc.getPassword())) {
-                UserLoginResponse us = new UserLoginResponse(jwTools.generateTokenForDoc(doc));
+                UserLoginResponse us = new UserLoginResponse(jwTools.generateTokenForDoc(doc),doc.getRole().name());
                 System.out.println(us.token());
                 return us;
             } else {
