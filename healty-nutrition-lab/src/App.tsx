@@ -48,7 +48,7 @@ function App() {
         if (tokenFrom != null) {
             decodeTokent(tokenFrom)
         }
-
+        /*console.log(role)*/
     }, [])
 
     const verifyValidLogin = () => {
@@ -60,10 +60,8 @@ function App() {
             body: JSON.stringify(body)
         })
             .then((response: Response) => {
-                console.log(JSON.stringify(body))
+                /*console.log(JSON.stringify(body))*/
                 if (response.status === 200) {
-                    console.log(response.status)
-                    console.log("valid Token")
                     dispatch(loggedUserAction(role))
                 } else {
                     dispatch(notLoggedAction())
@@ -71,15 +69,15 @@ function App() {
                 }
             })
             .catch((er: Error) => {
-                console.log(er)
+                console.error(Error + er.message)
             })
     }
     const decodeTokent = (token: string) => {
         try {
             if (token != null) {
                 const decoded: JwtPayload = jwtDecode(token);
-                console.log(decoded);
-                console.log(((decoded as JwtPayload)).Role)
+                /*console.log(decoded);
+                console.log(((decoded as JwtPayload)).Role)*/
                 role = ((decoded as JwtPayload)).Role
             }
         } catch (er) {
