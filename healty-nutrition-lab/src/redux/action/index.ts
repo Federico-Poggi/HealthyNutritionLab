@@ -2,8 +2,8 @@ export const OPEN: string = "OPEN";
 export const CLOSE: string = "CLOSE";
 export const SET_USER_LOGGED: string = "LOGIN"
 export const SET_USER_NOT_LOGGED: string = "USER_NOT_LOGGED"
-
 export const SET_DATASET:string="DATASET"
+export const GET_PATIENT:string="GET_PATIENT"
 
 
 export const openAction = () => {
@@ -31,5 +31,11 @@ export const setDataset= (data:object):{ type: string; payload:object }=>{
     return {
         type:SET_DATASET,
         payload: data
+    }
+}
+export const getPatientAll=(data:[])=>{
+    return {
+        type:GET_PATIENT,
+        payload:data
     }
 }

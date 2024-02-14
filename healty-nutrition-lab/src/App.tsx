@@ -12,6 +12,7 @@ import {loggedUserAction, notLoggedAction} from "./redux/action";
 import {jwtDecode} from "jwt-decode";
 import {LayoutDoctor} from "./component/LayoutDoctor.tsx";
 import {TabelleNutrizionali} from "./component/doctor/TabelleNutrizionali.tsx";
+import {Patient} from "./component/doctor/Patient.tsx";
 
 
 interface TokenString {
@@ -93,6 +94,7 @@ function App() {
                     <Route path = {"register"} element = {<RegisterForm/>}/>
                     <Route path = {"personalArea"} element = {<PersonalArea/>}>
                         <Route path = {"tabelle-nutrizionali"} element = {<TabelleNutrizionali/>}/>
+                        <Route path={"pazienti"} element={<Patient/>}/>
                     </Route>
                 </Route>
             </Routes>

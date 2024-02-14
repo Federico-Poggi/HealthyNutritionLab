@@ -1,9 +1,11 @@
-import {combineReducers, configureStore} from '@reduxjs/toolkit';
+import {combineReducers, configureStore, Store} from '@reduxjs/toolkit';
 import loginReducer from "../reducers/modalReducer.js";
 import userReducer from "../reducers/userReducer.ts";
 import alimentiDatasetReducer from "../reducers/alimentiDatasetReducer.ts";
+import {RootState} from "@reduxjs/toolkit/query";
 
 
+export type RootStore=ReturnType<typeof bigReducer>
 
 
 const bigReducer = combineReducers({
@@ -12,8 +14,11 @@ const bigReducer = combineReducers({
     alimentiDataSet:alimentiDatasetReducer
 })
 
+export type AppStore = Store<RootStore>;
+
  const store = configureStore({
     reducer: bigReducer,
 });
 
 export default store;
+

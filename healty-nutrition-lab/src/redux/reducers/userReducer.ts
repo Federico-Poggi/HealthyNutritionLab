@@ -1,14 +1,16 @@
 
-import {SET_USER_LOGGED, SET_USER_NOT_LOGGED} from "../action";
+import {GET_PATIENT, SET_USER_LOGGED, SET_USER_NOT_LOGGED} from "../action";
 
 interface User {
     logged: boolean
     role:string
+    patient:[]
 }
 
 const userState: User = {
     logged: false,
     role: "",
+    patient:[]
 }
 interface LoggedUserAction {
     type: typeof SET_USER_LOGGED
@@ -18,6 +20,10 @@ interface LoggedUserAction {
 interface NotLoggedAction {
     type: typeof SET_USER_NOT_LOGGED
     payload: ""
+}
+interface DocPatientAction{
+    type: typeof GET_PATIENT
+    payload:[]
 }
 
 type UserAction = LoggedUserAction | NotLoggedAction;
@@ -35,6 +41,11 @@ export default function userReducer(state: User = userState, action: UserAction)
                 logged: false,
             }
 
+        case GET_PATIENT:
+            return{
+                ...state,
+                patient:action.payload
+            }
         default:
             return {
                 ...state

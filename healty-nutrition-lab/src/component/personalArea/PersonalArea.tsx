@@ -3,6 +3,7 @@ import {SideBarUser} from "../userDir/SideBarUser.tsx";
 import {SideBarDocNutrition} from "../doctor/SideBarDocNutrition.tsx";
 import {useLocation} from "react-router-dom";
 import {TabelleNutrizionali} from "../doctor/TabelleNutrizionali.tsx";
+import {Patient} from "../doctor/Patient.tsx";
 
 
 interface StateLog {
@@ -24,6 +25,7 @@ export function PersonalArea() {
             <div className={"flex"}>
             {role === "NUTRITIONIST" ? <SideBarDocNutrition/> : <SideBarUser/>}
             {location.pathname === '/personalArea/tabelle-nutrizionali' && <TabelleNutrizionali/>}
+                {location.pathname==='/personalArea/pazienti'&&<Patient/>}
             </div>
         </>
     );

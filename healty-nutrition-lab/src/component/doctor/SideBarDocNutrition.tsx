@@ -9,7 +9,9 @@ export function SideBarDocNutrition() {
             <div className = {"relative"}>
                 <div id = {"sideBar-user"} className = {" left-2 rounded-2xl top-24 desktop:w-[350px] h-[88vh]"}>
                     <ul className = {"pl-4"}>
-                        <li>Clienti</li>
+                        <li onClick={()=>{
+                            NAVIGATE("pazienti")
+                        }}>Clienti</li>
                         <li onClick={()=>{
                             NAVIGATE("tabelle-nutrizionali")
                         }}>Tabelle Nutrizionali</li>

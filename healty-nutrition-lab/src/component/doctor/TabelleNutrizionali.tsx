@@ -41,6 +41,7 @@ export function TabelleNutrizionali() {
     useLocation().pathname
     const token = localStorage.getItem('token')
     const dispatch = useDispatch();
+
     useEffect(() => {
         const  fetchData =  async () => {
             try {
