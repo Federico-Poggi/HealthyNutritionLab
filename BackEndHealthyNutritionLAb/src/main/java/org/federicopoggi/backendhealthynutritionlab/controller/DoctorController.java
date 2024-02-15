@@ -9,6 +9,7 @@ import org.federicopoggi.backendhealthynutritionlab.DtoPayload.DietPayload;
 import org.federicopoggi.backendhealthynutritionlab.DtoPayload.DoctorPaylodSave;
 import org.federicopoggi.backendhealthynutritionlab.model.Alimento;
 import org.federicopoggi.backendhealthynutritionlab.model.Customer;
+import org.federicopoggi.backendhealthynutritionlab.repository.AlimentoDAO;
 import org.federicopoggi.backendhealthynutritionlab.service.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -23,6 +24,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -40,9 +42,11 @@ public class DoctorController {
 
 
     DoctorService docS;
+    AlimentoDAO ad;
     @Autowired
-    public DoctorController(DoctorService docS) {
+    public DoctorController(DoctorService docS, AlimentoDAO ad) {
         this.docS = docS;
+        this.ad=ad;
     }
 
     // GETMAPPING
@@ -79,6 +83,15 @@ public class DoctorController {
                                          @RequestParam(defaultValue = "idAlimento") String sortedBy) {
         return docS.getAllAliments(page, size, sortedBy);
     }
+
+    /* ------ PER OTTENERE TUTTI GLI ALIMENTI ----- */
+
+    @GetMapping("/aliments")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Alimento> getAll(){
+        return ad.findAll();
+    }
+
     /* ---- GET PER I PERSONALTRAINER PER AVERE UNA TABELLA DEGLI ESERCIZI ------ */
 
 

@@ -4,7 +4,6 @@ import {AppStore, RootStore} from "../../redux/store";
 import {getPatientAll} from "../../redux/action";
 import {Checkbox, Pagination, Table, TableBody, TableCell, TableHead, TableHeadCell, TableRow} from "flowbite-react";
 import {Link, useNavigate, useParams, useRoutes} from "react-router-dom";
-import {PazientePage} from "./PazientePage.tsx";
 import {Simulate} from "react-dom/test-utils";
 import click = Simulate.click;
 
@@ -78,7 +77,7 @@ export function Patient() {
 
     },[])
 
-    const {idCustomer}=useParams();
+    const {idCustomer}=useParams<string>();
     const nav=(id:number)=>{
         NAVIGATE(`/personalArea/pazienti/${id}`)
     }

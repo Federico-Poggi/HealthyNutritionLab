@@ -3,15 +3,16 @@ import {useLocation} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {setDataset} from "../../redux/action";
 import {Checkbox, Table, TableBody, TableCell, TableHead, TableHeadCell, TableRow, Pagination} from "flowbite-react";
+import {RootStore} from "../../redux/store";
 
 interface DataSet {
-    content: []
+    content: Alimento[]
     totalPages: number
     totalElements: number
 }
 
 
-interface Alimento {
+export interface Alimento {
     idAlimento: number
     name: string
     parteEdibile: number
@@ -28,7 +29,7 @@ interface Alimento {
 }
 
 export function TabelleNutrizionali() {
-    const dataset = useSelector((state: any) => state.alimentiDataSet)
+    const dataset = useSelector((state: RootStore) => state.alimentiDataSet)
     const alimenti: Alimento[] = dataset.content
     const [pageNumber, setPageNumber] = useState<number>(0);
     const [totalElement, setTotalElement] = useState<number>(0)
@@ -47,7 +48,7 @@ export function TabelleNutrizionali() {
         const fetchData = async () => {
             try {
                 const data: DataSet = await getDataSet();
-                dispatch(setDataset(data.content));
+                dispatch(setDataset(data));
                 setPageNumber(() => data.totalPages)
                 setTotalElement(() => data.totalElements)
                 console.log(data)
@@ -106,6 +107,7 @@ export function TabelleNutrizionali() {
                             <TableHeadCell className = {"bg-gray-800 text-gray-400"}>LIPIDI</TableHeadCell>
                         </TableHead>
                         <TableBody className = {"divide-y"}>
+                            {/*SE LA DATA DI SCADENZA E' UGUALE ALLA DATA ODIERNA O SUPERATA CAMBIARE LO STATO IN EXPIRIED E DIPACHARE L'AZIONE*/}
                             {alimenti.map(al =>
                                 <TableRow key = {al.idAlimento}
                                           className = {"border-gray-700 hover:bg-gray-300 hover:text-gray-700 hover:cursor-pointer bg-transparent text-gray-400"}>

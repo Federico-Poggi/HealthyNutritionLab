@@ -4,6 +4,13 @@ export const SET_USER_LOGGED: string = "LOGIN"
 export const SET_USER_NOT_LOGGED: string = "USER_NOT_LOGGED"
 export const SET_DATASET:string="DATASET"
 export const GET_PATIENT:string="GET_PATIENT"
+export const ALL_DATASET_ALIMENTS:string="ALL_DATASET_ALIMENTS"
+
+interface PayloadAliments{
+    content:[],
+    totalPages:number
+    totalElements:number
+}
 
 
 export const openAction = () => {
@@ -27,7 +34,7 @@ export const notLoggedAction = (): { type: string } => {
         type: SET_USER_NOT_LOGGED
     }
 }
-export const setDataset= (data:object):{ type: string; payload:object }=>{
+export const setDataset= (data:object):{ type: string; payload:PayloadAliments }=>{
     return {
         type:SET_DATASET,
         payload: data

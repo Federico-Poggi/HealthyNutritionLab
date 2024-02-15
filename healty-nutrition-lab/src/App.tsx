@@ -1,7 +1,6 @@
 import './App.css'
 
-import {BrowserRouter, Route, Routes, useParams} from "react-router-dom";
-import Layout from "./component/Layout.tsx";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Home from "./component/home/Home.tsx";
 import {Articles} from "./component/articles/Articles.tsx";
 import {RegisterForm} from "./component/Registration/RegisterForm.tsx";
