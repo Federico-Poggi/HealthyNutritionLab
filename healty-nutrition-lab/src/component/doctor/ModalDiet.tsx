@@ -2,10 +2,9 @@ import {useEffect, useState} from "react";
 import {Dropdown, Label, Modal, ModalBody, ModalHeader} from "flowbite-react";
 import {useDispatch, useSelector} from "react-redux";
 import {RootStore} from "../../redux/store";
-import * as repl from "repl";
 import {allDataActionAliments} from "../../redux/reducers/alimentiDatasetReducer.ts";
 import {Alimento} from "./TabelleNutrizionali.tsx";
-import {Input} from "postcss";
+
 
 interface Props {
     isOpenProps: boolean
@@ -27,7 +26,7 @@ export function ModalDiet({isOpenProps, onClose}: Props) {
     useEffect(() => {
         const data = async ()=> {
             const resp = await fetchAliments()
-            console.log(resp)
+            /*console.log(resp)*/
             DISPATCH(allDataActionAliments(resp))
         }
 

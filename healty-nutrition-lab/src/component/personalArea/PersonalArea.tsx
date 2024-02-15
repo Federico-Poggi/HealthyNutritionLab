@@ -23,7 +23,7 @@ export function PersonalArea() {
 
     return (
         <>
-            <div className = {"flex"}>
+            <div className = {"flex items-center"}>
                 {/* eslint-disable-next-line no-constant-condition */}
                 {role === "NUTRITIONIST"||"PERSONAL_TRAINER" ? <SideBarDocNutrition/> : <SideBarUser/>}
                 <Outlet/>

@@ -94,13 +94,12 @@ function App() {
                     <Route path = {"/"} index element = {<Home/>}/>
                     <Route path = {"articles"} element = {<Articles/>}/>
                     <Route path = {"register"} element = {<RegisterForm/>}/>
+                </Route>
                     <Route path = {"personalArea"} element = {<PersonalArea/>}>
                         <Route path = {"tabelle-nutrizionali"} element = {<TabelleNutrizionali/>}/>
                         <Route path = {"pazienti"} element = {<Patient/>}/>
                         <Route path = {`pazienti/:idCustomer`} element = {<PazientePage/>}/>
                     </Route>
-
-                </Route>
             </Routes>
         </BrowserRouter>
     )
