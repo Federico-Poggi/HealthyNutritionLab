@@ -45,6 +45,10 @@ public class UserController {
         return us.getAll();
     }
 
+    @GetMapping("/{idCustomer}")
+    public Customer getById(@PathVariable Long idCustomer){
+        return us.findById(idCustomer);
+    }
 
     /*POST MAPPING*/
 

@@ -306,3 +306,11 @@
 #sideBar-user{
     background: rgba(41, 41, 47, 0.63);
 }
+
+#pagination-nutritionist button{
+    background: transparent;
+    color: #b2b2b2;
+    font-weight: normal;
+}
+#pagination-nutritionist button:hover{
+    color: #ffea00;}

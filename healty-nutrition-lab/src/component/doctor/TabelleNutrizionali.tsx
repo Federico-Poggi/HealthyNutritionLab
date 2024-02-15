@@ -2,40 +2,41 @@ import {useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {setDataset} from "../../redux/action";
+import {Checkbox, Table, TableBody, TableCell, TableHead, TableHeadCell, TableRow, Pagination} from "flowbite-react";
+
 interface DataSet {
-        content:[]
-    totalPages:number
-    totalElements:number
+    content: []
+    totalPages: number
+    totalElements: number
 }
 
 
-interface Alimento{
-    idAlimento:number
-    name:string
-    parteEdibile:number
-    kcal:number
-    kj:number
-    acqua:number
-    totProt:number
-    protAnimali:number
-    protVeg:number
-    glucidiTot:number
-    lipidiTot:number
-    lipidiSaturi:number
-    lipidiMonoinsaturi:number
+interface Alimento {
+    idAlimento: number
+    name: string
+    parteEdibile: number
+    kcal: number
+    kj: number
+    acqua: number
+    totProt: number
+    protAnimali: number
+    protVeg: number
+    glucidiTot: number
+    lipidiTot: number
+    lipidiSaturi: number
+    lipidiMonoinsaturi: number
 }
 
 export function TabelleNutrizionali() {
-    const dataset=useSelector((state: any)=>state.alimentiDataSet)
-    const alimenti:Alimento[]=dataset.content
-    const [pageNumber,setPageNumber]=useState<number>(0);
-    const [totalPageNumber,setTotalPageNumber]=useState<number>(0)
-    const index:number[]=[];
-    const [pageNext, setPageNext]=useState(0)
+    const dataset = useSelector((state: any) => state.alimentiDataSet)
+    const alimenti: Alimento[] = dataset.content
+    const [pageNumber, setPageNumber] = useState<number>(0);
+    const [totalElement, setTotalElement] = useState<number>(0)
+    const [currentPage, setCurrentPage] = useState<number>(0)
+    const [page, setPage] = useState<number>(0)
+    const [size, setSize] = useState<number>(20)
+    const [sortedBy, setSortedBy] = useState<string>("idAlimento")
 
-    let page:number=pageNext;
-    let size:number=20;
-    let sortedBy:string="idAlimento";
 
     const URLDataSet = `http://localhost:5174/doctor/nutritionist/aliments?page=${page}&size=${size}&sortedBy=${sortedBy}`;
     useLocation().pathname
@@ -43,12 +44,12 @@ export function TabelleNutrizionali() {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        const  fetchData =  async () => {
+        const fetchData = async () => {
             try {
-                const data:DataSet = await getDataSet();
+                const data: DataSet = await getDataSet();
                 dispatch(setDataset(data.content));
-                setPageNumber(()=>data.totalPages)
-                setTotalPageNumber(()=>data.totalElements)
+                setPageNumber(() => data.totalPages)
+                setTotalElement(() => data.totalElements)
                 console.log(data)
             } catch (error) {
                 console.error("Errore nella fetch:", error);
@@ -57,10 +58,6 @@ export function TabelleNutrizionali() {
         fetchData();
 
     }, [page])
-
-    for(let i=0; i<=pageNumber; i++){
-        index.push(i);
-    }
 
     const getDataSet = async () => {
         const response = await fetch(URLDataSet, {
@@ -73,58 +70,70 @@ export function TabelleNutrizionali() {
         if (!response.ok) {
             throw new Error("Errore nella fetch");
         }
-        const resp=await response.json()
+        const resp = await response.json()
         console.log(resp)
         return resp;
 
     }
 
+    const goNext = (pagex: number) => {
+        /*setCurrentPage(pageCurrent+1)*/
+        setCurrentPage(pagex)
+        setPage(pagex - 1)
+
+    }
 
 
     return (
         <>
-            <h1>Alimenti</h1>
-            <div className = {"w-full my-auto"}>
-                <div className = {"p-4 max-h-[80vh] max-w-[60vw] overflow-y-auto border mx-auto w-full"}>
 
-
-                    <table className = {"mx-auto w-[100%] mt-2  "}>
-                        <thead className = {" "}>
-                        <tr>
-                            <th className = {"w-[100px]"}>Id</th>
-                            <th className = {"w-[100px]"}> name</th>
-                            <th className = {"w-[200px]"}>Kcal (100gr di parte edibile)</th>
-                            <th className = {"w-[100px]"}>Proteine</th>
-                            <th className = {"w-[100px]"}>Glucidi</th>
-                            <th className = {"w-[100px]"}>Lipidi</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {
-                            alimenti.map(al =>
-                                <tr className = {"text-center text-white"} key = {al.idAlimento}>
-                                    <td className = {"py-6"}>{al.idAlimento}</td>
-                                    <td className = {"py-6"}>{al.name}</td>
-                                    <td className = {"py-6"}>{al.kcal}</td>
-                                    <td className = {"py-6"}>{al.totProt}</td>
-                                    <td className = {"py-6"}>{al.glucidiTot}</td>
-                                    <td className = {"py-6"}>{al.lipidiTot}</td>
-                                </tr>
+            <div className = {"text-center flex flex-col w-[100vw]"}>
+                <div className={"flex w-[80vw] justify-around py-4"}>
+                    <h1 className = {"text-2xl"}>Tabella Nutrizionale</h1>
+                    <p className = {"text-white font-medium"}>Pagina: {page + 1} di {pageNumber}</p>
+                </div>
+                <div className = {"max-h-[70vh] my-auto w-[80vw] rounded-2xl mx-auto overflow-y-auto p-0 border border-gray-700"}>
+                    <Table hoverable className = {"h-full w-[80vw] relative border-gray-700 "}>
+                        <TableHead className = {"sticky top-0"}>
+                            <TableHeadCell className = {"p-4 bg-gray-800"}>
+                                <Checkbox/>
+                            </TableHeadCell>
+                            <TableHeadCell className = {"bg-gray-800 text-gray-400"}>ID</TableHeadCell>
+                            <TableHeadCell className = {"bg-gray-800 text-gray-400"}>NAME</TableHeadCell>
+                            <TableHeadCell className = {"bg-gray-800 text-gray-400"}>KCAL/100gr</TableHeadCell>
+                            <TableHeadCell className = {"bg-gray-800 text-gray-400"}>PROTEINE</TableHeadCell>
+                            <TableHeadCell className = {"bg-gray-800 text-gray-400"}>GLUCIDI</TableHeadCell>
+                            <TableHeadCell className = {"bg-gray-800 text-gray-400"}>LIPIDI</TableHeadCell>
+                        </TableHead>
+                        <TableBody className = {"divide-y"}>
+                            {alimenti.map(al =>
+                                <TableRow key = {al.idAlimento}
+                                          className = {"border-gray-700 hover:bg-gray-300 hover:text-gray-700 hover:cursor-pointer bg-transparent text-gray-400"}>
+                                    <TableCell className = {"p-4 "}>
+                                        <Checkbox/>
+                                    </TableCell>
+                                    <TableCell className = {"whitespace-nowrap font-medium"}>
+                                        {al.idAlimento}
+                                    </TableCell>
+                                    <TableCell className = {"whitespace-nowrap font-medium"}>
+                                        {al.name}
+                                    </TableCell>
+                                    <TableCell>{al.kcal}</TableCell>
+                                    <TableCell>{al.totProt}</TableCell>
+                                    <TableCell>{al.glucidiTot}</TableCell>
+                                    <TableCell>{al.lipidiTot}</TableCell>
+                                </TableRow>
                             )
-                        }
-                        </tbody>
-                    </table>
+                            }
+                        </TableBody>
+                    </Table>
+                </div>
+                <Pagination currentPage = {currentPage}
+                            onPageChange = {goNext}
+                            totalPages = {pageNumber}
+                            id = {"pagination-nutritionist"}
+                            className = {"mt-2"}/>
 
-                </div>
-                <div className = {"flex  max-w-[60vw] h-[50px] mx-auto"}>
-                    {
-                        index.map((num) => (
-                            <p onClick={()=>(setPageNext(num))} className = {"w-[50px] justify-center hover:bg-amber-300 cursor-pointer text-white flex items-center text-[20px]"} key = {num}>
-                                {num +1}
-                            </p>
-                        ))
-                    }
-                </div>
             </div>
         </>
     );

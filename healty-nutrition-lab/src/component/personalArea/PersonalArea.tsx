@@ -1,9 +1,8 @@
 import {useSelector} from "react-redux";
 import {SideBarUser} from "../userDir/SideBarUser.tsx";
 import {SideBarDocNutrition} from "../doctor/SideBarDocNutrition.tsx";
-import {useLocation} from "react-router-dom";
-import {TabelleNutrizionali} from "../doctor/TabelleNutrizionali.tsx";
-import {Patient} from "../doctor/Patient.tsx";
+import {Outlet, Route, Routes, useLocation, useParams} from "react-router-dom";
+
 
 
 interface StateLog {
@@ -14,7 +13,6 @@ interface StateLog {
 }
 
 export function PersonalArea() {
-    const location = useLocation();
     const role = useSelector((state: StateLog) => {
         return state.user.role
     })
@@ -22,10 +20,9 @@ export function PersonalArea() {
 
     return (
         <>
-            <div className={"flex"}>
-            {role === "NUTRITIONIST" ? <SideBarDocNutrition/> : <SideBarUser/>}
-            {location.pathname === '/personalArea/tabelle-nutrizionali' && <TabelleNutrizionali/>}
-                {location.pathname==='/personalArea/pazienti'&&<Patient/>}
+            <div className = {"flex"}>
+                {role === "NUTRITIONIST" ? <SideBarDocNutrition/> : <SideBarUser/>}
+                <Outlet/>
             </div>
         </>
     );

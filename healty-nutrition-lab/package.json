@@ -13,6 +13,8 @@
     "@react-buddy/ide-toolbox": "^2.4.0",
     "@reduxjs/toolkit": "^2.1.0",
     "@types/react-redux": "^7.1.33",
+    "flowbite": "^2.3.0",
+    "flowbite-react": "^0.7.2",
     "jwt-decode": "^4.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

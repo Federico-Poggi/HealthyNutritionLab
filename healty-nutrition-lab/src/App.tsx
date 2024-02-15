@@ -1,6 +1,6 @@
 import './App.css'
 
-import {BrowserRouter, Route, Routes} from "react-router-dom";
+import {BrowserRouter, Route, Routes, useParams} from "react-router-dom";
 import Layout from "./component/Layout.tsx";
 import Home from "./component/home/Home.tsx";
 import {Articles} from "./component/articles/Articles.tsx";
@@ -13,6 +13,7 @@ import {jwtDecode} from "jwt-decode";
 import {LayoutDoctor} from "./component/LayoutDoctor.tsx";
 import {TabelleNutrizionali} from "./component/doctor/TabelleNutrizionali.tsx";
 import {Patient} from "./component/doctor/Patient.tsx";
+import {PazientePage} from "./component/doctor/PazientePage.tsx";
 
 
 interface TokenString {
@@ -85,6 +86,8 @@ function App() {
             console.log(er);
         }
     }
+
+
     return (
         <BrowserRouter>
             <Routes>
@@ -94,8 +97,10 @@ function App() {
                     <Route path = {"register"} element = {<RegisterForm/>}/>
                     <Route path = {"personalArea"} element = {<PersonalArea/>}>
                         <Route path = {"tabelle-nutrizionali"} element = {<TabelleNutrizionali/>}/>
-                        <Route path={"pazienti"} element={<Patient/>}/>
+                        <Route path = {"pazienti"} element = {<Patient/>}/>
+                        <Route path = {`pazienti/:idCustomer`} element = {<PazientePage/>}/>
                     </Route>
+
                 </Route>
             </Routes>
         </BrowserRouter>

@@ -21,10 +21,7 @@ interface NotLoggedAction {
     type: typeof SET_USER_NOT_LOGGED
     payload: ""
 }
-interface DocPatientAction{
-    type: typeof GET_PATIENT
-    payload:[]
-}
+
 
 type UserAction = LoggedUserAction | NotLoggedAction;
 export default function userReducer(state: User = userState, action: UserAction) {
