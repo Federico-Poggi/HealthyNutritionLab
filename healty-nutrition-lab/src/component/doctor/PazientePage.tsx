@@ -1,10 +1,8 @@
 import {useParams} from "react-router-dom";
-import {SyntheticEvent, useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import {
     Badge, Dropdown,
     Label,
-    Modal, ModalBody,
-    ModalHeader,
     Table,
     TableBody,
     TableCell,
@@ -12,51 +10,27 @@ import {
     TableHeadCell,
     TableRow
 } from "flowbite-react";
-import * as events from "events";
+
 import {ModalDiet} from "./ModalDiet.tsx";
-
-
-interface Paziente {
-    idCliente: number
-    name: string
-    surname: string
-    cellNumber: string
-    email: string
-    diets: []
-    trainingPlans: []
-}
-
-interface Diet {
-
-    dietId: number
-    kcalTot: number
-    issueDate: string
-    expirationDate: string
-    duration: string
-    actually: string
-    dietType: string
-    alimentiQuantita: { string: string, quantita: number }
-    pdfDiet: File
-}
-
-interface AssignDiet {
-    duration: string
-    dietType: string
-    AlimentoAndQuantita: []
-}
+import {AssignDiet, Diet, Paziente} from "../../interface/Interface.ts";
+import {NewDiet} from "./NewDiet.tsx";
 
 export function PazientePage() {
     const {idCustomer} = useParams()
     const custFetchURL = `http://localhost:5174/user/${idCustomer}`
     const token = localStorage.getItem('token')
-    const [paziente, setPaziente] = useState<Paziente>()
-    const [diete, setDiete] = useState<Array<Diet>>([])
-    const [modalOpen, setModalOpen] = useState<boolean>(false)
-    const [dietAssign, setDietAssign] = useState<AssignDiet>({
-        duration: '',
-        dietType: '',
-        AlimentoAndQuantita: []
+    const [paziente, setPaziente] = useState<Paziente>({
+        idCliente: null,
+        name: '',
+        surname: '',
+        cellNumber: '',
+        email: '',
+        diets: [],
+        trainingPlans: []
     })
+    const [diete, setDiete] = useState<Array<Diet>>([])
+
+
 
 
     useEffect(() => {
@@ -94,68 +68,76 @@ export function PazientePage() {
 
     const checkData = (usage: string) => {
         if (usage === 'IN_USE') {
-            return <Badge className = {"w-1/3 justify-center bg-green-500 text-green-950"} color = {"success"}>IN
-                                                                                                               USE</Badge>
+            return <Badge className = {"justify-center bg-green-500 text-green-950"} color = {"success"}>IN
+                                                                                                         USE</Badge>
         } else {
-            return <Badge className = {"w-1/3 justify-center text-red-900 bg-red-400"}
+            return <Badge className = {"justify-center text-red-900 bg-red-400"}
                           color = {"failure"}>EXPIRED</Badge>
         }
-    }
-    const closeModal=()=>{
-        setModalOpen(false)
     }
 
 
     return (
         <>
-            <div className={"w-full"}>
-            <div className = {"text-white desktop:max-w-[80%] mx-auto my-2 max-h-[100vh] overflow-y-auto px-3 py-10"}>
-                <h1 className = {"text-center mb-10"}>SCHEDA CLIENTE</h1>
-                <div className = {"flex items-center justify-evenly"}>
+            <div className = {"flex h-[100vh] justify-around flex-grow"}>
+                <div className = {"max-w-[100%] h-[97%]  rounded-2xl my-4 mx-10"}>
+                    <div className = {"text-white desktop:max-w-[100%] mx-auto my-2 max-h-[70%] overflow-y-auto px-3"}>
+                        <h1 className = {"text-center mb-10"}>DIETE CLIENTE</h1>
+                        <div className = {"flex items-center justify-evenly"}>
                     <span className = {"flex items-center"}>
                         <Label className = {"text-white"}>Nome paziente: </Label>
                         <p className = {"font-medium text-[17px] px-3"}>{paziente?.name}</p>
                     </span>
-                    <span className = {"flex items-center"}>
+                            <span className = {"flex items-center"}>
                         <Label className = {"text-white"}>Cognome:</Label>
                         <p className = {"font-medium text-[17px] px-3"}>{paziente?.surname}</p>
                     </span>
-                    <span className = {"flex items-center"}>
+                            <span className = {"flex items-center"}>
                     <Label className = {"text-white"}>Email:</Label>
                     <p className = {"font-medium text-[17px] px-3"}>{paziente?.email}</p>
                     </span>
-                </div>
-                {/*SEZIONE DIETE*/}
-                <div className = {"max-h-[70vh] rounded-2xl mx-auto overflow-y-auto p-0 border border-gray-700 mt-5"}>
-                    <Table hoverable className = {"h-full w-[80vw] relative border-gray-700 "}>
-                        <TableHead className = {"sticky top-0"}>
-                            {/*<TableHeadCell className = {"bg-gray-800 text-gray-400"}>ID</TableHeadCell>*/}
-                            <TableHeadCell className = {"bg-gray-800 text-gray-400"}>TIPO DIETA</TableHeadCell>
-                            <TableHeadCell className = {"bg-gray-800 text-gray-400"}>STATO DIETA</TableHeadCell>
-                            <TableHeadCell className = {"bg-gray-800 text-gray-400"}>DATA ASSEGNAZIONE</TableHeadCell>
-                            <TableHeadCell className = {"bg-gray-800 text-gray-400"}>DATA SCADENZA</TableHeadCell>
-                            <TableHeadCell className = {"bg-gray-800 text-gray-400"}>KCAL TOTALI</TableHeadCell>
-                        </TableHead>
-                        <TableBody className = {"divide-y p-0"}>
-                            {diete.map(d => {
-                                return <TableRow key = {d.dietId}>
-                                    <TableCell>{d.dietType}</TableCell>
-                                    <TableCell>
-                                        {checkData(d.actually)}
-                                    </TableCell>
-                                    <TableCell>{d.issueDate}</TableCell>
-                                    <TableCell>{d.expirationDate}</TableCell>
-                                    <TableCell>{d.kcalTot}</TableCell>
-                                </TableRow>
-                            })
-                            }
-                        </TableBody>
-                    </Table>
+                        </div>
+                        {/*SEZIONE DIETE*/}
+                        <div className = {"max-h-[70vh] rounded-2xl mx-auto overflow-y-auto p-0 border border-gray-700 mt-5"}>
+                            <Table hoverable className = {"h-full  relative border-gray-700 "}>
+                                <TableHead className = {"sticky top-0"}>
+                                    {/*<TableHeadCell className = {"bg-gray-800 text-gray-400"}>ID</TableHeadCell>*/}
+                                    <TableHeadCell className = {"bg-gray-800 text-gray-400"}>TIPO DIETA</TableHeadCell>
+                                    <TableHeadCell className = {"bg-gray-800 text-gray-400"}>STATO DIETA</TableHeadCell>
+                                    <TableHeadCell className = {"bg-gray-800 text-gray-400"}>DATA
+                                                                                             ASSEGNAZIONE</TableHeadCell>
+                                    <TableHeadCell className = {"bg-gray-800 text-gray-400"}>DATA
+                                                                                             SCADENZA</TableHeadCell>
+                                    <TableHeadCell className = {"bg-gray-800 text-gray-400"}>KCAL TOTALI</TableHeadCell>
+                                </TableHead>
+                                <TableBody className = {"divide-y p-0"}>
+                                    {diete.map(d => {
+                                        return <TableRow key = {d.dietId}>
+                                            <TableCell>{d.dietType}</TableCell>
+                                            <TableCell>
+                                                {checkData(d.actually)}
+                                            </TableCell>
+                                            <TableCell>{d.issueDate}</TableCell>
+                                            <TableCell>{d.expirationDate}</TableCell>
+                                            <TableCell>{d.kcalTot}</TableCell>
+                                        </TableRow>
+                                    })
+                                    }
+                                </TableBody>
+                            </Table>
+
+                        </div>
+                    </div>
 
                 </div>
-            </div>
-            <button onClick={()=>setModalOpen(true)} className={"text-white"}>Aggiungi dieta</button>
-            <ModalDiet isOpenProps={modalOpen} onClose={closeModal}/>
+                <NewDiet idCliente = {paziente.idCliente}
+                         name = {paziente.name}
+                         surname = {paziente.surname}
+                         email = {paziente.email}
+                         cellNumber = {paziente.cellNumber}
+                         diets={paziente.diets}
+                         trainingPlans={paziente.trainingPlans}
+                />
             </div>
         </>
     );

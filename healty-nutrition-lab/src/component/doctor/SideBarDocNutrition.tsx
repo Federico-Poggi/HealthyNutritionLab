@@ -1,10 +1,11 @@
 import {useNavigate} from "react-router-dom";
 import {useState} from "react";
 import {IoPeopleOutline} from "react-icons/io5";
-import {SidebarLogo, Tooltip} from "flowbite-react";
+import {Tooltip} from "flowbite-react";
 import logo from '../../assets/Logo.svg'
-import { CiViewTable } from "react-icons/ci";
-import { MdArrowForwardIos, MdArrowBackIos } from "react-icons/md";
+import {CiViewTable} from "react-icons/ci";
+import {MdArrowForwardIos, MdArrowBackIos} from "react-icons/md";
+import {IoHomeOutline} from "react-icons/io5";
 
 export function SideBarDocNutrition() {
     const NAVIGATE = useNavigate();
@@ -16,22 +17,9 @@ export function SideBarDocNutrition() {
 
     return (
         <>
-            {/*<div className = {"relative"}>
-                <div id = {"sideBar-user"} className = {" left-2 rounded-2xl top-24 desktop:w-[350px] h-[88vh]"}>
-                    <ul className = {"pl-4"}>
-                        <li onClick={()=>{
-                            NAVIGATE("pazienti")
-                        }}>Clienti</li>
-                        <li onClick={()=>{
-                            NAVIGATE("tabelle-nutrizionali")
-                        }}>Tabelle Nutrizionali</li>
-                        <li>Profilo</li>
-                    </ul>
-                </div>
-            </div>*/}
-            <div className = {`${isOpen ? 'desktop:w-[14%]' : 'desktop:w-[3%]'} bg-gray-800 transition-all duration-300 my-3 ml-2 max-h-[97vh] h-[97vh] rounded-xl`}>
+            <div className = {`side-bar ${isOpen ? 'desktop:w-[14%]' : 'desktop:w-[3%]'} bg-[#121212] border border-[#75a602] transition-all duration-300 my-3 ml-2 max-h-[97vh] h-[97vh] rounded-xl`}>
                 {!isOpen &&
-                    <nav className={"relative transition-all duration-300 flex flex-col items-center"}>
+                    <nav className = {"relative transition-all duration-300 flex flex-col items-center"}>
                         <p>
                             <img onClick = {() => {
                                 NAVIGATE("/")
@@ -39,26 +27,68 @@ export function SideBarDocNutrition() {
                         </p>
                         <p>
                             <Tooltip content = {"Pazienti"} placement = {"right"}>
-                                <IoPeopleOutline onClick={()=>{
+                                <IoPeopleOutline onClick = {() => {
                                     NAVIGATE("pazienti")
-                                }} className = {'desktop:w-1/2 mx-auto h-20 text-gray-400 hover:text-[#579614] cursor-pointer'}/>
+                                }}
+                                                 className = {'desktop:w-1/2 mx-auto h-20 text-gray-400 hover:text-[#579614] cursor-pointer'}/>
                             </Tooltip>
                         </p>
                         <p>
                             <Tooltip content = {"Tabelle"} placement = {"right"}>
-                                <CiViewTable onClick={()=>{
+                                <CiViewTable onClick = {() => {
                                     NAVIGATE("tabelle-nutrizionali")
-                                }} className = {'desktop:w-1/2 mx-auto h-20 text-gray-400 hover:text-[#579614] cursor-pointer'}/>
+                                }}
+                                             className = {'desktop:w-1/2 mx-auto h-20 text-gray-400 hover:text-[#579614] cursor-pointer'}/>
+                            </Tooltip>
+                        </p>
+                        <p>
+                            <Tooltip content = {"Home"} placement = {"right"}>
+                                <IoHomeOutline onClick = {() => {
+                                    NAVIGATE("/")
+                                }}
+                                               className = {'desktop:w-1/2 mx-auto h-20 text-gray-400 hover:text-[#579614] cursor-pointer'}/>
                             </Tooltip>
                         </p>
                         <p>
                             <Tooltip content = {"Apri"} placement = {"right"}>
-                                <MdArrowForwardIos onClick={()=>{
+                                <MdArrowForwardIos onClick = {() => {
                                     setToggle()
-                                }} className = {'desktop:w-1/2 mx-auto h-20 text-gray-400 hover:text-[#579614] cursor-pointer'}/>
+                                }}
+                                                   className = {'desktop:w-1/2 mx-auto h-20 text-gray-400 hover:text-[#579614] cursor-pointer'}/>
                             </Tooltip>
                         </p>
                     </nav>}
+                {isOpen && <nav>
+                    <p className = {"flex items-center justify-center my-2"}>
+                        <img onClick = {() => {
+                            NAVIGATE("/")
+                        }} src = {logo} alt = {"logo"} className = {'desktop:w-1/12 ml-5 my-5'}/>
+                        <h2 className = {"mx-2 text-white text-[1.2rem] text-medium"}>HealthyNutritionLab</h2>
+                        <MdArrowBackIos size = {20} onClick = {() => {
+                            setToggle()
+                        }} className = {'flex-grow text-gray-400 hover:text-[#579614] cursor-pointer'}/>
+                    </p>
+                    <aside className = {"nav-open"}>
+                        <p onClick = {() => {
+                            NAVIGATE("pazienti")
+                        }} className = {"flex items-center gap-2 my-3"}>
+                            <IoPeopleOutline className = {'w-1/6 text-3xl text-gray-400 cursor-pointer'}/>
+                            <h2 className = {"side_open"}>Pazienti</h2>
+                        </p>
+                        <p onClick = {() => {
+                            NAVIGATE("tabelle-nutrizionali")
+                        }} className = {"flex items-center gap-2 my-3"}>
+                            <CiViewTable className = {'w-1/6 text-3xl text-gray-400 cursor-pointer'}/>
+                            <h2 className = {"side_open"}>Tabelle Nutrizionali</h2>
+                        </p>
+                        <p onClick = {() => {
+                            NAVIGATE("/")
+                        }} className = {"flex items-center gap-2 my-3"}>
+                            <IoHomeOutline className = {'w-1/6 text-3xl text-gray-400 cursor-pointer'}/>
+                            <h2 className = {"side_open"}>Home</h2>
+                        </p>
+                    </aside>
+                </nav>}
             </div>
         </>
     );

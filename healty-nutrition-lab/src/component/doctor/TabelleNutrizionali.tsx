@@ -4,33 +4,10 @@ import {useDispatch, useSelector} from "react-redux";
 import {setDataset} from "../../redux/action";
 import {Checkbox, Table, TableBody, TableCell, TableHead, TableHeadCell, TableRow, Pagination} from "flowbite-react";
 import {RootStore} from "../../redux/store";
-
-interface DataSet {
-    content: Alimento[]
-    totalPages: number
-    totalElements: number
-}
-
-
-export interface Alimento {
-    idAlimento: number
-    name: string
-    parteEdibile: number
-    kcal: number
-    kj: number
-    acqua: number
-    totProt: number
-    protAnimali: number
-    protVeg: number
-    glucidiTot: number
-    lipidiTot: number
-    lipidiSaturi: number
-    lipidiMonoinsaturi: number
-}
-
+import {Alimento, DataSet} from "../../interface/Interface.ts";
 export function TabelleNutrizionali() {
     const dataset = useSelector((state: RootStore) => state.alimentiDataSet)
-    const alimenti: Alimento[] = dataset.content
+    const alimenti: Array<Alimento> = dataset.content
     const [pageNumber, setPageNumber] = useState<number>(0);
     const [totalElement, setTotalElement] = useState<number>(0)
     const [currentPage, setCurrentPage] = useState<number>(0)
@@ -88,8 +65,8 @@ export function TabelleNutrizionali() {
     return (
         <>
 
-            <div className = {"text-center flex flex-col w-[100vw]"}>
-                <div className={"flex w-[80vw] justify-around py-4"}>
+            <div className = {"text-center flex flex-col"}>
+                <div className = {"flex w-[80vw] justify-around py-4"}>
                     <h1 className = {"text-2xl"}>Tabella Nutrizionale</h1>
                     <p className = {"text-white font-medium"}>Pagina: {page + 1} di {pageNumber}</p>
                 </div>

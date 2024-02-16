@@ -1,26 +1,13 @@
 import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {AppStore, RootStore} from "../../redux/store";
+import {RootStore} from "../../redux/store";
 import {getPatientAll} from "../../redux/action";
-import {Checkbox, Pagination, Table, TableBody, TableCell, TableHead, TableHeadCell, TableRow} from "flowbite-react";
-import {Link, useNavigate, useParams, useRoutes} from "react-router-dom";
-import {Simulate} from "react-dom/test-utils";
-import click = Simulate.click;
+import {Table, TableBody, TableCell, TableHead, TableHeadCell, TableRow} from "flowbite-react";
+import {useNavigate, useParams} from "react-router-dom";
+import {CheckState, DocPatient, Pazienti} from "../../interface/Interface.ts";
 
-interface Pazienti{
-    content:[]
-}
 interface StatePatient{
     patient:[]
-}
-interface DocPatient{
-    idCliente:number
-    name:string
-    surname:string
-    cellNumber:string
-    email:string
-    diets:[]
-    trainingPlans:[]
 }
 export function Patient() {
     const [page, setPage] = useState<number>(0)
@@ -33,7 +20,7 @@ export function Patient() {
     const doctorPatientState:DocPatient[]|string=useSelector((state:RootStore)=>(
         state.user.patient
     ))
-    const checkState=():any=>{
+    const checkState=():CheckState =>{
         if(Array.isArray(doctorPatientState)){
             return doctorPatientState as Array<DocPatient>
         }
@@ -54,8 +41,7 @@ export function Patient() {
             if(!patients.ok){
                 throw new Error("Errore nella fetch")
             }
-            const response=await patients.json();
-            return response;
+            return await patients.json();
         }catch (err){
             console.log("Errore: " + err)
         }
@@ -84,7 +70,7 @@ export function Patient() {
 
     return (
         <>
-            <div className = {"text-center flex flex-col w-[100vw]"}>
+            <div className = {"text-center flex flex-col"}>
                 <div className = {"flex w-[80vw] justify-around py-4"}>
                     <h1 className = {"text-2xl"}>Tabella Nutrizionale</h1>
                     <p className = {"text-white font-medium"}>Pagina: {page + 1} di {/*{pageNumber}*/}</p>

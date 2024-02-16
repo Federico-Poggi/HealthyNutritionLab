@@ -20,7 +20,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 
@@ -139,11 +138,42 @@ public class DoctorService {
                        .orElseThrow(() -> new NotFoundException("Utente non trovato"));
         List<AlimentoAndQuantita> alimentoAndQuantitaList = Arrays.asList(dp.alimentoAndQuantita());
         Diet newDiet = new Diet();
-        newDiet.setDietType(DietType.valueOf(dp.dietType()));
+        switch (dp.duration()) {
+            case "BIMESTRALE":
+                newDiet.setDuration(Duration.BIMONTHLY);
+                newDiet.setExpirationDate(LocalDate.now()
+                                                   .plusMonths(2));
+                break;
+            case "MENSILE":
+                newDiet.setDuration(Duration.MONTHLY);
+                newDiet.setExpirationDate(LocalDate.now()
+                                                   .plusMonths(1));
+                break;
+            case "SETTIMANALE":
+                newDiet.setDuration(Duration.WEEKLY);
+                newDiet.setExpirationDate(LocalDate.now()
+                                                   .plusWeeks(1));
+                break;
+        }
+        switch (dp.dietType()) {
+            case "DIMAGRIMENTO":
+                newDiet.setDietType(DietType.WEIGHT_LOSS);
+                break;
+            case "MASSA MUSCOLARE":
+                newDiet.setDietType(DietType.BULK);
+                break;
+            case "VEGANA":
+                newDiet.setDietType(DietType.VEGAN);
+                break;
+            case "VEGETARIANA":
+                newDiet.setDietType(DietType.VEGETARIAN);
+                break;
+            case "ALTRO":
+                newDiet.setDietType(DietType.OTHER);
+                break;
+        }
         newDiet.setActually(Actually.IN_USE);
-        newDiet.setDuration(Duration.valueOf(dp.duration()));
         newDiet.setIssueDate(LocalDate.now());
-        newDiet.setExpirationDate(dp.expirationDate());
         newDiet.setCustomer(c);
         for (AlimentoAndQuantita alimentoAndQuantita : alimentoAndQuantitaList) {
             Alimento a = al.findById(alimentoAndQuantita.getIdAlimento())
@@ -151,10 +181,9 @@ public class DoctorService {
             newDiet.getAlimentiQuantita()
                    .put(a.getName(), alimentoAndQuantita.getQuantita());
         }
-
-
         dt.save(newDiet);
-        c.getDiets().add(newDiet);
+        c.getDiets()
+         .add(newDiet);
         return new DietResponse(c.getIdCliente(), newDiet.getDietId());
     }
 }
