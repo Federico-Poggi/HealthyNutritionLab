@@ -1,3 +1,5 @@
+import {SetStateAction} from "react";
+
 export interface Pazienti{
     content:[]
 }
@@ -15,6 +17,8 @@ export type CheckState=DocPatient[]|undefined
 export interface ModalDietProps{
     isOpenProps: boolean
     onClose: () => void
+    alimentiDietaSelected:Alimento[]
+    setAlimentiDieta:SetStateAction<Alimento[]>
 }
 export interface Alimento {
     idAlimento: number
@@ -57,11 +61,11 @@ export interface Diet {
 export interface AssignDiet {
     duration: string
     dietType: string
-    AlimentoAndQuantita: DietSpec[]
+    alimentoAndQuantita: DietSpec[]
 }
 export interface DietSpec{
     idAlimento:null|number
-    quantita:string
+    quantita:number
 }
 export interface Paziente {
     idCliente: number|null
@@ -72,3 +76,4 @@ export interface Paziente {
     diets: []
     trainingPlans: []
 }
+

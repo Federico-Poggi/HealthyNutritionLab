@@ -90,9 +90,6 @@ export function Patient() {
                                     nav(paz.idCliente)
                                 }} key = {paz.idCliente}
                                           className = {"border-gray-700 hover:bg-gray-300 hover:text-gray-700 hover:cursor-pointer bg-transparent text-gray-400"}>
-                                    {/*<TableCell className = {"whitespace-nowrap font-medium"}>
-                                        {paz.idCliente}
-                                    </TableCell>*/}
                                     <TableCell className = {"whitespace-nowrap font-medium"}>
                                         {paz.name}
                                     </TableCell>

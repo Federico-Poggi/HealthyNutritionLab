@@ -1,21 +1,19 @@
 import {useEffect, useState} from "react";
-import {Banner, BannerCollapseButton, Checkbox, Dropdown, Label, Modal, ModalBody, ModalHeader} from "flowbite-react";
+import {Banner, BannerCollapseButton, Label, Modal, ModalBody, ModalHeader} from "flowbite-react";
 import {useDispatch, useSelector} from "react-redux";
 import {RootStore} from "../../redux/store";
 import {allDataActionAliments} from "../../redux/reducers/alimentiDatasetReducer.ts";
 import {Alimento, ModalDietProps} from "../../interface/Interface.ts";
-import {Input} from "postcss";
-import {HiArrowRight, HiX} from "react-icons/hi";
-import {MdPercent} from "react-icons/md";
-
-export function ModalDiet({isOpenProps, onClose}: ModalDietProps) {
+import {HiX} from "react-icons/hi";
+import { IoMdAdd } from "react-icons/io";
+export function ModalDiet({isOpenProps, onClose,alimentiDietaSelected,setAlimentiDieta}: ModalDietProps) {
     /*STATI*/
-    const [isOpen, setIsOpen] = useState<boolean>(isOpenProps)
+    /*const [isOpen, setIsOpen] = useState<boolean>(isOpenProps)*/
     const [inputSearch, setInputSearch] = useState<string>("");
     const URLAlimenti = `http://localhost:5174/doctor/aliments`
     const token = localStorage.getItem('token')
     const DISPATCH = useDispatch();
-    const [alimentiDietaSelected, setAlimentiDieta] = useState<Array<Alimento>>([])
+
     useEffect(() => {
         const data = async () => {
             const resp = await fetchAliments()
@@ -51,7 +49,6 @@ export function ModalDiet({isOpenProps, onClose}: ModalDietProps) {
 
     }
 
-
     const filter = (e: string, aliment: Alimento[]) => {
         return aliment.filter(al => al.name.toLocaleLowerCase().includes(e.toLocaleLowerCase())&&al);
 
@@ -65,11 +62,12 @@ export function ModalDiet({isOpenProps, onClose}: ModalDietProps) {
     }
 
     const remove=(ali:Alimento)=>{
-        const alimentiFiltrati=alimentiDietaSelected.filter((a)=>a.idAlimento!==ali.idAlimento);
-        setAlimentiDieta(alimentiFiltrati)
-    }
-    const changeCheck=(al:Alimento,isChecked:boolean)=>{
-        setAlimentiDieta(prevState => isChecked?[...prevState,al]:prevState.filter(it=>it.idAlimento!==al.idAlimento));
+        const index:number=alimentiDietaSelected.findIndex((i)=>i.idAlimento===ali.idAlimento)
+        if(index!==-1){
+            const arrayAggiornato=[...alimentiDietaSelected]
+            arrayAggiornato.splice(index,1)
+            setAlimentiDieta(arrayAggiornato);
+        }
     }
 
     return (
@@ -78,34 +76,36 @@ export function ModalDiet({isOpenProps, onClose}: ModalDietProps) {
             <Modal show = {isOpenProps} onClose = {() => {
                 onClose()
             }} size = {"7xl"}>
-                <ModalHeader>
-                    Dieta
+                <ModalHeader className={"flex"}>
+                    <h2>Dieta</h2>
                 </ModalHeader>
                 <ModalBody className = {"flex flex-col"}>
-
-                    <div className = {"flex"}>
-
-                        <div>
+                    <div className = {"flex justify-between py-2 "}>
                             <div>
-                                Alimenti
-                                <input type = {"search"} onChange = {(e) => {
+                                <Label>Cerca Alimenti</Label>
+                                <input className={"rounded h-8 mx-2"} type = {"search"} onChange = {(e) => {
                                     handleFilter(e)
                                 }}/>
                             </div>
+                            <button
+                                onClick={()=>onClose()}
+                                className = {"bg-green-500 text-white font-medium rounded px-2"}>Conferma</button>
+                        </div>
+                        <div className = {"flex"}>
+                            <div className={"w-1/2 overflow-y-auto max-h-[600px]"}>
                             {alimenti.filter((al) => al.name.includes(inputSearch.toUpperCase())).map((al) => {
                                 return (
-                                    <div key = {al.idAlimento} className = {"flex"}>
-                                        <Checkbox
-                                            checked = {alimentiDietaSelected.includes(al)}
-                                            onChange = {(e) => {changeCheck(al,e.target.checked)}}
-                                        />
+                                    <div key = {al.idAlimento} className = {"flex items-center justify-between"}>
                                         <p>{al.name}</p>
+                                        <IoMdAdd
+                                            onClick = {() => setAlimentiDieta((prevState) => [...prevState, al])}
+                                            className = {"w-10 h-5"}/>
                                     </div>
                                 )
 
                             })}
                         </div>
-                        <div className = {"border w-full f-full"}>
+                        <div className = {"border w-1/2 max-h-[600px] overflow-y-auto"}>
                             {
                                 alimentiDietaSelected.map((ali: Alimento) => {
                                     return (
@@ -118,7 +118,7 @@ export function ModalDiet({isOpenProps, onClose}: ModalDietProps) {
                                                         </span>
                                                     </p>
                                                 </div>
-                                                <BannerCollapseButton color = "gray" onChange = {() => {
+                                                <BannerCollapseButton color = "gray" onClick = {() => {
                                                     remove(ali)
                                                 }}
                                                                       className = "border-0 bg-transparent text-gray-500 dark:text-gray-400">
@@ -130,7 +130,6 @@ export function ModalDiet({isOpenProps, onClose}: ModalDietProps) {
                                 })
                             }
                         </div>
-
                     </div>
                 </ModalBody>
             </Modal>

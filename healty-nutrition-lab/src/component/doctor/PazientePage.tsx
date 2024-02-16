@@ -65,9 +65,10 @@ export function PazientePage() {
             throw new Error("Erorre:");
         }
     }
-
-    const checkData = (usage: string) => {
-        if (usage === 'IN_USE') {
+    const date =new Date()
+    const checkData = (expiredDate: string) => {
+        const year=date.toISOString().split("T")[0]
+        if (expiredDate>=year) {
             return <Badge className = {"justify-center bg-green-500 text-green-950"} color = {"success"}>IN
                                                                                                          USE</Badge>
         } else {
