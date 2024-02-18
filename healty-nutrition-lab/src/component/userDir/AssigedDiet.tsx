@@ -1,17 +1,37 @@
 import {useEffect, useState} from "react";
 import {Diet, DietList, DietSpec} from "../../interface/Interface.ts";
-import {Label, Table, TableBody, TableCell, TableHead, TableHeadCell, TableRow} from "flowbite-react";
+import {Label, Table, TableBody, TableCell, TableHead, TableHeadCell, TableRow, Tooltip} from "flowbite-react";
+import {useDownload} from "../../interface/funzioni.ts";
+import { TbFileDownload } from "react-icons/tb";
 
 export function AssigedDiet() {
-    const [dietList, setDietList] = useState<DietList>({dietList: []})
+    const [dietList, setDietList] = useState<DietList>({dietList:[]})
     const [selected, setSelected] = useState<boolean>(false)
+    const [dietFiltered,setDietFiltered]=useState<Diet>({
+        actually: "",
+        alimentiQuantita: undefined,
+        dietId: 0,
+        dietType: "",
+        duration: "",
+        expirationDate: "",
+        issueDate: "",
+        kcalTot: 0,
+        pdfDiet: ''
+    })
     const [thisDietId, setThisDietId] = useState<number>()
     const URLDiets = `http://localhost:5174/user/me/diets`
     const token = localStorage.getItem('token');
-
+    const dowloadFile=useDownload()
 
     useEffect(() => {
-        getDietsList().then(r => r);
+        const fetchDiet =async ()=>{
+            try {
+                await getDietsList();
+            }catch (e){
+                console.log(e)
+            }
+        }
+        fetchDiet()
     }, []);
     const getDietsList = async () => {
         const response = await fetch(URLDiets, {
@@ -29,7 +49,6 @@ export function AssigedDiet() {
         }
     }
     const filterDiet = (idDiet: number) => {
-
         const diet = dietList.dietList.find((s) => s.dietId === idDiet)
         if (diet != undefined) {
             return (
@@ -51,6 +70,7 @@ export function AssigedDiet() {
                             <Label className = {"text-white px-2 py-2"}>Tot. Calorie:</Label>
                             <h3 className = {"text-white"}>{diet.kcalTot}</h3>
                         </span>
+
                     </div>
                     <div>
                         <h2 className = {"px-10 mt-10"}>Alimenti</h2>
@@ -73,6 +93,12 @@ export function AssigedDiet() {
         }
     }
 
+    const findDiet=(idDieta:number)=>{
+        const diet=dietList.dietList.find((s)=>s.dietId===idDieta)
+        if(diet!=undefined){
+            return diet
+        }
+    }
 
     return (
         <>
@@ -87,6 +113,7 @@ export function AssigedDiet() {
                             <TableHeadCell className = {"bg-gray-800 text-gray-400"}>DATA
                                                                                      SCADENZA</TableHeadCell>
                             <TableHeadCell className = {"bg-gray-800 text-gray-400"}>KCAL TOTALI</TableHeadCell>
+                            <TableHeadCell  className = {"bg-gray-800 text-gray-400"}>DOWNLOAD</TableHeadCell>
                         </TableHead>
                         <TableBody className = {"divide-y p-0"}>
                             {dietList.dietList.map(d => {
@@ -103,6 +130,11 @@ export function AssigedDiet() {
                                     <TableCell>{d.issueDate}</TableCell>
                                     <TableCell>{d.expirationDate}</TableCell>
                                     <TableCell>{d.kcalTot}</TableCell>
+                                    <TableCell>
+                                        <Tooltip content={"Scarica dieta"}>
+                                            <TbFileDownload size={25} className={"cursor-pointer"} onClick={()=>dowloadFile(d.pdfDiet)}/>
+                                        </Tooltip>
+                                    </TableCell>
                                 </TableRow>
                             })
                             }
@@ -117,9 +149,7 @@ export function AssigedDiet() {
                         <div>
                             {filterDiet(thisDietId)}
                         </div>
-                        <div>
-                            <h2>Scarica dieta</h2>
-                        </div>
+
                     </div>
                 }
 

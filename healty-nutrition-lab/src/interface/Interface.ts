@@ -56,7 +56,7 @@ export interface Diet {
     actually: string
     dietType: string
     alimentiQuantita:Record<string, number>
-    pdfDiet: File
+    pdfDiet: string
 }
 export interface AssignDiet {
     duration: string
