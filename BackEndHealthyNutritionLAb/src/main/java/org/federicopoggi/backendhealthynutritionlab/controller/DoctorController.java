@@ -121,4 +121,9 @@ public class DoctorController {
         return docS.getAllPersonalCustomer(idPersonalTrainer, page, size, sortedBy);
     }*/
 
+    @DeleteMapping("/diet")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteDiet(@RequestParam Long idDieta){
+        docS.deletDiet(idDieta);
+    }
 }

@@ -55,7 +55,7 @@ export interface Diet {
     duration: string
     actually: string
     dietType: string
-    alimentiQuantita: { string: string, quantita: number }
+    alimentiQuantita:Record<string, number>
     pdfDiet: File
 }
 export interface AssignDiet {
@@ -75,5 +75,8 @@ export interface Paziente {
     email: string
     diets: []
     trainingPlans: []
+}
+export interface DietList{
+    dietList:Diet[];
 }
 

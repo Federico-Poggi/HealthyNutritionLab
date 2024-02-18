@@ -74,7 +74,7 @@ public class Customer implements UserDetails {
     @Override
     @JsonIgnore
     public String getUsername() {
-        return null;
+        return this.email;
     }
 
     @Override

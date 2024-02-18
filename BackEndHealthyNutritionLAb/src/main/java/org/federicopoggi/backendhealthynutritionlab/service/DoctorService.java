@@ -186,4 +186,9 @@ public class DoctorService {
          .add(newDiet);
         return new DietResponse(c.getIdCliente(), newDiet.getDietId());
     }
+
+    public void deletDiet(Long idDieta){
+        Diet found =dt.findById(idDieta).orElseThrow(()->new NotFoundException("Dieta non trovata"));
+        dt.delete(found);
+    }
 }

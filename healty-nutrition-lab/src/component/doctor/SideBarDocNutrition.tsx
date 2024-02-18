@@ -6,15 +6,25 @@ import logo from '../../assets/Logo.svg'
 import {CiViewTable} from "react-icons/ci";
 import {MdArrowForwardIos, MdArrowBackIos} from "react-icons/md";
 import {IoHomeOutline} from "react-icons/io5";
+import {BiLogOut} from "react-icons/bi";
+import {useDispatch} from "react-redux";
+import {notLoggedAction} from "../../redux/action";
 
 export function SideBarDocNutrition() {
     const NAVIGATE = useNavigate();
+    const DISPATCH=useDispatch();
     const [isOpen, setIsOpen] = useState<boolean>(false)
 
     const setToggle = () => {
         isOpen === true ? setIsOpen(false) : setIsOpen(true)
     }
 
+    const logOut=()=>{
+        localStorage.removeItem('token')
+        localStorage.removeItem("Role")
+        DISPATCH(notLoggedAction())
+        NAVIGATE("/")
+    }
     return (
         <>
             <div className = {`side-bar ${isOpen ? 'desktop:w-[14%]' : 'desktop:w-[3%]'} bg-[#121212] border border-[#75a602] transition-all duration-300 my-3 ml-2 max-h-[97vh] h-[97vh] rounded-xl`}>
@@ -57,6 +67,12 @@ export function SideBarDocNutrition() {
                                                    className = {'desktop:w-1/2 mx-auto h-20 text-gray-400 hover:text-[#579614] cursor-pointer'}/>
                             </Tooltip>
                         </p>
+                        <Tooltip content = {"LogOut"} placement = {"right"}>
+                            <BiLogOut onClick = {() => {
+                                logOut()
+                            }}
+                                      className = {'desktop:w-1/2 mx-auto h-20 text-gray-400 hover:text-[#579614] cursor-pointer'}/>
+                        </Tooltip>
                     </nav>}
                 {isOpen && <nav>
                     <p className = {"flex items-center justify-center my-2"}>
@@ -88,6 +104,7 @@ export function SideBarDocNutrition() {
                             <h2 className = {"side_open"}>Home</h2>
                         </p>
                     </aside>
+
                 </nav>}
             </div>
         </>

@@ -73,9 +73,9 @@ export function ModalDiet({isOpenProps, onClose,alimentiDietaSelected,setAliment
     return (
         <>
 
-            <Modal show = {isOpenProps} onClose = {() => {
+            <Modal show = {isOpenProps} className={"backdrop-blur-[10px] relative"} onClose = {() => {
                 onClose()
-            }} size = {"7xl"}>
+            }} size={'5xl'}>
                 <ModalHeader className={"flex"}>
                     <h2>Dieta</h2>
                 </ModalHeader>

@@ -1,11 +1,9 @@
 package org.federicopoggi.backendhealthynutritionlab.service;
 
+import org.federicopoggi.backendhealthynutritionlab.DTOResponse.UserDietResponse;
 import org.federicopoggi.backendhealthynutritionlab.Exception.AlreadyAssignException;
 import org.federicopoggi.backendhealthynutritionlab.Exception.NotFoundException;
-import org.federicopoggi.backendhealthynutritionlab.model.Customer;
-import org.federicopoggi.backendhealthynutritionlab.model.Doc;
-import org.federicopoggi.backendhealthynutritionlab.model.Nutritionist;
-import org.federicopoggi.backendhealthynutritionlab.model.PersonalTrainer;
+import org.federicopoggi.backendhealthynutritionlab.model.*;
 import org.federicopoggi.backendhealthynutritionlab.repository.CustomerDAO;
 import org.federicopoggi.backendhealthynutritionlab.repository.DocDAO;
 import org.federicopoggi.backendhealthynutritionlab.repository.NutritionistDAO;
@@ -99,6 +97,11 @@ public class UserSevice {
                 break;
         }
     }*/
+    public UserDietResponse getMyDiets(String email) throws NotFoundException{
+        Customer c= cs.findByEmail(email).orElseThrow(()->new NotFoundException("user non trovato"));
+        List<Diet> myDIetList=c.getDiets();
+        return new UserDietResponse(myDIetList);
+    }
 
 }
 

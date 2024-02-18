@@ -11,9 +11,10 @@ import {
     TableRow
 } from "flowbite-react";
 
-import {ModalDiet} from "./ModalDiet.tsx";
+
 import {AssignDiet, Diet, Paziente} from "../../interface/Interface.ts";
 import {NewDiet} from "./NewDiet.tsx";
+import {HiX} from "react-icons/hi";
 
 export function PazientePage() {
     const {idCustomer} = useParams()
@@ -77,6 +78,16 @@ export function PazientePage() {
         }
     }
 
+    const deleteDiet=async (idDieta:number)=>{
+        const deleteFetch=`http://localhost:5174/doctor/diet?idDieta=${idDieta}`
+        await fetch(deleteFetch,{
+            method:'DELETE',
+            headers:{
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        })
+    }
 
     return (
         <>
@@ -110,6 +121,7 @@ export function PazientePage() {
                                     <TableHeadCell className = {"bg-gray-800 text-gray-400"}>DATA
                                                                                              SCADENZA</TableHeadCell>
                                     <TableHeadCell className = {"bg-gray-800 text-gray-400"}>KCAL TOTALI</TableHeadCell>
+                                    <TableHeadCell className={"bg-gray-800 text-gray-400"}></TableHeadCell>
                                 </TableHead>
                                 <TableBody className = {"divide-y p-0"}>
                                     {diete.map(d => {
@@ -121,6 +133,9 @@ export function PazientePage() {
                                             <TableCell>{d.issueDate}</TableCell>
                                             <TableCell>{d.expirationDate}</TableCell>
                                             <TableCell>{d.kcalTot}</TableCell>
+                                            <TableCell onClick={()=>{
+                                                deleteDiet(d.dietId).then(() => window.location.reload())
+                                            }}><HiX></HiX></TableCell>
                                         </TableRow>
                                     })
                                     }

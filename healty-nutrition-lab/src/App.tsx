@@ -1,6 +1,6 @@
 import './App.css'
 
-import {BrowserRouter, Route, Routes} from "react-router-dom";
+import {BrowserRouter, redirect, Route, Router, Routes} from "react-router-dom";
 import Home from "./component/home/Home.tsx";
 import {Articles} from "./component/articles/Articles.tsx";
 import {RegisterForm} from "./component/Registration/RegisterForm.tsx";
@@ -13,6 +13,7 @@ import {LayoutDoctor} from "./component/LayoutDoctor.tsx";
 import {TabelleNutrizionali} from "./component/doctor/TabelleNutrizionali.tsx";
 import {Patient} from "./component/doctor/Patient.tsx";
 import {PazientePage} from "./component/doctor/PazientePage.tsx";
+import {AssigedDiet} from "./component/userDir/AssigedDiet.tsx";
 
 
 interface TokenString {
@@ -32,6 +33,7 @@ interface Userstate {
     role: string
 }
 
+
 function App() {
 
 
@@ -49,7 +51,6 @@ function App() {
         if (tokenFrom != null) {
             decodeTokent(tokenFrom)
         }
-        /*console.log(role)*/
     }, [])
 
     const verifyValidLogin = () => {
@@ -85,9 +86,14 @@ function App() {
             console.log(er);
         }
     }
-
+    const redirectTo = (roleUser: string) => {
+        if (roleUser != "CUSTOMER") {
+            redirect("/")
+        }
+    }
 
     return (
+
         <BrowserRouter>
             <Routes>
                 <Route path = {"/"} element = {<LayoutDoctor/>}>
@@ -95,11 +101,12 @@ function App() {
                     <Route path = {"articles"} element = {<Articles/>}/>
                     <Route path = {"register"} element = {<RegisterForm/>}/>
                 </Route>
-                    <Route path = {"personalArea"} element = {<PersonalArea/>}>
-                        <Route path = {"tabelle-nutrizionali"} element = {<TabelleNutrizionali/>}/>
-                        <Route path = {"pazienti"} element = {<Patient/>}/>
-                        <Route path = {`pazienti/:idCustomer`} element = {<PazientePage/>}/>
-                    </Route>
+                <Route path = {"personalArea"} element = {<PersonalArea/>}>
+                    <Route path = {"tabelle-nutrizionali"} element = {<TabelleNutrizionali/>}/>
+                    <Route path = {"pazienti"} element = {<Patient/>}/>
+                    <Route path = {`pazienti/:idCustomer`} element = {<PazientePage/>}/>
+                    <Route path={"diete"} element={<AssigedDiet/>}/>
+                </Route>
             </Routes>
         </BrowserRouter>
     )

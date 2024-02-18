@@ -14,26 +14,26 @@ export function NewDiet(paziente: Paziente) {
     })
     const [modalOpen, setModalOpen] = useState<boolean>(false)
     const [alimentiDietaSelected, setAlimentiDieta] = useState<Array<Alimento>>([])
-    const {idCustomer}=useParams()
-    const URL=`http://localhost:5174/doctor/me/diet?idCustomer=${paziente.idCliente}`
-    const token=localStorage.getItem('token')
+    const {idCustomer} = useParams()
+    const URL = `http://localhost:5174/doctor/me/diet?idCustomer=${paziente.idCliente}`
+    const token = localStorage.getItem('token')
 
-    const pushDiet=async ()=>{
-        try{
-            const resp=await fetch(URL,{
+    const pushDiet = async () => {
+        try {
+            const resp = await fetch(URL, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
                 },
-                body:JSON.stringify(dietAssign)
+                body: JSON.stringify(dietAssign)
             })
-            if(!resp.ok){
+            if (!resp.ok) {
                 throw new Error("ERROR:")
             }
             console.log(resp)
             return await resp.json()
-        }catch (er){
+        } catch (er) {
             console.log(er)
         }
     }
@@ -53,42 +53,40 @@ export function NewDiet(paziente: Paziente) {
     }, [alimentiDietaSelected]);
 
 
-
-
     const closeModal = () => {
         setModalOpen(false)
     }
     const setTipologia = (e: string) => {
         const value: string = e;
-        setDietAssign((prevState)=>({
+        setDietAssign((prevState) => ({
             ...prevState,
-            dietType:value
+            dietType: value
         }))
         setTipo(value)
     }
     const setDur = (e: string) => {
         const dur: string = e;
         setDurata(dur);
-        setDietAssign((prevState)=>({
+        setDietAssign((prevState) => ({
             ...prevState,
-            duration:dur
+            duration: dur
         }))
     }
 
     const changeInput = (ev: React.ChangeEvent<HTMLInputElement>, idAliment: number) => {
-        const value = parseInt(ev.target.value) ;
-        if(value<0||isNaN(value)){
+        const value = parseInt(ev.target.value);
+        if (value < 0 || isNaN(value)) {
             return
         }
         const updatedAlimentoAndQuantita = dietAssign.alimentoAndQuantita.map(item => {
             if (item.idAlimento === idAliment) {
-                return { ...item, quantita: value };
+                return {...item, quantita: value};
             }
             return item;
         });
         setDietAssign(prevState => ({
             ...prevState,
-            alimentoAndQuantita:updatedAlimentoAndQuantita
+            alimentoAndQuantita: updatedAlimentoAndQuantita
         }));
     };
 
@@ -144,7 +142,7 @@ export function NewDiet(paziente: Paziente) {
                             >MENSILE</Dropdown.Item>
                             <Dropdown.Item
                                 onClick = {() => {
-                                    setDurata("SETTIMANALE")
+                                    setDur("SETTIMANALE")
                                 }}
                             >SETTIMANALE</Dropdown.Item>
 
@@ -163,16 +161,17 @@ export function NewDiet(paziente: Paziente) {
                         <div key = {index} className = {"flex items-center"}>
                             <Label className = {"text-white font-medium"}>{a.name}</Label>
                             <input type = {"number"}
-                                   onChange = {(e) => changeInput(e,a.idAlimento)}
+                                   onChange = {(e) => changeInput(e, a.idAlimento)}
                             />
                         </div>
                     )
                 })}
             </div>
-            <button onClick={(e)=>{
+            <button onClick = {(e) => {
                 pushDiet()
                 window.location.reload()
-            }}>Assegna dieta</button>
+            }}>Assegna dieta
+            </button>
         </div>
     );
 }
