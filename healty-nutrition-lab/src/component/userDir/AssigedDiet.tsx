@@ -47,27 +47,27 @@ export function AssigedDiet() {
                             <Label className = {"text-white px-2"}>Data scadenza: </Label>
                             <h3 className = {"text-white"}>{diet.expirationDate}</h3>
                         </span>
+                        <span className = {"flex items-center px-2"}>
+                            <Label className = {"text-white px-2 py-2"}>Tot. Calorie:</Label>
+                            <h3 className = {"text-white"}>{diet.kcalTot}</h3>
+                        </span>
                     </div>
                     <div>
-                        <h2 className={"px-10 mt-10"}>Alimenti</h2>
+                        <h2 className = {"px-10 mt-10"}>Alimenti</h2>
                         <div className = {"text-white mt-10 overflow-y-auto"}>
                             {Object.entries(diet.alimentiQuantita).map(([alimento, quantita]: [string, number]) => (
                                 <div className = {"text-white list-unstyled flex w-2/3 mx-auto py-1"} key = {alimento}>
-                                <span className={"flex-grow"}>
+                                <span className = {"flex-grow"}>
                                     {alimento}
                                 </span>
-                                    <span className={"flex"}>
+                                    <span className = {"flex"}>
                                         {quantita}
-                                        <p className={"px-2"}>gr</p>
+                                        <p className = {"px-2"}>gr</p>
                                     </span>
                                 </div>
                             ))}
                         </div>
                     </div>
-                    <footer className={"absolute bottom-0 flex items-center"}>
-                        <Label className={"text-white px-2 py-2"}>Tot. Calorie:</Label>
-                        <h3 className = {"text-white"}>{diet.kcalTot}</h3>
-                    </footer>
                 </>
             );
         }
@@ -76,11 +76,10 @@ export function AssigedDiet() {
 
     return (
         <>
-            <div className = {"flex h-[100vh] justify-around flex-grow"}>
+            <div className = {"flex justify-around flex-grow"}>
                 <div className = {"max-h-[70vh] rounded-2xl  overflow-y-auto p-0 border border-gray-700 mt-5"}>
-                    <Table hoverable className = {"h-full relative border-gray-700 "}>
+                    <Table hoverable className = {"relative border-gray-700 "}>
                         <TableHead className = {"sticky top-0"}>
-                            {/*<TableHeadCell className = {"bg-gray-800 text-gray-400"}>ID</TableHeadCell>*/}
                             <TableHeadCell className = {"bg-gray-800 text-gray-400"}>TIPO DIETA</TableHeadCell>
                             <TableHeadCell className = {"bg-gray-800 text-gray-400"}>STATO DIETA</TableHeadCell>
                             <TableHeadCell className = {"bg-gray-800 text-gray-400"}>DATA
@@ -111,11 +110,16 @@ export function AssigedDiet() {
                     </Table>
                 </div>
                 {selected &&
-                    <div className = {"max-w-[90%] max-h-[97%] w-[40%] border my-4 relative"}>
+                    <div className = {"max-w-[90%] max-h-[90vh] w-[40%] border my-4 "}>
                         <div className = {"p-3 border-b border-gray-700"}>
                             <h2 className = {"text-xl"}>Info Dieta</h2>
                         </div>
-                        {filterDiet(thisDietId)}
+                        <div>
+                            {filterDiet(thisDietId)}
+                        </div>
+                        <div>
+                            <h2>Scarica dieta</h2>
+                        </div>
                     </div>
                 }
 

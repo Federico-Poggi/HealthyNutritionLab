@@ -3,6 +3,7 @@ package org.federicopoggi.backendhealthynutritionlab.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.mail.MessagingException;
 import org.federicopoggi.backendhealthynutritionlab.DTOResponse.DietResponse;
 import org.federicopoggi.backendhealthynutritionlab.DTOResponse.ResponseDoctor;
 import org.federicopoggi.backendhealthynutritionlab.DtoPayload.DietPayload;
@@ -104,7 +105,7 @@ public class DoctorController {
     @PreAuthorize("hasAuthority('NUTRITIONIST')")
     public DietResponse assignDiet(@AuthenticationPrincipal UserDetails userDetails,
                                    @RequestParam(required = true) Long idCustomer,
-                                   @RequestBody @Validated DietPayload dp){
+                                   @RequestBody @Validated DietPayload dp) throws MessagingException {
         return docS.createDiet(idCustomer,dp);
 
     }

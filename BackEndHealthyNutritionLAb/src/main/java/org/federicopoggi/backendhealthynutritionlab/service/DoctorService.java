@@ -1,5 +1,6 @@
 package org.federicopoggi.backendhealthynutritionlab.service;
 
+import jakarta.mail.MessagingException;
 import org.federicopoggi.backendhealthynutritionlab.DTOResponse.DietResponse;
 import org.federicopoggi.backendhealthynutritionlab.DTOResponse.ResponseDoctor;
 import org.federicopoggi.backendhealthynutritionlab.DtoPayload.DietPayload;
@@ -13,10 +14,12 @@ import org.federicopoggi.backendhealthynutritionlab.model.Enum.Duration;
 import org.federicopoggi.backendhealthynutritionlab.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -39,7 +42,9 @@ public class DoctorService {
 
     DietDAO dt;
 
+    EmailService es;
 
+    private JdbcTemplate jdbcTemplate;
     @Autowired
     public DoctorService(NutritionistDAO nutritionistDAO,
                          PersonalTrainerDAO pt,
@@ -47,7 +52,9 @@ public class DoctorService {
                          CustomerDAO cs,
                          DocDAO dc,
                          AlimentoDAO al,
-                         DietDAO dt) {
+                         DietDAO dt,
+                         EmailService es,
+                         JdbcTemplate jdbcTemplate) {
         this.nutritionistDAO = nutritionistDAO;
         this.pt = pt;
         this.bc = bc;
@@ -55,6 +62,8 @@ public class DoctorService {
         this.dc = dc;
         this.al = al;
         this.dt = dt;
+        this.es=es;
+        this.jdbcTemplate=jdbcTemplate;
     }
 
 
@@ -133,7 +142,8 @@ public class DoctorService {
         return al.findAll(p);
     }
 
-    public DietResponse createDiet(Long idCustomer, DietPayload dp) throws NotFoundException {
+
+    public DietResponse createDiet(Long idCustomer, DietPayload dp) throws NotFoundException, MessagingException {
         Customer c = cs.findById(idCustomer)
                        .orElseThrow(() -> new NotFoundException("Utente non trovato"));
         List<AlimentoAndQuantita> alimentoAndQuantitaList = Arrays.asList(dp.alimentoAndQuantita());
@@ -181,9 +191,16 @@ public class DoctorService {
             newDiet.getAlimentiQuantita()
                    .put(a.getName(), alimentoAndQuantita.getQuantita());
         }
+        byte[] pdfFile= es.generatePdf(newDiet);
+        System.out.println(pdfFile.length);
+        String fileDiet=newDiet.encodedFile(pdfFile);
+        System.out.println(fileDiet);
+        newDiet.setPdfDiet(fileDiet);
+        es.sendEmailWithDiet(pdfFile,c);
         dt.save(newDiet);
         c.getDiets()
          .add(newDiet);
+
         return new DietResponse(c.getIdCliente(), newDiet.getDietId());
     }
 

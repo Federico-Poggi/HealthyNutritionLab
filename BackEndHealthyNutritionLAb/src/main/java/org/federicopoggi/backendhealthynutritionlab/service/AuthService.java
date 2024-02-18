@@ -71,9 +71,9 @@ public class AuthService {
                 newUser.setEmail(rup.mail());
                 newUser.setPassword(psEncoder.encode(rup.password()));
                 newUser.setRole(Role.CUSTOMER);
-
                 cs.save(newUser);
                 mailservice.sendEmail(rup.mail());
+
                 return new RegisterResponse("User registrato con successo", newUser.getIdCliente());
             }
         } catch (RuntimeException e) {

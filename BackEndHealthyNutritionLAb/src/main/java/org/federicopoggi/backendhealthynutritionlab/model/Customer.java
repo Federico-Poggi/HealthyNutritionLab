@@ -60,7 +60,6 @@ public class Customer implements UserDetails {
     @OneToMany(fetch = FetchType.EAGER)
     List<TrainingPlan> trainingPlans;
 
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.name()));

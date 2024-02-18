@@ -10,6 +10,7 @@ import org.federicopoggi.backendhealthynutritionlab.model.Enum.DietType;
 import org.federicopoggi.backendhealthynutritionlab.model.Enum.Duration;
 
 import java.time.LocalDate;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -56,10 +57,14 @@ public class Diet {
     @JsonBackReference
     Customer customer;
 
-    @Lob
-    @Column(name = "diet_file")
-    private byte[] pdfDiet;
 
+    @Column(name = "diet_file", length = 3000)
+    private String pdfDiet;
+
+
+    public String encodedFile(byte[] file){
+        return Base64.getEncoder().encodeToString(file);
+    }
 
 }
 

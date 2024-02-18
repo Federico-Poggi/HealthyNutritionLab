@@ -59,6 +59,8 @@ public class UserController {
         String emailCustomer=userDetails.getUsername();
         return us.getMyDiets(emailCustomer);
     }
+
+
     /*POST MAPPING*/
 
 
