@@ -81,7 +81,7 @@ export interface DietaList{
 }
 
 export interface DietModalProps{
-    isOpen:boolean
+    isOpened:boolean
     setIsOpen:React.Dispatch<React.SetStateAction<boolean>>
     diet:Diet
 }

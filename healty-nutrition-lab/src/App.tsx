@@ -1,6 +1,6 @@
 import './App.css'
 
-import {BrowserRouter, redirect, Route, Router, Routes} from "react-router-dom";
+import {BrowserRouter, redirect, Route, Routes} from "react-router-dom";
 import Home from "./component/home/Home.tsx";
 import {Articles} from "./component/articles/Articles.tsx";
 import {RegisterForm} from "./component/Registration/RegisterForm.tsx";
@@ -14,6 +14,8 @@ import {TabelleNutrizionali} from "./component/doctor/TabelleNutrizionali.tsx";
 import {Patient} from "./component/doctor/Patient.tsx";
 import {PazientePage} from "./component/doctor/PazientePage.tsx";
 import {AssigedDiet} from "./component/userDir/AssigedDiet.tsx";
+import {DashboardDoc} from "./component/personalArea/DashboardDoc.tsx";
+import {DashboardUser} from "./component/personalArea/DashboardUser.tsx";
 
 
 interface TokenString {
@@ -102,10 +104,10 @@ function App() {
                     <Route path = {"register"} element = {<RegisterForm/>}/>
                 </Route>
                 <Route path = {"personalArea"} element = {<PersonalArea/>}>
-                    <Route path = {"tabelle-nutrizionali"} element = {<TabelleNutrizionali/>}/>
-                    <Route path = {"pazienti"} element = {<Patient/>}/>
-                    <Route path = {`pazienti/:idCustomer`} element = {<PazientePage/>}/>
-                    <Route path={"diete"} element={<AssigedDiet/>}/>
+                    {role==="CUSTOMER"? <Route path={""} element={<DashboardUser/>}/>:<Route path={""} element={<DashboardDoc/>}/>}
+                        <Route path = {"tabelle-nutrizionali"} element = {<TabelleNutrizionali/>}/>
+                        <Route path = {`pazienti/:idCustomer`} element = {<PazientePage/>}/>
+                        <Route path = {"diete"} element = {<AssigedDiet/>}/>
                 </Route>
             </Routes>
         </BrowserRouter>

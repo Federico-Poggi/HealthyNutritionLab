@@ -9,6 +9,7 @@ import {IoHomeOutline} from "react-icons/io5";
 import {BiLogOut} from "react-icons/bi";
 import {useDispatch} from "react-redux";
 import {notLoggedAction} from "../../redux/action";
+import { TbLayoutDashboard } from "react-icons/tb";
 
 export function SideBarDocNutrition() {
     const NAVIGATE = useNavigate();
@@ -37,10 +38,10 @@ export function SideBarDocNutrition() {
                         </p>
                         <p>
                             <Tooltip content = {"Pazienti"} placement = {"right"}>
-                                <IoPeopleOutline onClick = {() => {
-                                    NAVIGATE("pazienti")
+                                <TbLayoutDashboard onClick = {() => {
+                                    NAVIGATE("")
                                 }}
-                                                 className = {'desktop:w-1/2 mx-auto h-20 text-gray-400 hover:text-[#579614] cursor-pointer'}/>
+                                             className = {'desktop:w-1/2 mx-auto h-20 text-gray-400 hover:text-[#579614] cursor-pointer'}/>
                             </Tooltip>
                         </p>
                         <p>

@@ -51,7 +51,7 @@ export function AssigedDiet() {
 
     return (
         <>
-            <div className = {"flex justify-around flex-grow"}>
+            <div className = {"flex justify-around flex-grow h-1/2"}>
                 <div className = {"max-h-[70vh] rounded-2xl  overflow-y-auto p-0 border border-gray-700 mt-5"}>
                     <Table hoverable className = {"relative border-gray-700 "}>
                         <TableHead className = {"sticky top-0"}>
@@ -71,6 +71,7 @@ export function AssigedDiet() {
                                         setSelected(!selected)
                                         setThisDietId(d.dietId)
                                     }}
+                                    className={"cursor-pointer"}
                                     key = {d.dietId}>
                                     <TableCell>{d.dietType}</TableCell>
                                     <TableCell>
@@ -90,7 +91,7 @@ export function AssigedDiet() {
                         </TableBody>
                     </Table>
                 </div>
-                {selected && <ModalDietSelected setIsOpen={setSelected} isOpen={selected} diet={filterDiet(thisDietId)}/>}
+                {selected && <ModalDietSelected setIsOpen={setSelected} isOpened={selected} diet={filterDiet(thisDietId)}/>}
             </div>
         </>
     );

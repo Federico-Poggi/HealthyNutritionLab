@@ -71,14 +71,13 @@ export function Patient() {
     return (
         <>
             <div className = {"text-center flex flex-col"}>
-                <div className = {"flex w-[80vw] justify-around py-4"}>
-                    <h1 className = {"text-2xl"}>Tabella Nutrizionale</h1>
+                <div className = {"flex w-[50vw] justify-around py-4 items-center"}>
+                    <h1 className = {"text-xl"}>Pazienti</h1>
                     <p className = {"text-white font-medium"}>Pagina: {page + 1} di {/*{pageNumber}*/}</p>
                 </div>
-                <div className = {"max-h-[70vh]  w-[65vw] rounded-2xl mx-auto overflow-y-auto p-0 border border-gray-700"}>
-                    <Table hoverable className = {"h-full w-[80vw] relative border-gray-700 "}>
+                <div className = {"max-h-[70vh]  w-[40vw] rounded-2xl mx-auto overflow-y-auto p-0 border border-gray-700"}>
+                    <Table hoverable className = {"h-full relative border-gray-700 "}>
                         <TableHead className = {"sticky top-0"}>
-                            {/*<TableHeadCell className = {"bg-gray-800 text-gray-400"}>ID</TableHeadCell>*/}
                             <TableHeadCell className = {"bg-gray-800 text-gray-400"}>NAME</TableHeadCell>
                             <TableHeadCell className = {"bg-gray-800 text-gray-400"}>SURNAME</TableHeadCell>
                             <TableHeadCell className = {"bg-gray-800 text-gray-400"}>CELLNUMBER</TableHeadCell>

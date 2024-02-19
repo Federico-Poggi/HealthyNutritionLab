@@ -1,10 +1,13 @@
 import {DietModalProps} from "../../interface/Interface.ts";
-import {Label} from "flowbite-react";
+import {Label, Tooltip} from "flowbite-react";
+import {TbFileDownload} from "react-icons/tb";
+import {useDownload} from "../../interface/funzioni.ts";
 
-export function ModalDietSelected({isOpen,diet,setIsOpen}:DietModalProps) {
+export function ModalDietSelected({isOpened,diet,setIsOpen}:DietModalProps) {
+    const download=useDownload()
     return (
         <>
-            <dialog className = "modal w-full backdrop-blur-[5px]"open={isOpen}>
+            <dialog className = "modal w-1/2 mx-auto" open={isOpened}>
                 <div className = "modal-box max-w-[50vw] h-[100vh]">
                     <h3 className = "font-bold text-lg py-2">Dieta</h3>
                     <header className = {"flex justify-evenly items-center"}>
@@ -26,8 +29,11 @@ export function ModalDietSelected({isOpen,diet,setIsOpen}:DietModalProps) {
                             </div>
                         ))}
                     </div>
-                    <div className={"fixed bottom-5"}>
-                        <button className={"btn btn-ghost float-end"} onClick = {() => setIsOpen(!isOpen)}>Chiudi</button>
+                    <div className={"fixed bottom-5 flex items-center"}>
+                        <Tooltip content={"Scarica dieta"}>
+                            <TbFileDownload size={25} className={"cursor-pointer"} onClick={()=>download(diet.pdfDiet)}/>
+                        </Tooltip>
+                        <button className={"btn btn-ghost"} onClick = {() => setIsOpen(!isOpened)}>Chiudi</button>
                     </div>
                 </div>
 
