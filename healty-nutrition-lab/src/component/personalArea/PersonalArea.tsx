@@ -12,14 +12,18 @@ export function PersonalArea() {
 
     return (
         <>
-            <div className = {"flex"}>
-                {(role === "NUTRITIONIST" || role === "PERSONAL_TRAINER") && <SideBarDocNutrition/>}
-                {role == "CUSTOMER" && <SideBarUser/>}
+            <div className={"desktop:max-w-[15vw] flex"}>
+            {(role === "NUTRITIONIST" || role === "PERSONAL_TRAINER") && <SideBarDocNutrition/>}
+            {role == "CUSTOMER" && <SideBarUser/>}
+            </div>
+            <div className = {"flex flex-grow"}>
+
                 <main className = {"max-w-[100vw] flex-grow"}>
                     <div className = {"w-1/2 flex-col justify-evenly"}>
                         {role === "CUSTOMER" && <DashboardUser/>}
+                        {role==="NUTRITIONIST" && <DashboardDoc/>}
                     </div>
-                    <Outlet/>
+
                 </main>
             </div>
         </>

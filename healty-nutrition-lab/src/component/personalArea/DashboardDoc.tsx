@@ -5,7 +5,7 @@ export function DashboardDoc() {
     return (
         <>
             <div className={"w-1/2"}>
-                <Patient/>
+                {/*<Patient/>*/}
             </div>
 
 

@@ -11,7 +11,6 @@ import {loggedUserAction, notLoggedAction} from "./redux/action";
 import {jwtDecode} from "jwt-decode";
 import {LayoutDoctor} from "./component/LayoutDoctor.tsx";
 import {TabelleNutrizionali} from "./component/doctor/TabelleNutrizionali.tsx";
-import {Patient} from "./component/doctor/Patient.tsx";
 import {PazientePage} from "./component/doctor/PazientePage.tsx";
 import {AssigedDiet} from "./component/userDir/AssigedDiet.tsx";
 import {DashboardDoc} from "./component/personalArea/DashboardDoc.tsx";

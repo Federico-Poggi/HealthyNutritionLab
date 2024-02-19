@@ -28,7 +28,7 @@ export function SideBarDocNutrition() {
     }
     return (
         <>
-            <div className = {`side-bar ${isOpen ? 'desktop:w-[14%]' : 'desktop:w-[3%]'} bg-[#121212] border border-[#75a602] transition-all duration-300 my-3 ml-2 max-h-[97vh] h-[97vh] rounded-xl`}>
+            <div className = {` side-bar ${isOpen ? 'desktop:w-[14%]' : 'desktop:w-[3%]'} bg-[#121212] border border-[#75a602] transition-all duration-300 my-3 ml-2 max-h-[97vh] h-[97vh] rounded-xl`}>
                 {!isOpen &&
                     <nav className = {"relative transition-all duration-300 flex flex-col items-center"}>
                         <p>

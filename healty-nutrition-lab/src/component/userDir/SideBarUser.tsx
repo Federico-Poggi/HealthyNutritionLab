@@ -6,11 +6,9 @@ import {MdArrowBackIos, MdArrowForwardIos} from "react-icons/md";
 import {BiLogOut} from "react-icons/bi";
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
-import { GrSchedules } from "react-icons/gr";
-import { CgGym } from "react-icons/cg";
 import {notLoggedAction} from "../../redux/action";
 import {useDispatch} from "react-redux";
-
+import { IoIosArrowDown } from "react-icons/io";
 export function SideBarUser() {
     const [isOpen, setIsopen] = useState<boolean>(false)
 
@@ -27,51 +25,35 @@ export function SideBarUser() {
     }
     return (
         <>
-            <div className = {`side-bar ${isOpen ? 'desktop:w-[14%]' : 'desktop:w-[3%]'} bg-[#121212] border border-[#75a602] transition-all duration-300 my-3 ml-2 max-h-[97vh] h-[97vh] rounded-xl`}>
+            <div className = {`desktop:w-[10vw] side-bar bg-[#121212] border border-[#75a602] absolute right-10 transition-all duration-300 my-3 ml-2 rounded-xl`}>
                 {!isOpen &&
-                    <nav className = {"relative transition-all duration-300 flex flex-col items-center"}>
+                    <nav className = {"relative transition-all duration-300 items-center flex justify-evenly p-2"}>
                         <p>
                             <img onClick = {() => {
                                 NAVIGATE("/")
-                            }} src = {logo} alt = {"logo"} className = {'desktop:w-1/2 mx-auto my-5'}/>
-                        </p>
-                        <p>
-                            <Tooltip content = {"Diete"} placement = {"right"}>
-                                <GrSchedules onClick = {() => {
-                                    NAVIGATE("diete")
-                                }}
-                                                 className = {'desktop:w-1/2 mx-auto h-20 text-gray-400 hover:text-[#579614] cursor-pointer'}/>
-                            </Tooltip>
-                        </p>
-                        <p>
-                            <Tooltip content = {"Schede Allenamento"} placement = {"right"}>
-                                <CgGym onClick = {() => {
-                                    NAVIGATE("tabelle-nutrizionali")
-                                }}
-                                             className = {'desktop:w-1/2 mx-auto h-20 text-gray-400 hover:text-[#579614] cursor-pointer'}/>
-                            </Tooltip>
+                            }} src = {logo} alt = {"logo"} className = {'desktop:w-[25px] mx-auto '}/>
                         </p>
                         <p>
                             <Tooltip content = {"Home"} placement = {"right"}>
                                 <IoHomeOutline onClick = {() => {
                                     NAVIGATE("/")
                                 }}
-                                               className = {'desktop:w-1/2 mx-auto h-20 text-gray-400 hover:text-[#579614] cursor-pointer'}/>
+                                               className = {'mx-auto h-full desktop:w-[25px] text-gray-400 hover:text-[#579614] cursor-pointer'}/>
                             </Tooltip>
                         </p>
                         <p>
                             <Tooltip content = {"Apri"} placement = {"right"}>
-                                <MdArrowForwardIos onClick = {() => {
+                                <IoIosArrowDown onClick = {() => {
                                     setToggle()
-                                }}
-                                                   className = {'desktop:w-1/2 mx-auto h-20 text-gray-400 hover:text-[#579614] cursor-pointer'}/>
+                                }}size={25}
+                                                className = {'mx-auto h-full desktop:w-[25px] text-gray-400 hover:text-[#579614] cursor-pointer'}/>
                             </Tooltip>
                         </p>
                         <Tooltip content = {"LogOut"} placement = {"right"}>
                             <BiLogOut onClick = {() => {
                                 logOut()
                             }}
-                                      className = {'desktop:w-1/2 mx-auto h-20 text-gray-400 hover:text-[#579614] cursor-pointer'}/>
+                                      className = {'mx-auto h-full desktop:w-[25px] text-gray-400 hover:text-[#579614] cursor-pointer'}/>
                         </Tooltip>
                     </nav>}
                 {isOpen && <nav>
