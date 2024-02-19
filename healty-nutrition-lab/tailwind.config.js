@@ -1,3 +1,5 @@
+import theme from "tailwindcss/defaultTheme.js";
+
 /** @type {import('tailwindcss').Config} */
 export default {
     content: ["./src/**/*.{js,jsx,ts,tsx}", "node_modules/flowbite-react/lib/esm/**/*.js"],
@@ -13,6 +15,8 @@ export default {
     plugins: [
         // eslint-disable-next-line no-undef
         require('flowbite/plugin'),
+        // eslint-disable-next-line no-undef
+        require("daisyui")
     ],
     darkMode:"class"
 };

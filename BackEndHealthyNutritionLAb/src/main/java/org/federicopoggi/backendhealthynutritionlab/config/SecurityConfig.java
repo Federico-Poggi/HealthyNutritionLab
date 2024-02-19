@@ -1,22 +1,15 @@
 package org.federicopoggi.backendhealthynutritionlab.config;
 
 /*import org.federicopoggi.backendhealthynutritionlab.security.FilterForSwagger;*/
+
 import org.federicopoggi.backendhealthynutritionlab.security.JwtFilter;
-import org.jose4j.jwt.consumer.JwtConsumer;
-import org.jose4j.jwt.consumer.JwtConsumerBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
-import org.springframework.security.config.annotation.SecurityBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
-import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -27,14 +20,12 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import javax.crypto.spec.SecretKeySpec;
-import java.security.Key;
 import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
-public class SecurityConfig{
+public class SecurityConfig {
 
     @Autowired
     JwtFilter jwtFilter;
@@ -65,13 +56,14 @@ public class SecurityConfig{
     }
 
     @Bean
-    PasswordEncoder getPwEncoder(){
+    PasswordEncoder getPwEncoder() {
         return new BCryptPasswordEncoder(11);
     }
 
 
     /*@Override
     public void customize(WebSecurity web) {
-        web.ignoring().requestMatchers("/v2/api-docs", "/configuration/**", "/swagger-resources/**",  "/swagger-ui.html", "/webjars/**", "/api-docs/**");
+        web.ignoring().requestMatchers("/v2/api-docs", "/configuration/**", "/swagger-resources/**",  "/swagger-ui
+        .html", "/webjars/**", "/api-docs/**");
     }*/
 }

@@ -4,11 +4,11 @@
 /*NAVBAR STYLE*/
 
 :root{
-    background-color: #121212ff;
     margin: 0;
     padding: 0;
     width: 100vw;
-
+    --tw-bg-opacity: 1;
+    --tw-bg-white: #ffffff;
 }
 
 .modal-open{

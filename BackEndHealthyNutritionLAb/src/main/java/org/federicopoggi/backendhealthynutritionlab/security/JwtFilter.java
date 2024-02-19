@@ -8,8 +8,6 @@ import org.federicopoggi.backendhealthynutritionlab.Exception.NotFoundException;
 import org.federicopoggi.backendhealthynutritionlab.model.Customer;
 import org.federicopoggi.backendhealthynutritionlab.model.Doc;
 import org.federicopoggi.backendhealthynutritionlab.repository.DocDAO;
-import org.federicopoggi.backendhealthynutritionlab.service.AuthService;
-import org.federicopoggi.backendhealthynutritionlab.service.DoctorService;
 import org.federicopoggi.backendhealthynutritionlab.service.UserSevice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -33,7 +31,6 @@ public class JwtFilter extends OncePerRequestFilter {
     DocDAO docd;
 
 
-
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException, NotFoundException {
@@ -47,17 +44,19 @@ public class JwtFilter extends OncePerRequestFilter {
                 String id = jwTools.validateToken(token)
                                    .getSubject();
 
-                String userType=jwTools.validateToken(token).getClaimValueAsString("userType");
+                String userType = jwTools.validateToken(token)
+                                         .getClaimValueAsString("userType");
                 System.out.println(userType);
 
-                if(userType.equals("doctor")){
-                    Doc d= docd.findById(Long.parseLong(id)).orElseThrow(()->new NotFoundException("non esiste il dottore con l'id inserito"));
+                if (userType.equals("doctor")) {
+                    Doc d = docd.findById(Long.parseLong(id))
+                                .orElseThrow(() -> new NotFoundException("non esiste il dottore con l'id inserito"));
                     Authentication authentication = new UsernamePasswordAuthenticationToken(d,
                                                                                             null,
                                                                                             d.getAuthorities());
                     SecurityContextHolder.getContext()
                                          .setAuthentication(authentication);
-                }else if(userType.equals("customer")){
+                } else if (userType.equals("customer")) {
                     Customer user = userSevice.findById(Long.parseLong(id));
                     Authentication authentication = new UsernamePasswordAuthenticationToken(user,
                                                                                             null,
@@ -74,9 +73,17 @@ public class JwtFilter extends OncePerRequestFilter {
     }
 
 
-
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
-        return new AntPathMatcher().match("/auth/**", request.getServletPath());
+        String serverLet = request.getServletPath();
+        return new AntPathMatcher().match("/auth/**", request.getServletPath()) ||
+                new AntPathMatcher().match("/v2/**", request.getServletPath()) ||
+                new AntPathMatcher().match("/v3/**", request.getServletPath()) ||
+                new AntPathMatcher().match("/swagger-resources/**", request.getServletPath())||
+                new AntPathMatcher().match("/configuration/ui",request.getServletPath())||
+                new AntPathMatcher().match("/configuration/security",request.getServletPath())||
+                new AntPathMatcher().match("/swagger-ui/**",request.getServletPath())||
+                new AntPathMatcher().match("/swagger-ui.html",request.getServletPath())||
+                new AntPathMatcher().match("/webjars/**",request.getServletPath());
     }
 }

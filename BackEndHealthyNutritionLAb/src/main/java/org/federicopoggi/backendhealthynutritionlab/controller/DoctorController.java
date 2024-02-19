@@ -1,13 +1,7 @@
 package org.federicopoggi.backendhealthynutritionlab.controller;
-
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.v3.oas.annotations.Operation;
 import jakarta.mail.MessagingException;
 import org.federicopoggi.backendhealthynutritionlab.DTOResponse.DietResponse;
-import org.federicopoggi.backendhealthynutritionlab.DTOResponse.ResponseDoctor;
 import org.federicopoggi.backendhealthynutritionlab.DtoPayload.DietPayload;
-import org.federicopoggi.backendhealthynutritionlab.DtoPayload.DoctorPaylodSave;
 import org.federicopoggi.backendhealthynutritionlab.model.Alimento;
 import org.federicopoggi.backendhealthynutritionlab.model.Customer;
 import org.federicopoggi.backendhealthynutritionlab.repository.AlimentoDAO;
@@ -16,11 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 

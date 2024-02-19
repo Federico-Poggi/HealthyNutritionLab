@@ -1,4 +1,4 @@
-import {SetStateAction} from "react";
+import React, {SetStateAction} from "react";
 
 export interface Pazienti{
     content:[]
@@ -76,7 +76,12 @@ export interface Paziente {
     diets: []
     trainingPlans: []
 }
-export interface DietList{
-    dietList:Diet[];
+export interface DietaList{
+    dietList:Diet[]
 }
 
+export interface DietModalProps{
+    isOpen:boolean
+    setIsOpen:React.Dispatch<React.SetStateAction<boolean>>
+    diet:Diet
+}

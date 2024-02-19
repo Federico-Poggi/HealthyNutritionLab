@@ -8,7 +8,7 @@ function Layout() {
         <>
             <Nav/>
 
-            <main className={"relative"}>
+            <main className={"relative "}>
                 <Outlet/>
                 <LoginPage/>
             </main>

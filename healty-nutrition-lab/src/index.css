@@ -2,14 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
-/*
 :root{
     background-color: #121212ff;
     margin: 0;
     padding: 0;
     width: 100vw;
+    --tw-bg-opacity: 1; /* Opacità completa */
+    --bg-opacity: 1; /* Opacità completa (versioni precedenti di Tailwind CSS) */
+    --tw-bg-white: #ffffff;
 }
-*/
 
 /*html,body{
     max-width: 100vw;
