@@ -91,8 +91,8 @@ export function PazientePage() {
 
     return (
         <>
-            <div className = {"flex h-[100vh] justify-around flex-grow"}>
-                <div className = {"max-w-[100%] h-[97%]  rounded-2xl my-4 mx-10"}>
+            <div className = {"flex items-center h-[100vh] justify-around flex-grow"}>
+                <div className = {"max-w-[50%]  rounded-2xl my-auto mx-10"}>
                     <div className = {"text-white desktop:max-w-[100%] mx-auto my-2 max-h-[70%] overflow-y-auto px-3"}>
                         <h1 className = {"text-center mb-10"}>DIETE CLIENTE</h1>
                         <div className = {"flex items-center justify-evenly"}>
@@ -146,6 +146,7 @@ export function PazientePage() {
                     </div>
 
                 </div>
+
                 <NewDiet idCliente = {paziente.idCliente}
                          name = {paziente.name}
                          surname = {paziente.surname}

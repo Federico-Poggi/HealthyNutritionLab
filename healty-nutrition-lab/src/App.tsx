@@ -1,6 +1,6 @@
 import './App.css'
 
-import {BrowserRouter, redirect, Route, Routes} from "react-router-dom";
+import {BrowserRouter, redirect, Route, Routes, useParams} from "react-router-dom";
 import Home from "./component/home/Home.tsx";
 import {Articles} from "./component/articles/Articles.tsx";
 import {RegisterForm} from "./component/Registration/RegisterForm.tsx";
@@ -92,21 +92,19 @@ function App() {
             redirect("/")
         }
     }
-
+    const {idCustomer} = useParams<{ idCustomer: string }>();
     return (
 
         <BrowserRouter>
             <Routes>
-                <Route path = {"/"} element = {<LayoutDoctor/>}>
-                    <Route path = {"/"} index element = {<Home/>}/>
-                    <Route path = {"articles"} element = {<Articles/>}/>
-                    <Route path = {"register"} element = {<RegisterForm/>}/>
-                </Route>
-                <Route path = {"personalArea"} element = {<PersonalArea/>}>
-                    {role==="CUSTOMER"? <Route path={""} element={<DashboardUser/>}/>:<Route path={""} element={<DashboardDoc/>}/>}
-                        <Route path = {"tabelle-nutrizionali"} element = {<TabelleNutrizionali/>}/>
-                        <Route path = {`pazienti/:idCustomer`} element = {<PazientePage/>}/>
-                        <Route path = {"diete"} element = {<AssigedDiet/>}/>
+                <Route path={"/"} element={<LayoutDoctor/>}/>
+                <Route path={"personalArea"} element={<PersonalArea/>}>
+                    {role === "CUSTOMER" && <Route path={""} element={<DashboardUser/>}/>}
+                    {(role === "PERSONAL_TRAINER" || role === "NUTRITIONIST") &&
+                        <Route path={"*"} index element={<DashboardDoc/>}/>}
+                    <Route path={"tabelle-nutrizionali"} element={<TabelleNutrizionali/>}/>
+                    <Route path={`pazienti/:idCustomer`} element={<PazientePage/>}/>
+                    <Route path={"diete"} element={<AssigedDiet/>}/>
                 </Route>
             </Routes>
         </BrowserRouter>

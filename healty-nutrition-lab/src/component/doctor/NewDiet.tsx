@@ -3,6 +3,7 @@ import {useEffect, useState} from "react";
 import {Alimento, AssignDiet, DietSpec, Paziente} from "../../interface/Interface.ts";
 import {ModalDiet} from "./ModalDiet.tsx";
 import {useParams} from "react-router-dom";
+import {retry} from "@reduxjs/toolkit/query";
 
 export function NewDiet(paziente: Paziente) {
     const [tipoDieta, setTipo] = useState<string>("")
@@ -73,14 +74,11 @@ export function NewDiet(paziente: Paziente) {
         }))
     }
 
-    const changeInput = (ev: React.ChangeEvent<HTMLInputElement>, idAliment: number) => {
-        const value = parseInt(ev.target.value);
-        if (value < 0 || isNaN(value)) {
-            return
-        }
+    const changeInput = (newV: number, idAliment: number) => {
+
         const updatedAlimentoAndQuantita = dietAssign.alimentoAndQuantita.map(item => {
             if (item.idAlimento === idAliment) {
-                return {...item, quantita: value};
+                return {...item, quantita: newV};
             }
             return item;
         });
@@ -91,87 +89,114 @@ export function NewDiet(paziente: Paziente) {
     };
 
     return (
-        <div className = {"max-w-[90%] h-[97%] w-[40%] border rounded-2xl my-4"}>
-            <h2 className = {"text-white"}>NUOVA DIETA</h2>
+        <div className="w-[40%] max-w-[90%]">
+            <h2 className={"text-white "}>ASSEGNA UNA NUOVA DIETA</h2>
+            <div className={"bg-[#191919]  overflow-y-auto max-h-[60vh]  p-3 rounded-2xl"}>
 
-            <div className = {"flex items-center"}>
-                <Label className = {"text-white mx-2"}>Paziente: </Label>
-                <p>{paziente.name} {paziente.surname}</p>
-            </div>
-            <div className = {"flex items-center"}>
-                <Label className = {"text-white mx-2"}>Email: </Label>
-                <p>{paziente.email}</p>
-            </div>
-            <div className = {"flex items-center"}>
-                <Label className = {"text-white mx-2"}>Cell: </Label>
-                <p>{paziente.cellNumber}</p>
-            </div>
-            <section className = {"flex"}>
-            <span className = {"flex items-center"}>
-                        <Label className = {"text-[17px] text-white font-medium mx-5"}>Tipologia</Label>
-                        <Dropdown label = {tipoDieta || 'TIPO DIETA'}>
-                            <Dropdown.Item onClick = {() => {
+            <span className="flex py-5 justify-evenly">
+                <div className={"flex items-center"}>
+                    <Label className={"text-white mx-2"}>Paziente: </Label>
+                    <p>{paziente.name} {paziente.surname}</p>
+                </div>
+                <div className={"flex items-center"}>
+                    <Label className={"text-white mx-2"}>Email: </Label>
+                    <p>{paziente.email}</p>
+                </div>
+                <div className={"flex items-center"}>
+                    <Label className={"text-white mx-2"}>Cell: </Label>
+                    <p>{paziente.cellNumber}</p>
+                </div>
+            </span>
+                <section className={"flex justify-evenly"}>
+            <span className={"flex items-center"}>
+                        <Label className={"text-[17px] text-white font-medium mx-4"}>Tipologia</Label>
+                        <Dropdown label={tipoDieta || 'TIPO DIETA'}>
+                            <Dropdown.Item onClick={() => {
                                 setTipologia("DIMAGRIMENTO")
                             }}>DIMAGRIMENTO</Dropdown.Item>
-                            <Dropdown.Item onClick = {() => {
+                            <Dropdown.Item onClick={() => {
                                 setTipologia("MASSA MUSCOLARE")
                             }}>MASSA MUSCOLARE</Dropdown.Item>
-                            <Dropdown.Item onClick = {() => {
+                            <Dropdown.Item onClick={() => {
                                 setTipologia("VEGANA")
                             }}>VEGANA</Dropdown.Item>
-                            <Dropdown.Item onClick = {() => {
+                            <Dropdown.Item onClick={() => {
                                 setTipologia("VEGETARIANA")
                             }}>VEGETARIANA</Dropdown.Item>
-                            <Dropdown.Item onClick = {() => {
+                            <Dropdown.Item onClick={() => {
                                 setTipologia("ALTRO")
                             }}>ALTRO...</Dropdown.Item>
                         </Dropdown>
                         </span>
-                <span className = {"flex items-center"}>
-                        <Label className = {"text-[17px] text-white font-medium mx-5"}>Durata</Label>
-                        <Dropdown label = {durata || "DURATA"}>
+                    <span className={"flex items-center"}>
+                        <Label className={"text-[17px] text-white font-medium mx-4"}>Durata</Label>
+                        <Dropdown label={durata || "DURATA"}>
                             <Dropdown.Item
-                                onClick = {() => {
+                                onClick={() => {
                                     setDur("BIMESTRALE")
                                 }}
                             >BIMESTRALE</Dropdown.Item>
                             <Dropdown.Item
-                                onClick = {() => {
+                                onClick={() => {
                                     setDur("MENSILE")
                                 }}
                             >MENSILE</Dropdown.Item>
                             <Dropdown.Item
-                                onClick = {() => {
+                                onClick={() => {
                                     setDur("SETTIMANALE")
                                 }}
                             >SETTIMANALE</Dropdown.Item>
 
                         </Dropdown>
                         </span>
-            </section>
-            <button onClick = {() => setModalOpen(true)} className = {"text-white"}>Aggiungi dieta</button>
-            <ModalDiet isOpenProps = {modalOpen}
-                       onClose = {closeModal}
-                       alimentiDietaSelected = {alimentiDietaSelected}
-                       setAlimentiDieta = {setAlimentiDieta}/>
+                    <button onClick={() => setModalOpen(true)} className={"text-white"}>Aggiungi alimento</button>
+                </section>
 
-            <div className = {"flex flex-col"}>
-                {alimentiDietaSelected.map((a, index) => {
-                    return (
-                        <div key = {index} className = {"flex items-center"}>
-                            <Label className = {"text-white font-medium"}>{a.name}</Label>
-                            <input type = {"number"}
-                                   onChange = {(e) => changeInput(e, a.idAlimento)}
-                            />
-                        </div>
-                    )
-                })}
+                <ModalDiet isOpenProps={modalOpen}
+                           onClose={closeModal}
+                           alimentiDietaSelected={alimentiDietaSelected}
+                           setAlimentiDieta={setAlimentiDieta}/>
+
+
+                <table className="table-auto text-center mx-auto w-full my-5 overflow-y-auto max-h-72] ">
+                    <thead>
+                    <tr>
+                        <th>Alimento</th>
+                        <th>Quantita</th>
+                    </tr>
+                    </thead>
+                    <tbody className="max-h-full overflow-y-auto">
+                    {alimentiDietaSelected.map((a, index) => {
+                        return (
+                            <tr key={index} className={"table-auto"}>
+                                <td className="py-2">
+                                    <Label className={"text-white font-medium"}>{a.name}</Label>
+                                </td>
+                                <td>
+                                    <input type={"text"}
+                                           className="w-1/2 bg-gray-800 h-[2em] border-0 outline-none"
+                                           onChange={(e) => {
+                                               const v = e.target.value
+                                               const newV = parseInt(v);
+                                               if (newV <= 0 || isNaN(newV)) {
+                                                   e.target.value = '';
+                                               } else {
+                                                   changeInput(newV, a.idAlimento)
+                                               }
+                                           }}
+                                    />
+                                </td>
+                            </tr>
+                        )
+                    })}
+                    </tbody>
+                </table>
+                <button onClick={(e) => {
+                    pushDiet()
+                    window.location.reload()
+                }}>Assegna dieta
+                </button>
             </div>
-            <button onClick = {(e) => {
-                pushDiet()
-                window.location.reload()
-            }}>Assegna dieta
-            </button>
         </div>
     );
 }

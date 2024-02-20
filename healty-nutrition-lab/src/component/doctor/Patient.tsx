@@ -14,7 +14,6 @@ export function Patient() {
     const [size, setSize] = useState<number>(20)
     const [sortedBy, setSortedBy] = useState<string>("userId")
     const NAVIGATE=useNavigate();
-
     const URLPatient = `http://localhost:5174/doctor/me/patients?page=${page}&size=${size}&sortedBy=${sortedBy}`
     const token = localStorage.getItem('token')
     const doctorPatientState:DocPatient[]|string=useSelector((state:RootStore)=>(
@@ -63,7 +62,6 @@ export function Patient() {
 
     },[])
 
-    const {idCustomer}=useParams<string>();
     const nav=(id:number)=>{
         NAVIGATE(`/personalArea/pazienti/${id}`)
     }
@@ -71,12 +69,12 @@ export function Patient() {
     return (
         <>
             <div className = {"text-center flex flex-col"}>
-                <div className = {"flex w-[50vw] justify-around py-4 items-center"}>
-                    <h1 className = {"text-xl"}>Pazienti</h1>
+                <div className = {"flex w-full justify-center py-4 items-center"}>
+                    <h1 className = {"text-xl px-4"}>Pazienti</h1>
                     <p className = {"text-white font-medium"}>Pagina: {page + 1} di {/*{pageNumber}*/}</p>
                 </div>
                 <div className = {"max-h-[70vh]  w-[40vw] rounded-2xl mx-auto overflow-y-auto p-0 border border-gray-700"}>
-                    <Table hoverable className = {"h-full relative border-gray-700 "}>
+                    <Table  className = {"table-auto h-full relative border-gray-700 "}>
                         <TableHead className = {"sticky top-0"}>
                             <TableHeadCell className = {"bg-gray-800 text-gray-400"}>NAME</TableHeadCell>
                             <TableHeadCell className = {"bg-gray-800 text-gray-400"}>SURNAME</TableHeadCell>
