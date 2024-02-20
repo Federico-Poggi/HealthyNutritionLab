@@ -4,9 +4,8 @@ import {useSelector} from "react-redux";
 import {RootStore} from "../../redux/store";
 import {DashboardDoc} from "./DashboardDoc.tsx";
 import {Outlet, useParams, useRoutes} from "react-router-dom";
-import {PazientePage} from "../doctor/PazientePage.tsx";
-import {TabelleNutrizionali} from "../doctor/TabelleNutrizionali.tsx";
-import {AssigedDiet} from "../userDir/AssigedDiet.tsx";
+
+import {NavDoctor} from "../doctor/NavDoctor.tsx";
 
 
 export function PersonalArea() {
@@ -21,19 +20,15 @@ export function PersonalArea() {
 
     return (
         <>
-            <div className="flex">
+            {/*<div className="flex">
                 <div className={"desktop:max-w-[15vw] flex"}>
                     {role == "CUSTOMER" && <SideBarUser/>}
-                </div>
-
-                <main className={"max-w-[100vw] flex flex-grow"}>
-                    <div className={"w-1/2 flex-col justify-evenly"}>
+                </div>*/}
+                <main id="main-personal" className={"max-w-[100vw] h-[100vh] flex flex-grow bg-gradient-to-r from-[#4b752a] from-0% via-[#393939] via-20% to-[#383c40] to-90%"}>
                         {role === "CUSTOMER" && <DashboardUser/>}
                         {role === "NUTRITIONIST" && routesDoc}
-                    </div>
-
                 </main>
-            </div>
+            {/*</div>*/}
         </>
     );
 }

@@ -6,27 +6,28 @@ import {Table, TableBody, TableCell, TableHead, TableHeadCell, TableRow} from "f
 import {useNavigate, useParams} from "react-router-dom";
 import {CheckState, DocPatient, Pazienti} from "../../interface/Interface.ts";
 
-interface StatePatient{
-    patient:[]
+interface StatePatient {
+    patient: []
 }
+
 export function Patient() {
     const [page, setPage] = useState<number>(0)
     const [size, setSize] = useState<number>(20)
     const [sortedBy, setSortedBy] = useState<string>("userId")
-    const NAVIGATE=useNavigate();
+    const NAVIGATE = useNavigate();
     const URLPatient = `http://localhost:5174/doctor/me/patients?page=${page}&size=${size}&sortedBy=${sortedBy}`
     const token = localStorage.getItem('token')
-    const doctorPatientState:DocPatient[]|string=useSelector((state:RootStore)=>(
+    const doctorPatientState: DocPatient[] | string = useSelector((state: RootStore) => (
         state.user.patient
     ))
-    const checkState=():CheckState =>{
-        if(Array.isArray(doctorPatientState)){
+    const checkState = (): CheckState => {
+        if (Array.isArray(doctorPatientState)) {
             return doctorPatientState as Array<DocPatient>
         }
     }
 
     console.log(doctorPatientState)
-    const DISPATCH=useDispatch();
+    const DISPATCH = useDispatch();
 
     const getPatient = async () => {
         try {
@@ -37,41 +38,41 @@ export function Patient() {
                     'Authorization': `Bearer ${token}`
                 }
             })
-            if(!patients.ok){
+            if (!patients.ok) {
                 throw new Error("Errore nella fetch")
             }
             return await patients.json();
-        }catch (err){
+        } catch (err) {
             console.log("Errore: " + err)
         }
     }
 
 
-    useEffect(()=>{
-    const fetchPatient=async ()=>{
-        try {
-            const p:Pazienti=await getPatient();
-            console.log(p)
-            DISPATCH(getPatientAll(p.content))
-        }catch (err){
-            console.log(err);
+    useEffect(() => {
+        const fetchPatient = async () => {
+            try {
+                const p: Pazienti = await getPatient();
+                console.log(p)
+                DISPATCH(getPatientAll(p.content))
+            } catch (err) {
+                console.log(err);
+            }
         }
-    }
 
-    fetchPatient()
+        fetchPatient()
 
-    },[])
+    }, [])
 
-    const nav=(id:number)=>{
+    const nav = (id: number) => {
         NAVIGATE(`/personalArea/pazienti/${id}`)
     }
 
     return (
         <>
-            <div className = {"text-center flex flex-col"}>
+            {/*<div className = {"text-center flex flex-col"}>
                 <div className = {"flex w-full justify-center py-4 items-center"}>
                     <h1 className = {"text-xl px-4"}>Pazienti</h1>
-                    <p className = {"text-white font-medium"}>Pagina: {page + 1} di {/*{pageNumber}*/}</p>
+                    <p className = {"text-white font-medium"}>Pagina: {page + 1} di {pageNumber}</p>
                 </div>
                 <div className = {"max-h-[70vh]  w-[40vw] rounded-2xl mx-auto overflow-y-auto p-0 border border-gray-700"}>
                     <Table  className = {"table-auto h-full relative border-gray-700 "}>
@@ -99,12 +100,40 @@ export function Patient() {
                         </TableBody>
                     </Table>
                 </div>
-                {/*<Pagination currentPage = {currentPage}
+                <Pagination currentPage = {currentPage}
                             onPageChange = {goNext}
                             totalPages = {pageNumber}
                             id = {"pagination-nutritionist"}
-                            className = {"mt-2"}/>*/}
+                            className = {"mt-2"}/>
 
+            </div>*/}
+            <div className="max-h-[99%] bg-[#413F42] w-[33%] bg-opacity-35 rounded-xl p-2 overflow-y-auto">
+                <h2 className="p-3 bg-[#545454] bg-opacity-[30%] rounded-xl">I tuoi Pazienti</h2>
+                <table className="table table-auto w-full mt-5">
+                    <thead>
+                    <tr className="text-center">
+                        <th>NOME</th>
+                        <th>COGNOME</th>
+                        <th>N.CELLULARE</th>
+                        <th>EMAIL</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {checkState().map((paz) => (
+                        <tr className="text-center hover:bg-[#545454] hover:bg-opacity-[8%] hover:text-[#17CF97] font-medium text-[90%] li cursor-pointer transition-all duration-100]"
+                            key={paz.idCliente}
+                            onClick={() => {
+                                nav(paz.idCliente)
+                            }}
+                        >
+                            <td>{paz.name}</td>
+                            <td>{paz.surname}</td>
+                            <td>{paz.cellNumber}</td>
+                            <td>{paz.email}</td>
+                        </tr>
+                    ))}
+                    </tbody>
+                </table>
             </div>
         </>
     );
