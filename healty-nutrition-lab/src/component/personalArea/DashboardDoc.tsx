@@ -18,7 +18,7 @@ export function DashboardDoc() {
     ])
     return (
         <>
-            <div className="flex w-[100vw] mt-20 relative">
+            <div className="flex w-[100vw] mt-20">
                 <NavDoctor/>
                 <div className="max-h-[99%] w-[15%] px-2">
                     <SideBarDocNutrition/>
