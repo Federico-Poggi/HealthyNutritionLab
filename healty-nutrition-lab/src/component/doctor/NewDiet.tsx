@@ -89,25 +89,11 @@ export function NewDiet(paziente: Paziente) {
     };
 
     return (
-        <div className="w-[40%] max-w-[90%]">
-            <h2 className={"text-white "}>ASSEGNA UNA NUOVA DIETA</h2>
-            <div className={"bg-[#191919]  overflow-y-auto max-h-[60vh]  p-3 rounded-2xl"}>
-
-            <span className="flex py-5 justify-evenly">
-                <div className={"flex items-center"}>
-                    <Label className={"text-white mx-2"}>Paziente: </Label>
-                    <p>{paziente.name} {paziente.surname}</p>
-                </div>
-                <div className={"flex items-center"}>
-                    <Label className={"text-white mx-2"}>Email: </Label>
-                    <p>{paziente.email}</p>
-                </div>
-                <div className={"flex items-center"}>
-                    <Label className={"text-white mx-2"}>Cell: </Label>
-                    <p>{paziente.cellNumber}</p>
-                </div>
-            </span>
-                <section className={"flex justify-evenly"}>
+        <div className="w-full overflow-y-auto">
+            <div className="p-3 bg-[#545454] bg-opacity-[100%] z-30  w-[97%] rounded-xl flex top-3  absolute">
+                <h2 className={"text-white "}>Nuova dieta</h2>
+            </div>
+            <section className={"flex justify-evenly mt-16"}>
             <span className={"flex items-center"}>
                         <Label className={"text-[17px] text-white font-medium mx-4"}>Tipologia</Label>
                         <Dropdown label={tipoDieta || 'TIPO DIETA'}>
@@ -128,7 +114,7 @@ export function NewDiet(paziente: Paziente) {
                             }}>ALTRO...</Dropdown.Item>
                         </Dropdown>
                         </span>
-                    <span className={"flex items-center"}>
+                <span className={"flex items-center"}>
                         <Label className={"text-[17px] text-white font-medium mx-4"}>Durata</Label>
                         <Dropdown label={durata || "DURATA"}>
                             <Dropdown.Item
@@ -149,54 +135,53 @@ export function NewDiet(paziente: Paziente) {
 
                         </Dropdown>
                         </span>
-                    <button onClick={() => setModalOpen(true)} className={"text-white"}>Aggiungi alimento</button>
-                </section>
+                <button onClick={() => setModalOpen(true)} className={"text-white"}>Aggiungi alimento</button>
+            </section>
 
-                <ModalDiet isOpenProps={modalOpen}
-                           onClose={closeModal}
-                           alimentiDietaSelected={alimentiDietaSelected}
-                           setAlimentiDieta={setAlimentiDieta}/>
+            <ModalDiet isOpenProps={modalOpen}
+                       onClose={closeModal}
+                       alimentiDietaSelected={alimentiDietaSelected}
+                       setAlimentiDieta={setAlimentiDieta}/>
 
 
-                <table className="table-auto text-center mx-auto w-full my-5 overflow-y-auto max-h-72] ">
-                    <thead>
-                    <tr>
-                        <th>Alimento</th>
-                        <th>Quantita</th>
-                    </tr>
-                    </thead>
-                    <tbody className="max-h-full overflow-y-auto">
-                    {alimentiDietaSelected.map((a, index) => {
-                        return (
-                            <tr key={index} className={"table-auto"}>
-                                <td className="py-2">
-                                    <Label className={"text-white font-medium"}>{a.name}</Label>
-                                </td>
-                                <td>
-                                    <input type={"text"}
-                                           className="w-1/2 bg-gray-800 h-[2em] border-0 outline-none"
-                                           onChange={(e) => {
-                                               const v = e.target.value
-                                               const newV = parseInt(v);
-                                               if (newV <= 0 || isNaN(newV)) {
-                                                   e.target.value = '';
-                                               } else {
-                                                   changeInput(newV, a.idAlimento)
-                                               }
-                                           }}
-                                    />
-                                </td>
-                            </tr>
-                        )
-                    })}
-                    </tbody>
-                </table>
-                <button onClick={(e) => {
-                    pushDiet()
-                    window.location.reload()
-                }}>Assegna dieta
-                </button>
-            </div>
+            <table className="table-auto text-center mx-auto w-full my-5 overflow-y-auto max-h-72] ">
+                <thead>
+                <tr>
+                    <th>Alimento</th>
+                    <th>Quantita</th>
+                </tr>
+                </thead>
+                <tbody className="max-h-full overflow-y-auto">
+                {alimentiDietaSelected.map((a, index) => {
+                    return (
+                        <tr key={index} className={"table-auto"}>
+                            <td className="py-2">
+                                <Label className={"text-white font-medium"}>{a.name}</Label>
+                            </td>
+                            <td>
+                                <input type={"text"}
+                                       className="w-1/2 bg-gray-800 h-[2em] border-0 outline-none"
+                                       onChange={(e) => {
+                                           const v = e.target.value
+                                           const newV = parseInt(v);
+                                           if (newV <= 0 || isNaN(newV)) {
+                                               e.target.value = '';
+                                           } else {
+                                               changeInput(newV, a.idAlimento)
+                                           }
+                                       }}
+                                />
+                            </td>
+                        </tr>
+                    )
+                })}
+                </tbody>
+            </table>
+            <button onClick={(e) => {
+                pushDiet()
+                window.location.reload()
+            }}>Assegna dieta
+            </button>
         </div>
     );
 }

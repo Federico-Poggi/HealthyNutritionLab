@@ -2,7 +2,6 @@ import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {RootStore} from "../../redux/store";
 import {getPatientAll} from "../../redux/action";
-import {Table, TableBody, TableCell, TableHead, TableHeadCell, TableRow} from "flowbite-react";
 import {useNavigate, useParams} from "react-router-dom";
 import {CheckState, DocPatient, Pazienti} from "../../interface/Interface.ts";
 
@@ -69,44 +68,6 @@ export function Patient() {
 
     return (
         <>
-            {/*<div className = {"text-center flex flex-col"}>
-                <div className = {"flex w-full justify-center py-4 items-center"}>
-                    <h1 className = {"text-xl px-4"}>Pazienti</h1>
-                    <p className = {"text-white font-medium"}>Pagina: {page + 1} di {pageNumber}</p>
-                </div>
-                <div className = {"max-h-[70vh]  w-[40vw] rounded-2xl mx-auto overflow-y-auto p-0 border border-gray-700"}>
-                    <Table  className = {"table-auto h-full relative border-gray-700 "}>
-                        <TableHead className = {"sticky top-0"}>
-                            <TableHeadCell className = {"bg-gray-800 text-gray-400"}>NAME</TableHeadCell>
-                            <TableHeadCell className = {"bg-gray-800 text-gray-400"}>SURNAME</TableHeadCell>
-                            <TableHeadCell className = {"bg-gray-800 text-gray-400"}>CELLNUMBER</TableHeadCell>
-                            <TableHeadCell className = {"bg-gray-800 text-gray-400"}>EMAIL</TableHeadCell>
-                        </TableHead>
-                        <TableBody className = {"divide-y p-0"}>
-                            {checkState().map(paz =>
-                                <TableRow onClick={()=>{
-                                    nav(paz.idCliente)
-                                }} key = {paz.idCliente}
-                                          className = {"border-gray-700 hover:bg-gray-300 hover:text-gray-700 hover:cursor-pointer bg-transparent text-gray-400"}>
-                                    <TableCell className = {"whitespace-nowrap font-medium"}>
-                                        {paz.name}
-                                    </TableCell>
-                                    <TableCell>{paz.surname}</TableCell>
-                                    <TableCell>{paz.cellNumber}</TableCell>
-                                    <TableCell>{paz.email}</TableCell>
-                                </TableRow>
-                            )
-                            }
-                        </TableBody>
-                    </Table>
-                </div>
-                <Pagination currentPage = {currentPage}
-                            onPageChange = {goNext}
-                            totalPages = {pageNumber}
-                            id = {"pagination-nutritionist"}
-                            className = {"mt-2"}/>
-
-            </div>*/}
             <div className="max-h-[99%] bg-[#413F42] w-[33%] bg-opacity-35 rounded-xl p-2 overflow-y-auto">
                 <h2 className="p-3 bg-[#545454] bg-opacity-[30%] rounded-xl">I tuoi Pazienti</h2>
                 <table className="table table-auto w-full mt-5">
