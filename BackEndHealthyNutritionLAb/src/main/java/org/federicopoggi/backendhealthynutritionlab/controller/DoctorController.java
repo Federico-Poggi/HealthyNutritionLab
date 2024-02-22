@@ -1,4 +1,5 @@
 package org.federicopoggi.backendhealthynutritionlab.controller;
+import com.lowagie.text.DocumentException;
 import jakarta.mail.MessagingException;
 import org.federicopoggi.backendhealthynutritionlab.DTOResponse.DietResponse;
 import org.federicopoggi.backendhealthynutritionlab.DtoPayload.DietPayload;
@@ -17,6 +18,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -97,7 +99,8 @@ public class DoctorController {
     @PreAuthorize("hasAuthority('NUTRITIONIST')")
     public DietResponse assignDiet(@AuthenticationPrincipal UserDetails userDetails,
                                    @RequestParam(required = true) Long idCustomer,
-                                   @RequestBody @Validated DietPayload dp) throws MessagingException {
+                                   @RequestBody @Validated DietPayload dp)
+            throws MessagingException, IOException, DocumentException {
         return docS.createDiet(idCustomer,dp);
 
     }

@@ -91,6 +91,7 @@ export function AssigedDiet() {
                                                             className={"cursor-pointer"}
                                                             onClick={() => dowloadFile(d.pdfDiet)}
                                             />
+                                            <a href={d.pdfDiet} download="pdf.pdf">Download</a>
                                         </Tooltip>
                                     </TableCell>
                                 </TableRow>

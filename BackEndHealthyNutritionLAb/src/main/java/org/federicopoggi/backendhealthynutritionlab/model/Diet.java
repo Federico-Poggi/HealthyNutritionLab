@@ -8,6 +8,7 @@ import lombok.Setter;
 import org.federicopoggi.backendhealthynutritionlab.model.Enum.Actually;
 import org.federicopoggi.backendhealthynutritionlab.model.Enum.DietType;
 import org.federicopoggi.backendhealthynutritionlab.model.Enum.Duration;
+import org.hibernate.annotations.Type;
 
 import java.time.LocalDate;
 import java.util.Base64;
@@ -58,7 +59,7 @@ public class Diet {
     Customer customer;
 
 
-    @Column(name = "diet_file", length = 3000)
+    @Column(name = "diet_file")
     private String pdfDiet;
 
 

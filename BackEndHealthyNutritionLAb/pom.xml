@@ -16,7 +16,19 @@
     <properties>
         <java.version>17</java.version>
     </properties>
+    <repositories>
+        <repository>
+            <id>AsposeJavaAPI</id>
+            <name>Aspose Java AP</name>
+            <url>https://releases.aspose.com/java/repo/</url>
+        </repository>
+    </repositories>
     <dependencies>
+        <dependency>
+            <groupId>com.aspose</groupId>
+            <artifactId>aspose-pdf</artifactId>
+            <version>21.12</version>
+        </dependency>
         <!-- https://mvnrepository.com/artifact/com.itextpdf/itextpdf -->
         <dependency>
             <groupId>com.itextpdf</groupId>
@@ -92,34 +104,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-webflux</artifactId>
         </dependency>
-        <!--<dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-boot-starter</artifactId>
-            <version>3.0.0</version> &lt;!&ndash; Assicurati di usare l'ultima versione &ndash;&gt;
-        </dependency>-->
-        <!-- https://mvnrepository.com/artifact/io.springfox/springfox-swagger2 -->
-        <!--<dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-            <version>3.0.0</version>
-        </dependency>-->
-        <!-- https://mvnrepository.com/artifact/io.springfox/springfox-swagger-ui -->
-        <!--<dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
-            <version>3.0.0</version>
-        </dependency>-->
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
             <version>4.0.1</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.springframework/spring-webmvc -->
-        <!--<dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-webmvc</artifactId>
-            <version>6.1.3</version>
-        </dependency>-->
         <dependency>
             <groupId>com.sun.mail</groupId>
             <artifactId>javax.mail</artifactId>
@@ -130,6 +120,23 @@
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
             <version>2.3.0</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.cloudinary</groupId>
+            <artifactId>cloudinary-http44</artifactId>
+            <version>1.27.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.xhtmlrenderer</groupId>
+            <artifactId>flying-saucer-pdf</artifactId>
+            <version>9.1.22</version> <!-- Aggiorna la versione a quella più recente -->
+        </dependency>
+        <dependency>
+        <groupId>org.freemarker</groupId>
+        <artifactId>freemarker</artifactId>
+        <version>2.3.31</version> <!-- Aggiorna alla versione più recente disponibile -->
+    </dependency>
     </dependencies>
     <build>
         <plugins>

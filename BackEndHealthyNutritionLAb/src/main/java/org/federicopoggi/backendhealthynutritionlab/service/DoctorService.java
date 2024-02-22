@@ -1,6 +1,8 @@
 package org.federicopoggi.backendhealthynutritionlab.service;
 
+import com.lowagie.text.DocumentException;
 import jakarta.mail.MessagingException;
+import jakarta.transaction.Transactional;
 import org.federicopoggi.backendhealthynutritionlab.DTOResponse.DietResponse;
 import org.federicopoggi.backendhealthynutritionlab.DTOResponse.ResponseDoctor;
 import org.federicopoggi.backendhealthynutritionlab.DtoPayload.DietPayload;
@@ -19,11 +21,13 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @Service
@@ -43,6 +47,7 @@ public class DoctorService {
     DietDAO dt;
 
     EmailService es;
+    PdfService pdfService;
 
     private JdbcTemplate jdbcTemplate;
     @Autowired
@@ -54,7 +59,8 @@ public class DoctorService {
                          AlimentoDAO al,
                          DietDAO dt,
                          EmailService es,
-                         JdbcTemplate jdbcTemplate) {
+                         JdbcTemplate jdbcTemplate,
+                         PdfService pdfService) {
         this.nutritionistDAO = nutritionistDAO;
         this.pt = pt;
         this.bc = bc;
@@ -64,6 +70,7 @@ public class DoctorService {
         this.dt = dt;
         this.es=es;
         this.jdbcTemplate=jdbcTemplate;
+        this.pdfService=pdfService;
     }
 
 
@@ -142,8 +149,8 @@ public class DoctorService {
         return al.findAll(p);
     }
 
-
-    public DietResponse createDiet(Long idCustomer, DietPayload dp) throws NotFoundException, MessagingException {
+    public DietResponse createDiet(Long idCustomer, DietPayload dp)
+            throws NotFoundException, MessagingException, IOException, DocumentException {
         Customer c = cs.findById(idCustomer)
                        .orElseThrow(() -> new NotFoundException("Utente non trovato"));
         List<AlimentoAndQuantita> alimentoAndQuantitaList = Arrays.asList(dp.alimentoAndQuantita());
@@ -191,16 +198,12 @@ public class DoctorService {
             newDiet.getAlimentiQuantita()
                    .put(a.getName(), alimentoAndQuantita.getQuantita());
         }
-        byte[] pdfFile= es.generatePdf(newDiet);
-        System.out.println(pdfFile.length);
-        String fileDiet=newDiet.encodedFile(pdfFile);
-        System.out.println(fileDiet);
-        newDiet.setPdfDiet(fileDiet);
-        es.sendEmailWithDiet(pdfFile,c);
+
+        byte[] pdf = pdfService.generatePDF(newDiet);
         dt.save(newDiet);
         c.getDiets()
          .add(newDiet);
-
+        es.sendEmailWithDiet(pdf,c);
         return new DietResponse(c.getIdCliente(), newDiet.getDietId());
     }
 

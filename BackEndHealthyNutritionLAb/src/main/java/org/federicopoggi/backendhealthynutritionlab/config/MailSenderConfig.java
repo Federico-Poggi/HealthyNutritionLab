@@ -1,18 +1,24 @@
 package org.federicopoggi.backendhealthynutritionlab.config;
 
-import jakarta.mail.Authenticator;
-import jakarta.mail.PasswordAuthentication;
-import jakarta.mail.Session;
+import com.cloudinary.Cloudinary;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
-
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 @Configuration
+@EnableWebMvc
 public class MailSenderConfig {
+
+
+    private ApplicationContext applicationContext;
+
     @Bean(name = "google_mail_sender")
     JavaMailSender getJavaMailSender(@Value("${spring.mail.host}") String host,
                                      @Value("${spring.mail.port}") int port,
@@ -33,6 +39,15 @@ public class MailSenderConfig {
         return mailSender;
     }
 
+    @Bean
+    public Cloudinary cloudinaryUploader(@Value("${CLOUDINARY_NAME}") String name,@Value("${CLOUDINARY_APIKEY}") String apiKey,@Value("${CLOUDINARY_SECRET}") String apiSecret ){
+        Map<String,String> config=new HashMap<>();
+        config.put("cloud_name", name);
+        config.put("api_key",apiKey);
+        config.put("api_secret", apiSecret);
+
+        return new Cloudinary(config);
+    }
 
 
 }
