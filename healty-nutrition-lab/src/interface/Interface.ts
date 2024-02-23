@@ -50,8 +50,8 @@ export interface StateLog {
 export interface Diet {
     dietId: number
     kcalTot: number
-    issueDate: string
-    expirationDate: string
+    issueDate: number[]
+    expirationDate: number[]
     duration: string
     actually: string
     dietType: string

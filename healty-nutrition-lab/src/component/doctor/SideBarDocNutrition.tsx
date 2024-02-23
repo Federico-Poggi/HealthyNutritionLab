@@ -1,26 +1,18 @@
 import {useNavigate} from "react-router-dom";
 import {useState} from "react";
-import {IoPeopleOutline} from "react-icons/io5";
-import {Tooltip} from "flowbite-react";
-import logo from '../../assets/Logo.svg'
-import {CiViewTable} from "react-icons/ci";
-import {MdArrowForwardIos, MdArrowBackIos} from "react-icons/md";
-import {IoHomeOutline} from "react-icons/io5";
-import {BiLogOut} from "react-icons/bi";
+import {IoHomeOutline, IoLogOut} from "react-icons/io5";
 import {PiArticleLight} from "react-icons/pi";
 import {useDispatch} from "react-redux";
 import {notLoggedAction} from "../../redux/action";
 import {TbLayoutDashboard} from "react-icons/tb";
+import {CiMenuKebab} from "react-icons/ci";
+import {BiImageAlt} from "react-icons/bi";
+import { RxDashboard } from "react-icons/rx";
 
 export function SideBarDocNutrition() {
     const NAVIGATE = useNavigate();
     const DISPATCH = useDispatch();
     const [isOpen, setIsOpen] = useState<boolean>(false)
-
-    const setToggle = () => {
-        isOpen === true ? setIsOpen(false) : setIsOpen(true)
-    }
-
     const logOut = () => {
         localStorage.removeItem('token')
         localStorage.removeItem("Role")
@@ -31,8 +23,8 @@ export function SideBarDocNutrition() {
         <>
 
             <div className="w-full h-full rounded-xl p-3 bg-[#161616] bg-opacity-[70%]">
-                <nav>
-                    <div className="flex items-center pb-5">
+                <nav className="h-1/2">
+                    <div className="flex items-center pb-5 relative">
                         <svg className="w-10 h-10 me-3 text-gray-200 dark:text-gray-700" aria-hidden="true"
                              xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                             <path
@@ -42,26 +34,52 @@ export function SideBarDocNutrition() {
                             <h3 className="text-[12px]">Nome Cognome</h3>
                             <h3 className="text-[12px]">Ruolo</h3>
                         </span>
+
                     </div>
                     <hr/>
-                    <aside className="py-2">
-                        <span className="flex items-center">
+                    <aside className="py-2 flex flex-col">
+                        <span className="flex items-center py-2 px-1 hover:bg-[#545454] hover:bg-opacity-[8%] hover:text-[#17CF97] rounded-lg">
                             <TbLayoutDashboard/>
-                            <p className="px-2 cursor-pointer"
+                            <p className="px-2 cursor-pointer text-[15px] "
                                onClick={() => NAVIGATE("tabelle-nutrizionali")}
                             >Tabelle Nutrizionali</p>
                         </span>
-                        <span className="flex items-center">
+                        <span className="flex items-center py-2 px-1 hover:bg-[#545454] hover:bg-opacity-[8%] hover:text-[#17CF97] rounded-lg">
                             <PiArticleLight/>
-                            <p className="px-2">Articoli</p>
+                            <p className="px-2 text-[15px]">Articoli</p>
                         </span>
-                        <span className="flex items-center">
+                        <span className="flex items-center cursor-pointer py-2 px-1 hover:bg-[#545454] hover:bg-opacity-[8%] hover:text-[#17CF97] rounded-lg">
                             <IoHomeOutline/>
-                            <p className="px-2">Home</p>
+                            <p onClick={() => {
+                                NAVIGATE("/")
+                            }} className="px-2 text-[15px]">Home</p>
                         </span>
-
+                        <span className="flex items-center cursor-pointer py-2 px-1 hover:bg-[#545454] hover:bg-opacity-[8%] hover:text-[#17CF97] rounded-lg">
+                            <RxDashboard/>
+                            <p onClick={() => {
+                                NAVIGATE("/personalArea")
+                            }} className="px-2 text-[15px]">Dashboard</p>
+                        </span>
                     </aside>
+
                 </nav>
+                <div className="divider">Account</div>
+                <footer className="">
+                    <div className=" flex flex-col w-full">
+                        <span className="py-3 px-1 flex items-center hover:bg-[#545454] hover:bg-opacity-[8%] hover:text-[#17CF97] rounded-lg">
+                        <BiImageAlt size={20}/>
+                            <p className="px-2 text-[15px]">Immagine Profilo</p>
+                            </span>
+                        <span
+                            onClick={()=>{
+                                logOut()
+                            }}
+                            className="flex py-3 px-1 items-center cursor-pointer hover:bg-[#545454] hover:bg-opacity-[8%] hover:text-[#17CF97] rounded-lg">
+                        <IoLogOut size={20}/>
+                            <p className="px-2 text-[15px]">LogOut</p>
+                        </span>
+                    </div>
+                </footer>
             </div>
         </>
     );

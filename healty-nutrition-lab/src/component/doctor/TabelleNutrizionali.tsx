@@ -148,7 +148,7 @@ export function TabelleNutrizionali() {
                             <td>{al.kcal}</td>
                             <td>{al.totProt}</td>
                             <td>{al.glucidiTot}</td>
-                            <td>{al.lipidiTot}</td>
+                            <td>{al.lipidiMonoinsaturi}</td>
                         </tr>
                     ))}
                     </tbody>
@@ -166,8 +166,8 @@ export function TabelleNutrizionali() {
                     />
                 </div>
                 <div
-                    className="w-full  h-[92%] mt-2 rounded-xl flex flex-col px-5  bg-transparent justify-evenly">
-                    <div className="w-full h-1/2  overflow-y-auto p-2 gap-y-2 gap-x-2 grid  grid-cols-2 flex-wrap">
+                    className="w-full h-[92%] mt-2 rounded-xl flex flex-col px-5  bg-transparent justify-evenly">
+                    <div className="w-full h-1/2 overflow-y-auto p-2 gap-y-2 gap-x-2 grid  grid-cols-2 flex-wrap">
                         {alimentFiltered?.map((al) => (
                             <div onClick={() => {
                                 setAlimentoSelected(al)
@@ -179,38 +179,45 @@ export function TabelleNutrizionali() {
                         ))}
                     </div>
                     <div className="divider divider-primary">Valori Nutrizionali</div>
-                    <div className="w-full h-1/2 border">
+                    <div className="w-full h-1/2">
                         {alimentoSelected &&
                             <>
                                 <h2 className="text-center">{alimentoSelected.name}</h2>
-                                <table className="mx-auto w-1/2 table">
+                                <table className="bg-gray-600 bg-opacity-25 mx-auto  w-1/2 table">
                                     <tbody>
                                     <tr className="text-center border-0">
                                         <th>Acqua</th>
-                                        <td className="flex items-center text-center">
+                                        <td className="flex items-center justify-center text-center">
                                             <label><IoWater color="#2DC5BE"/></label>
                                             <p className="px-2">{alimentoSelected.acqua}%</p>
                                         </td>
                                     </tr>
                                     <tr className="border-0">
                                         <th className="text-center ">Carboidrati</th>
-                                        <td className="flex items-center text-center">
+                                        <td className="flex items-center text-center justify-center">
                                             <label><PiGrains color="#8E8603"/></label>
                                             <p className="px-2">{alimentoSelected.glucidiTot}%</p>
                                         </td>
                                     </tr>
-                                    <tr>
+                                    <tr className="border-0">
                                         <th className="text-center">Lipidi</th>
-                                        <td className="flex items-center text-center">
+                                        <td className="flex items-center text-center justify-center">
                                             <label><GiFat color="#E77FAA"/></label>
-                                            <p className="px-2">{alimentoSelected.lipidiTot}%</p>
+                                            <p className="px-2">{alimentoSelected.lipidiMonoinsaturi}%</p>
                                         </td>
                                     </tr>
-                                    <tr>
+                                    <tr className="border-0">
                                         <th className="text-center">Proteine</th>
-                                        <td className="flex items-center text-center">
+                                        <td className="flex justify-center items-center text-center">
                                             <label><TbMeat color="#935E60"/></label>
-                                            <p className="px-2">{alimentoSelected.lipidiTot}%</p>
+                                            <p className="px-2">{alimentoSelected.totProt}%</p>
+                                        </td>
+                                    </tr>
+                                    <tr className="border-0">
+                                        <th className="text-center">Kcal</th>
+                                        <td className="flex justify-center items-center text-center">
+                                            <label><TbMeat color="#935E60"/></label>
+                                            <p className="px-2">{alimentoSelected.kcal} kcal</p>
                                         </td>
                                     </tr>
                                     </tbody>

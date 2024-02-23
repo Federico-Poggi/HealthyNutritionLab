@@ -8,7 +8,7 @@ import {
 import {AssignDiet, Diet, Paziente} from "../../interface/Interface.ts";
 import {NewDiet} from "./NewDiet.tsx";
 import {HiX} from "react-icons/hi";
-import {formatDate, isAfter, isBefore} from "date-fns";
+import {format, formatDate, isAfter, isBefore} from "date-fns";
 
 export function PazientePage() {
     const {idCustomer} = useParams()
@@ -58,10 +58,19 @@ export function PazientePage() {
             throw new Error("Erorre:");
         }
     }
-    const checkData = (expiredDate: string) => {
+
+    const convertToDate=(dateArray:number[]):string=>{
+        const year=dateArray[0];
+        const month=dateArray[1]-1;
+        const day=dateArray[2];
+        const date:Date=new Date(year,month,day)
+        return format(date,"dd-MM-yyyy")
+    }
+
+    const checkData = (expiredDate: number[]) => {
         const current = new Date();
-        formatDate(expiredDate, "dd/MM/yyyy")
-        if (isAfter(expiredDate, current)) {
+        const date=new Date(expiredDate[0],expiredDate[1]-1,expiredDate[2])
+        if (isAfter(date, current)) {
             return <Badge className={"justify-center bg-green-500 text-green-950"} color={"success"}>IN USE</Badge>
         } else {
             return <Badge className={"justify-center text-red-900 bg-red-400"}
@@ -106,8 +115,8 @@ export function PazientePage() {
                         >
                             <td>{d.dietType}</td>
                             <td>{checkData(d.expirationDate)}</td>
-                            <td>{d.issueDate}</td>
-                            <td>{d.expirationDate}</td>
+                            <td>{convertToDate(d.issueDate)}</td>
+                            <td>{convertToDate(d.expirationDate)}</td>
                             <td>{d.kcalTot}</td>
                             <td><HiX
                                 onClick={() => {
