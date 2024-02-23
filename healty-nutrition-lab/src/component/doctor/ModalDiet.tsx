@@ -54,7 +54,7 @@ export function ModalDiet({isOpenProps, onClose,alimentiDietaSelected,setAliment
 
     }
 
-    const handleFilter = (e) => {
+    const handleFilter = (e):Array<Alimento> => {
         const inputValue: string = e.target.value
         setInputSearch(inputValue)
         console.log(filter(inputValue, alimenti))

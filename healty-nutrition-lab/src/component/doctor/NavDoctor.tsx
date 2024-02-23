@@ -3,7 +3,7 @@ import Logo from "../../assets/Logo.svg";
 export const NavDoctor = () => {
     return (
         <>
-            <nav className="w-full flex justify-between px-10 py-4 shadow-2xl fixed top-0 z-30 bg-[#232121]">
+            <nav className="w-full flex justify-between px-10 py-4 shadow-2xl fixed top-0 z-30 bg-[#232121] bg-opacity-[80%]">
                 <div className="flex items-center shadow-[rgba(0,_0,_0,_0.2)_0px_60px_40px_-7px]">
                     <img src={Logo}
                          className={"brand-img mr-2 desktop:w-[30px] tablet:w-[20px] phone:w-[17px]"}

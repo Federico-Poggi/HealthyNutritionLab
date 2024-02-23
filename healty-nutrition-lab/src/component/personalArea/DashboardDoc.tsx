@@ -1,4 +1,3 @@
-
 import {Outlet, useParams, useRoutes} from "react-router-dom";
 import {SideBarDocNutrition} from "../doctor/SideBarDocNutrition.tsx";
 import {PazientePage} from "../doctor/PazientePage.tsx";
@@ -18,13 +17,15 @@ export function DashboardDoc() {
     ])
     return (
         <>
-            <div className="flex w-[100vw] mt-20">
+            <div className="flex w-[100vw]  mt-20 ">
                 <NavDoctor/>
-                <div className="max-h-[99%] w-[15%] px-2">
+                <div className="max-h-[99%] w-[15%] px-1">
                     <SideBarDocNutrition/>
                 </div>
-                {routes}
-                <Outlet/>
+                <div className="flex w-full px-3 justify-between">
+                    {routes}
+                    <Outlet/>
+                </div>
             </div>
         </>
     );

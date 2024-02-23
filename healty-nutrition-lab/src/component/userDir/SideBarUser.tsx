@@ -17,7 +17,8 @@ export function SideBarUser() {
     }
     return (
         <>
-            <div className={`desktop:w-[10vw] side-bar bg-[#121212] border border-[#75a602] absolute right-10 transition-all duration-800 my-3 ml-2 rounded-xl`}>
+            <div
+                className={`desktop:w-[10vw] side-bar bg-[#121212] border border-[#75a602] absolute right-10 transition-all duration-800 my-3 ml-2 rounded-xl`}>
                 <nav className={"relative transition-all duration-300 items-center flex justify-evenly p-2"}>
                     <p>
                         <img onClick={() => {
