@@ -43,13 +43,6 @@ public class UserSevice {
                            .orElseThrow(() -> new NotFoundException("USer non trovato ricontrollare l'id inserito"));
         Doc doc = docD.findById(doctorId)
                     .orElseThrow(() -> new NotFoundException("Dottore non trovato ricontrollare l'id inserito"));
-        /*if (doc instanceof Nutritionist){
-
-            System.out.println(doc.getRole().name());
-            System.out.println("é un nutrizionista");
-        }else {
-            System.out.println("è un personal trainer");
-        }*/
 
         if (user.getNutritionist() != null) {
             throw new AlreadyAssignException();
@@ -73,30 +66,6 @@ public class UserSevice {
         cs.save(user);
     }
 
-    /*{
-        String docRole = doc.getRole()
-                            .name();
-        newCus.setUserId(userId);
-        newCus.setName(user.getName());
-        newCus.setSurname(user.getSurname());
-        newCus.setCellNumber(user.getCellNumber());
-        newCus.setEmail(user.getEmail());
-        newCus.setRole(Role.USER);
-        newCus.setPassword(user.getPassword());
-        newCus.setBirthday(user.getBirthday());
-        switch (docRole) {
-            case "NUTRITIONIST":
-                newCus.setNutritionist((Nutritionist) doc);
-                ((Nutritionist) doc).getCustomers()
-                                    .add(newCus);
-                break;
-            case "PERSONAL_TRAINER":
-                newCus.setPersonalTrainer((PersonalTrainer) doc);
-                ((PersonalTrainer) doc).getCustomers()
-                                       .add(newCus);
-                break;
-        }
-    }*/
     public UserDietResponse getMyDiets(String email) throws NotFoundException{
         Customer c= cs.findByEmail(email).orElseThrow(()->new NotFoundException("user non trovato"));
         List<Diet> myDIetList=c.getDiets();

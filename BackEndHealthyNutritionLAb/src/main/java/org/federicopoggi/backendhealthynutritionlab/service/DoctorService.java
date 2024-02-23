@@ -1,8 +1,6 @@
 package org.federicopoggi.backendhealthynutritionlab.service;
 
-import com.lowagie.text.DocumentException;
 import jakarta.mail.MessagingException;
-import jakarta.transaction.Transactional;
 import org.federicopoggi.backendhealthynutritionlab.DTOResponse.DietResponse;
 import org.federicopoggi.backendhealthynutritionlab.DTOResponse.ResponseDoctor;
 import org.federicopoggi.backendhealthynutritionlab.DtoPayload.DietPayload;
@@ -22,12 +20,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 @Service
@@ -47,9 +42,11 @@ public class DoctorService {
     DietDAO dt;
 
     EmailService es;
+
     PdfService pdfService;
 
     private JdbcTemplate jdbcTemplate;
+
     @Autowired
     public DoctorService(NutritionistDAO nutritionistDAO,
                          PersonalTrainerDAO pt,
@@ -68,9 +65,9 @@ public class DoctorService {
         this.dc = dc;
         this.al = al;
         this.dt = dt;
-        this.es=es;
-        this.jdbcTemplate=jdbcTemplate;
-        this.pdfService=pdfService;
+        this.es = es;
+        this.jdbcTemplate = jdbcTemplate;
+        this.pdfService = pdfService;
     }
 
 
@@ -85,23 +82,11 @@ public class DoctorService {
         try {
             switch (role) {
                 case "NUTRITIONIST":
-                    Nutritionist d = new Nutritionist();
-                    d.setName(dps.name());
-                    d.setSurname(dps.surname());
-                    d.setCellNumber(dps.cellNumber());
-                    d.setEmail(dps.email());
-                    d.setPassword(bc.encode(dps.password()));
-                    d.setRole(Role.NUTRITIONIST);
-                    dc.save(d);
-                    return new ResponseDoctor(d.getIdDoctor());
+                    Nutritionist n = createNutritionist(dps);
+                    dc.save(n);
+                    return new ResponseDoctor(n.getIdDoctor());
                 case "PERSONAL_TRAINER":
-                    PersonalTrainer p = new PersonalTrainer();
-                    p.setName(dps.name());
-                    p.setSurname(dps.surname());
-                    p.setCellNumber(dps.cellNumber());
-                    p.setEmail(dps.email());
-                    p.setPassword(bc.encode(dps.password()));
-                    p.setRole(Role.PERSONAL_TRAINER);
+                    PersonalTrainer p = creatPersonal(dps);
                     dc.save(p);
                     return new ResponseDoctor(p.getIdDoctor());
                 default:
@@ -149,10 +134,52 @@ public class DoctorService {
         return al.findAll(p);
     }
 
-    public DietResponse createDiet(Long idCustomer, DietPayload dp)
-            throws NotFoundException, MessagingException, IOException, DocumentException {
+    public DietResponse createDiet(Long idCustomer, DietPayload dp) throws NotFoundException, MessagingException {
         Customer c = cs.findById(idCustomer)
                        .orElseThrow(() -> new NotFoundException("Utente non trovato"));
+        Diet newDiet = newDiet(dp, c);
+
+        byte[] pdf = pdfService.generatePDF(newDiet);
+        dt.save(newDiet);
+        c.getDiets()
+         .add(newDiet);
+        es.sendEmailWithDiet(pdf, c);
+        return new DietResponse(c.getIdCliente(), newDiet.getDietId());
+    }
+
+    public void deletDiet(Long idDieta) {
+        Diet found = dt.findById(idDieta)
+                       .orElseThrow(() -> new NotFoundException("Dieta non trovata"));
+        dt.delete(found);
+    }
+
+
+    /*------ CREAZIONE NUOVO PERSONAL TRAINER ------*/
+    public PersonalTrainer creatPersonal(DoctorPaylodSave dps) {
+        PersonalTrainer p = new PersonalTrainer();
+        p.setName(dps.name());
+        p.setSurname(dps.surname());
+        p.setCellNumber(dps.cellNumber());
+        p.setEmail(dps.email());
+        p.setPassword(bc.encode(dps.password()));
+        p.setRole(Role.PERSONAL_TRAINER);
+        return p;
+    }
+
+    /*------ CREAZIONE NUOVO NUTRIZIONISTA ------*/
+    public Nutritionist createNutritionist(DoctorPaylodSave dps) {
+        Nutritionist n = new Nutritionist();
+        n.setName(dps.name());
+        n.setSurname(dps.surname());
+        n.setCellNumber(dps.cellNumber());
+        n.setEmail(dps.email());
+        n.setPassword(bc.encode(dps.password()));
+        n.setRole(Role.NUTRITIONIST);
+        return n;
+    }
+
+    /*------ CREAZIONE DIETA -----*/
+    public Diet newDiet(DietPayload dp, Customer c) {
         List<AlimentoAndQuantita> alimentoAndQuantitaList = Arrays.asList(dp.alimentoAndQuantita());
         Diet newDiet = new Diet();
         switch (dp.duration()) {
@@ -198,17 +225,7 @@ public class DoctorService {
             newDiet.getAlimentiQuantita()
                    .put(a.getName(), alimentoAndQuantita.getQuantita());
         }
-
-        byte[] pdf = pdfService.generatePDF(newDiet);
-        dt.save(newDiet);
-        c.getDiets()
-         .add(newDiet);
-        es.sendEmailWithDiet(pdf,c);
-        return new DietResponse(c.getIdCliente(), newDiet.getDietId());
+        return newDiet;
     }
 
-    public void deletDiet(Long idDieta){
-        Diet found =dt.findById(idDieta).orElseThrow(()->new NotFoundException("Dieta non trovata"));
-        dt.delete(found);
-    }
 }

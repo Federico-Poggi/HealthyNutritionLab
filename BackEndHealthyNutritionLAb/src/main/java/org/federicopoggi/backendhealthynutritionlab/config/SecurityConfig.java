@@ -1,7 +1,5 @@
 package org.federicopoggi.backendhealthynutritionlab.config;
 
-/*import org.federicopoggi.backendhealthynutritionlab.security.FilterForSwagger;*/
-
 import org.federicopoggi.backendhealthynutritionlab.security.JwtFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -29,9 +27,6 @@ public class SecurityConfig {
 
     @Autowired
     JwtFilter jwtFilter;
-    /*@Autowired
-    FilterForSwagger filterForSwagger;*/
-
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.formLogin(AbstractHttpConfigurer::disable);
@@ -60,10 +55,4 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder(11);
     }
 
-
-    /*@Override
-    public void customize(WebSecurity web) {
-        web.ignoring().requestMatchers("/v2/api-docs", "/configuration/**", "/swagger-resources/**",  "/swagger-ui
-        .html", "/webjars/**", "/api-docs/**");
-    }*/
 }
