@@ -91,13 +91,13 @@ export function PazientePage() {
 
     return (
         <>
-            <div className="max-h-[99%] bg-[#413F42] w-2/5 bg-opacity-35 rounded-xl p-2 overflow-y-auto">
+            <div className="max-h-[99%] bg-[#413F42] w-1/2 mr-2 bg-opacity-35 rounded-xl p-2 overflow-y-auto">
                 <div className="p-3 bg-[#545454] bg-opacity-[30%] rounded-xl flex">
                     <h2 className="w-1/3 text-center">DIETE</h2>
                     <p className="w-1/3 text-center">Paziente: {paziente.name} {paziente.surname}</p>
                     <p className="w-1/3 text-center">Id: {paziente.idCliente}</p>
                 </div>
-                <table className="table table-auto w-full mt-5">
+                <table className="table table-auto mt-5">
                     <thead>
                     <tr className="text-center">
                         <th>TIPO DIETA</th>
@@ -128,7 +128,7 @@ export function PazientePage() {
                     </tbody>
                 </table>
             </div>
-            <div className="max-h-[99%] w-2/5 mx-auto bg-[#413F42] bg-opacity-35 rounded-xl p-3 flex relative">
+            <div className="max-h-[99%] w-1/2 mx-auto bg-[#413F42] bg-opacity-35 rounded-xl p-2 flex relative">
                 <NewDiet idCliente={paziente.idCliente}
                          name={paziente.name}
                          surname={paziente.surname}

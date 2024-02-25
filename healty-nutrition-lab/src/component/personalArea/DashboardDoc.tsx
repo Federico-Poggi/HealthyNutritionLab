@@ -19,10 +19,10 @@ export function DashboardDoc() {
         <>
             <div className="flex w-[100vw]  mt-20 ">
                 <NavDoctor/>
-                <div className="max-h-[99%] w-[15%] px-1">
+                <div className="max-h-[99%] w-[15%] pl-1">
                     <SideBarDocNutrition/>
                 </div>
-                <div className="flex w-full px-3 justify-between">
+                <div className="flex w-full px-2 justify-between">
                     {routes}
                     <Outlet/>
                 </div>

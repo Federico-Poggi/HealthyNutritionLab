@@ -1,9 +1,10 @@
 import {Dropdown, Label} from "flowbite-react";
 import {useEffect, useState} from "react";
-import {Alimento, AssignDiet, DietSpec, Paziente} from "../../interface/Interface.ts";
+import {Alimento, AssignDiet, Paziente} from "../../interface/Interface.ts";
 import {ModalDiet} from "./ModalDiet.tsx";
 import {useParams} from "react-router-dom";
-import {retry} from "@reduxjs/toolkit/query";
+import {PiBowlFood} from "react-icons/pi";
+import {RxPaperPlane} from "react-icons/rx";
 
 export function NewDiet(paziente: Paziente) {
     const [tipoDieta, setTipo] = useState<string>("")
@@ -90,13 +91,23 @@ export function NewDiet(paziente: Paziente) {
 
     return (
         <div className="w-full overflow-y-auto">
-            <div className="p-3 bg-[#545454] bg-opacity-[100%] z-30  w-[97%] rounded-xl flex top-3  absolute">
+            <div
+                className="p-3 bg-[#545454] bg-opacity-[60%] z-30  w-[97%] rounded-xl flex justify-between px-5 top-3  absolute">
                 <h2 className={"text-white "}>Nuova dieta</h2>
+                <div
+                    className="flex items-center hover:text-[#17CF97] hover:scale-105 transition-all duration-500 cursor-pointer">
+                    <button onClick={(e) => {
+                        pushDiet()
+                        window.location.reload()
+                    }}>Invia
+                    </button>
+                    <RxPaperPlane className="mx-2"/>
+                </div>
             </div>
             <section className={"flex justify-evenly mt-16"}>
             <span className={"flex items-center"}>
-                        <Label className={"text-[17px] text-white font-medium mx-4"}>Tipologia</Label>
-                        <Dropdown label={tipoDieta || 'TIPO DIETA'}>
+                        <Label className={"text-white font-medium mx-4"}>Tipologia</Label>
+                        <Dropdown label={tipoDieta || 'TIPO DIETA'} inline>
                             <Dropdown.Item onClick={() => {
                                 setTipologia("DIMAGRIMENTO")
                             }}>DIMAGRIMENTO</Dropdown.Item>
@@ -115,8 +126,8 @@ export function NewDiet(paziente: Paziente) {
                         </Dropdown>
                         </span>
                 <span className={"flex items-center"}>
-                        <Label className={"text-[17px] text-white font-medium mx-4"}>Durata</Label>
-                        <Dropdown label={durata || "DURATA"}>
+                        <Label className={"text-white mx-4"}>Durata</Label>
+                        <Dropdown label={durata || "DURATA"} inline size="sm">
                             <Dropdown.Item
                                 onClick={() => {
                                     setDur("BIMESTRALE")
@@ -135,7 +146,10 @@ export function NewDiet(paziente: Paziente) {
 
                         </Dropdown>
                         </span>
-                <button onClick={() => setModalOpen(true)} className={"text-white"}>Aggiungi alimento</button>
+                <button onClick={() => setModalOpen(true)} className={"text-white flex text-sm items-center"}>
+                    <PiBowlFood className=""/>
+                    <p className="px-2"> Aggiungi alimento</p>
+                </button>
             </section>
 
             <ModalDiet isOpenProps={modalOpen}
@@ -143,45 +157,42 @@ export function NewDiet(paziente: Paziente) {
                        alimentiDietaSelected={alimentiDietaSelected}
                        setAlimentiDieta={setAlimentiDieta}/>
 
-
-            <table className="table-auto text-center mx-auto w-full my-5 overflow-y-auto max-h-72] ">
-                <thead>
-                <tr>
-                    <th>Alimento</th>
-                    <th>Quantita</th>
-                </tr>
-                </thead>
-                <tbody className="max-h-full overflow-y-auto">
-                {alimentiDietaSelected.map((a, index) => {
-                    return (
-                        <tr key={index} className={"table-auto"}>
-                            <td className="py-2">
-                                <Label className={"text-white font-medium"}>{a.name}</Label>
-                            </td>
-                            <td>
-                                <input type={"text"}
-                                       className="w-1/2 bg-gray-800 h-[2em] border-0 outline-none"
-                                       onChange={(e) => {
-                                           const v = e.target.value
-                                           const newV = parseInt(v);
-                                           if (newV <= 0 || isNaN(newV)) {
-                                               e.target.value = '';
-                                           } else {
-                                               changeInput(newV, a.idAlimento)
-                                           }
-                                       }}
-                                />
-                            </td>
-                        </tr>
-                    )
-                })}
-                </tbody>
-            </table>
-            <button onClick={(e) => {
-                pushDiet()
-                window.location.reload()
-            }}>Assegna dieta
-            </button>
+            <div className="w-full my-5 max-h-full" >
+                <table className="table-auto text-center overflow-y-auto mx-auto">
+                    <thead>
+                    <tr>
+                        <th>Alimento</th>
+                        <th>Quantita</th>
+                    </tr>
+                    </thead>
+                    <tbody className="max-h-full overflow-y-auto">
+                    {alimentiDietaSelected.map((a, index) => {
+                        return (
+                            <tr key={index}
+                                className={`ring-1 ring-green-800 text-[12px] shadow-lg rounded-xl bg-green-500 bg-opacity-10 h-[50px] `}>
+                                <td>
+                                    <p className={"text-white font-medium "}>{a.name}</p>
+                                </td>
+                                <td>
+                                    <input type={"text"}
+                                           className="w-1/2 bg-gray-800 h-[2em] border-0 outline-none"
+                                           onChange={(e) => {
+                                               const v = e.target.value
+                                               const newV = parseInt(v);
+                                               if (newV <= 0 || isNaN(newV)) {
+                                                   e.target.value = '';
+                                               } else {
+                                                   changeInput(newV, a.idAlimento)
+                                               }
+                                           }}
+                                    />
+                                </td>
+                            </tr>
+                        )
+                    })}
+                    </tbody>
+                </table>
+            </div>
         </div>
     );
 }
