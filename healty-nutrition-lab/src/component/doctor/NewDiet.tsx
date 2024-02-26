@@ -5,7 +5,7 @@ import {ModalDiet} from "./ModalDiet.tsx";
 import {useParams} from "react-router-dom";
 import {PiBowlFood} from "react-icons/pi";
 import {RxPaperPlane} from "react-icons/rx";
-import {IconType} from "react-icons";
+
 
 export function NewDiet(paziente: Paziente) {
     const [tipoDieta, setTipo] = useState<string>("")
@@ -15,13 +15,10 @@ export function NewDiet(paziente: Paziente) {
         dietType: '',
         alimentoAndQuantita: []
     })
-    const [kcal, setKcal] = useState<number>(0);
     const [modalOpen, setModalOpen] = useState<boolean>(false)
     const [alimentiDietaSelected, setAlimentiDieta] = useState<Array<Alimento>>([])
-    const {idCustomer} = useParams()
     const URL = `http://localhost:5174/doctor/me/diet?idCustomer=${paziente.idCliente}`
     const token = localStorage.getItem('token')
-    let lastInput = 0;
     const pushDiet = async () => {
         try {
             const resp = await fetch(URL, {
@@ -91,28 +88,6 @@ export function NewDiet(paziente: Paziente) {
         }));
     };
 
-    /*const kcalCalculate = (al: Alimento, quantity: number) => {
-        if(isNaN(quantity)){
-            quantity=0;
-        }
-        const edibile = (al.parteEdibile * quantity) / 100;
-        const kcalPeEdibile = (edibile * al.kcal) / 100;//Mi trovo le kcal totali per la quantita assegnata di parte edibile
-        const kcalTot=Math.ceil(kcal+kcalPeEdibile);
-        setKcal(kcalTot);
-    }*/
-    function Card1({heading, description, icon, className}: CardProps) {
-        return (
-            <>
-                <div className={`flex gap-4 rounded-xl shadow-sm p-6 ${className}`}>
-                    <div className="min-w-max">{icon}</div>
-                    <div className="space-y-2">
-                        <h3 className="text-[22px] font-semibold">{heading}</h3>
-                        <p className="leading-8 text-gray-500 font-normal">{description}</p>
-                    </div>
-                </div>
-            </>
-        );
-    }
 
     return (
         <div className="w-full overflow-y-auto">

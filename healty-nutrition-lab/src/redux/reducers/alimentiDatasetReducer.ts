@@ -1,7 +1,8 @@
 import {SET_DATASET,ALL_DATASET_ALIMENTS} from "../action";
+import {Alimento} from "../../interface/Interface.ts";
 
 interface DataSet {
-    content:any[]
+    content:Alimento[]
     totalPages:number
     totalElements:number
 }

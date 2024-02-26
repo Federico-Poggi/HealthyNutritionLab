@@ -7,8 +7,6 @@ import {Alimento, ModalDietProps} from "../../interface/Interface.ts";
 import {HiX} from "react-icons/hi";
 import { IoMdAdd } from "react-icons/io";
 export function ModalDiet({isOpenProps, onClose,alimentiDietaSelected,setAlimentiDieta}: ModalDietProps) {
-    /*STATI*/
-    /*const [isOpen, setIsOpen] = useState<boolean>(isOpenProps)*/
     const [inputSearch, setInputSearch] = useState<string>("");
     const URLAlimenti = `http://localhost:5174/doctor/aliments`
     const token = localStorage.getItem('token')
@@ -17,7 +15,6 @@ export function ModalDiet({isOpenProps, onClose,alimentiDietaSelected,setAliment
     useEffect(() => {
         const data = async () => {
             const resp = await fetchAliments()
-            /*console.log(resp)*/
             DISPATCH(allDataActionAliments(resp))
         }
 
@@ -54,7 +51,7 @@ export function ModalDiet({isOpenProps, onClose,alimentiDietaSelected,setAliment
 
     }
 
-    const handleFilter = (e):Array<Alimento> => {
+    const handleFilter = (e:React.ChangeEvent<HTMLInputElement>):Array<Alimento> => {
         const inputValue: string = e.target.value
         setInputSearch(inputValue)
         console.log(filter(inputValue, alimenti))

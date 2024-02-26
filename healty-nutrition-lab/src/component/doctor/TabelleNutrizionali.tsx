@@ -13,18 +13,14 @@ import {TbMeat} from "react-icons/tb";
 
 export function TabelleNutrizionali() {
     const dataset = useSelector((state: RootStore) => state.alimentiDataSet)
-    const alimenti: Array<Alimento> = dataset.content
+    const alimenti: Array<Alimento> = dataset.content;
     const [pageNumber, setPageNumber] = useState<number>(0);
-    const [totalElement, setTotalElement] = useState<number>(0)
-    const [currentPage, setCurrentPage] = useState<number>(0)
     const [page, setPage] = useState<number>(0)
     const [size, setSize] = useState<number>(20)
     const [sortedBy, setSortedBy] = useState<string>("idAlimento")
     const [allAliments, setAllAliments] = useState<Array<Alimento>>([]);
     const [alimentFiltered, setAlimentFiltered] = useState<Array<Alimento>>([])
-    const [inputSearch, setInputSearch] = useState<string>("");
     const [alimentoSelected, setAlimentoSelected] = useState<Alimento>()
-    const [isSelected, setIsSeleted] = useState<boolean>(false)
 
     const URLAlimenti = `http://localhost:5174/doctor/aliments`
     const URLDataSet = `http://localhost:5174/doctor/nutritionist/aliments?page=${page}&size=${size}&sortedBy=${sortedBy}`;
@@ -38,7 +34,6 @@ export function TabelleNutrizionali() {
                 const data: DataSet = await getDataSet();
                 dispatch(setDataset(data));
                 setPageNumber(() => data.totalPages)
-                setTotalElement(() => data.totalElements)
                 console.log(data)
             } catch (error) {
                 console.error("Errore nella fetch:", error);
@@ -171,7 +166,6 @@ export function TabelleNutrizionali() {
                         {alimentFiltered?.map((al) => (
                             <div onClick={() => {
                                 setAlimentoSelected(al)
-                                setIsSeleted(true)
                             }} key={al.idAlimento}
                                  className={`ring-1 ring-green-800 cursor-pointer text-[12px] shadow-lg rounded-xl bg-green-500 bg-opacity-10 h-[50px] flex items-center justify-center`}>
                                 {al.name}

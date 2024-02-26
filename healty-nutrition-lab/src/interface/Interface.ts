@@ -19,7 +19,7 @@ export interface ModalDietProps{
     isOpenProps: boolean
     onClose: () => void
     alimentiDietaSelected:Alimento[]
-    setAlimentiDieta:SetStateAction<Alimento[]>
+    setAlimentiDieta:Alimento[]
 }
 export interface Alimento {
     idAlimento: number
@@ -95,4 +95,32 @@ export interface CardProps{
 }
 export interface RespImg{
     imgUrl:string
+}
+
+export interface RootMe {
+    idCliente: number
+    name: string
+    surname: string
+    cellNumber: string
+    email: string
+    password: string
+    birthday: any
+    role: string
+    urlImg: any
+    diets: Diet[]
+    trainingPlans: any[]
+}
+export interface MyDoc {
+    nutriotionist: Doctor|null
+    personalTrainer: Doctor|null
+}
+export interface Doctor {
+    idDoctor: number
+    name: string
+    surname: string
+    cellNumber: string
+    email: string
+    role: string
+    urlImg: string
+    customers: any[]
 }

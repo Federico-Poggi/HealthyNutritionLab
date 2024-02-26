@@ -9,7 +9,9 @@ export function UserMain() {
                 <YourDoc/>
                 <div className="flex flex-col grow px-2 justify-start">
                     <Calendar/>
+                    <div className="h-1/3">
                     <CardDoc/>
+                    </div>
                 </div>
             </div>
         </>

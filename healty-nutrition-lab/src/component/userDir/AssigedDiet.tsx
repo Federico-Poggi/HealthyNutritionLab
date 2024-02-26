@@ -1,8 +1,8 @@
 import {useEffect, useState} from "react";
 import {DietaList} from "../../interface/Interface.ts";
-import {Badge, Table, TableBody, TableCell, TableHead, TableHeadCell, TableRow, Tooltip} from "flowbite-react";
+import {Badge} from "flowbite-react";
 import {useDownload} from "../../interface/funzioni.ts";
-import { TbFileDownload } from "react-icons/tb";
+
 import {ModalDietSelected} from "./ModalDietSelected.tsx";
 import {format, isAfter} from "date-fns";
 
@@ -69,54 +69,6 @@ export function AssigedDiet() {
 
     return (
         <>
-
-        {/*<div className={"flex justify-around flex-grow max-h-[100%]"}>
-                <div className={"max-h-[70vh] rounded-2xl  overflow-y-auto p-0 border border-gray-700 mt-5"}>
-                    <Table hoverable
-                           className={"relative border-gray-700 "}
-                    >
-                        <TableHead className={"sticky top-0"}>
-                            <TableHeadCell className={"bg-gray-800 text-gray-400"}>TIPO DIETA</TableHeadCell>
-                            <TableHeadCell className={"bg-gray-800 text-gray-400"}>STATO DIETA</TableHeadCell>
-                            <TableHeadCell className={"bg-gray-800 text-gray-400"}>DATA
-                                                                                   ASSEGNAZIONE</TableHeadCell>
-                            <TableHeadCell className={"bg-gray-800 text-gray-400"}>DATA
-                                                                                   SCADENZA</TableHeadCell>
-                            <TableHeadCell className={"bg-gray-800 text-gray-400"}>KCAL TOTALI</TableHeadCell>
-                            <TableHeadCell className={"bg-gray-800 text-gray-400"}>DOWNLOAD</TableHeadCell>
-                        </TableHead>
-                        <TableBody className={"divide-y p-0"}>
-                            {dietList.dietList.map(d => {
-                                return <TableRow
-                                    onClick={() => {
-                                        setSelected(!selected)
-                                        setThisDietId(d.dietId)
-                                    }}
-                                    className={"cursor-pointer"}
-                                    key={d.dietId}
-                                >
-                                    <TableCell>{d.dietType}</TableCell>
-                                    <TableCell>
-                                        {(d.actually)}
-                                    </TableCell>
-                                    <TableCell>{d.issueDate}</TableCell>
-                                    <TableCell>{d.expirationDate}</TableCell>
-                                    <TableCell>{d.kcalTot}</TableCell>
-                                    <TableCell>
-                                        <Tooltip content={"Scarica dieta"}>
-                                            <TbFileDownload size={25}
-                                                            className={"cursor-pointer"}
-                                                            onClick={() => dowloadFile(d.pdfDiet)}
-                                            />
-                                            <a href={d.pdfDiet} download="pdf.pdf">Download</a>
-                                        </Tooltip>
-                                    </TableCell>
-                                </TableRow>
-                            })
-                            }
-                        </TableBody>
-                    </Table>
-                </div>*/}
         <div className="max-h-1/3 h-1/2 bg-[#413F42] w-full bg-opacity-35 rounded-xl p-2 overflow-y-auto">
             <h2 className="p-3 bg-[#545454] bg-opacity-[30%] rounded-xl">Le Tue Diete</h2>
             <table className="table table-auto w-full mt-5">

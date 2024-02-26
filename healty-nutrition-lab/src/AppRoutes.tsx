@@ -10,7 +10,13 @@ import {PazientePage} from "./component/doctor/PazientePage.tsx";
 import {TabelleNutrizionali} from "./component/doctor/TabelleNutrizionali.tsx";
 import {AssigedDiet} from "./component/userDir/AssigedDiet.tsx";
 
-export const AppRoutes = ({role, idCustomer}) => {
+interface StateThis{
+    role:string
+    idCustomer:string
+}
+
+
+export const AppRoutes = ({role, idCustomer}:StateThis) => {
     return (
         <>
             <Router>

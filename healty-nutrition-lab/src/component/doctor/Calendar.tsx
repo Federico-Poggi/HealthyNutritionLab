@@ -6,7 +6,6 @@ import {Reservations} from "./Reservations.tsx";
 
 export const Calendar = () => {
     const date = new Date()
-    const [currentDate, setCurrentDate] = useState(date)
     const [mothSelected, setMoth] = useState(date.getMonth() + 1)
     const [year, setYear] = useState(date.getFullYear())
     const MESI = ["GENNAIO", "FEBBRAIO", "MARZO", "APRILE", "MAGGIO", "GIUGNO", "LUGLIO", "AGOSTO", "SETTEMBRE", "OTTOBRE", "NOVEMBRE", "DICEMBRE"];
@@ -15,9 +14,6 @@ export const Calendar = () => {
         return new Date(year, moth, 0).getDate();
     }
 
-    const firstDAy = (date: Date) => {
-        return new Date(date.getFullYear(), date.getMonth(), 1).getDate();
-    }
     const getCalendar = () => {
         const days = day(year, mothSelected);
         const first = 1
