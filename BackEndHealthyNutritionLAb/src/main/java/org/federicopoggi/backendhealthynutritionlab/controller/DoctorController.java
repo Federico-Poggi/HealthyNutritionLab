@@ -1,7 +1,9 @@
 package org.federicopoggi.backendhealthynutritionlab.controller;
+
 import com.lowagie.text.DocumentException;
 import jakarta.mail.MessagingException;
 import org.federicopoggi.backendhealthynutritionlab.DTOResponse.DietResponse;
+import org.federicopoggi.backendhealthynutritionlab.DTOResponse.ImgResponse;
 import org.federicopoggi.backendhealthynutritionlab.DtoPayload.DietPayload;
 import org.federicopoggi.backendhealthynutritionlab.model.Alimento;
 import org.federicopoggi.backendhealthynutritionlab.model.Customer;
@@ -16,7 +18,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
@@ -24,24 +26,27 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/doctor")
-/*@Api(tags = "prova controller",value = "Controller operazioni doc")*/
-public class DoctorController {
+/*@Api(tags = "prova controller",value = "Controller operazioni doc")*/ public class DoctorController {
     /*
-    * TODO:
-    *  1- GET PER OTTENERE LE DIETE ASSEGNATE AD UN CERTO CLIENTE PER COORDINARE IL LAVORO CON I PERSONAL TRAINER
-    *  2- POST PER INSERIRE UN PROGRAMMA D'ALLENAMENTO FAX SIMILE DELLE DIETE
-    *  3- AGGIUNGERE LA POSSIBILITA DI INSERIRE UN PDF CON LA DIET/SCHEDA ALLENAMENTO CHE VERRA SPEDITO VIA MAIL AL CLIENTE
-    *  4- AGGIUNGERE CONTROLLI O SULLA DIETA E SULLA SCHEDA DI ALLENAMENTO PER SCADENZE (QUANDO SCADE CAMBIARE LO STATO IN EXPIRED)
-    *  5- CONTROLLARE FORMATO DATE
-    * */
+     * TODO:
+     *  1- GET PER OTTENERE LE DIETE ASSEGNATE AD UN CERTO CLIENTE PER COORDINARE IL LAVORO CON I PERSONAL TRAINER
+     *  2- POST PER INSERIRE UN PROGRAMMA D'ALLENAMENTO FAX SIMILE DELLE DIETE
+     *  3- AGGIUNGERE LA POSSIBILITA DI INSERIRE UN PDF CON LA DIET/SCHEDA ALLENAMENTO CHE VERRA SPEDITO VIA MAIL AL
+     * CLIENTE
+     *  4- AGGIUNGERE CONTROLLI O SULLA DIETA E SULLA SCHEDA DI ALLENAMENTO PER SCADENZE (QUANDO SCADE CAMBIARE LO
+     * STATO IN EXPIRED)
+     *  5- CONTROLLARE FORMATO DATE
+     * */
 
 
     DoctorService docS;
+
     AlimentoDAO ad;
+
     @Autowired
     public DoctorController(DoctorService docS, AlimentoDAO ad) {
         this.docS = docS;
-        this.ad=ad;
+        this.ad = ad;
     }
 
     // GETMAPPING
@@ -67,8 +72,9 @@ public class DoctorController {
                                                  @RequestParam(defaultValue = "10") int size,
                                                  @RequestParam(defaultValue = "userId") String sortedBy) {
 
-        return docS.getAllPatient(us,page, size, sortedBy);
+        return docS.getAllPatient(us, page, size, sortedBy);
     }
+
     /* ---- GET PER I NUTRIZIONISTI PER AVERE UNA TABELLA DEGLI ALIMENTI -----*/
     @GetMapping("/nutritionist/aliments")
     @PreAuthorize("hasAuthority('NUTRITIONIST')")
@@ -83,12 +89,11 @@ public class DoctorController {
 
     @GetMapping("/aliments")
     @ResponseStatus(HttpStatus.OK)
-    public List<Alimento> getAll(){
+    public List<Alimento> getAll() {
         return ad.findAll();
     }
 
     /* ---- GET PER I PERSONALTRAINER PER AVERE UNA TABELLA DEGLI ESERCIZI ------ */
-
 
 
     // POST
@@ -101,7 +106,7 @@ public class DoctorController {
                                    @RequestParam(required = true) Long idCustomer,
                                    @RequestBody @Validated DietPayload dp)
             throws MessagingException, IOException, DocumentException {
-        return docS.createDiet(idCustomer,dp);
+        return docS.createDiet(idCustomer, dp);
 
     }
 
@@ -116,10 +121,22 @@ public class DoctorController {
                                                  @RequestParam(defaultValue = "userId") String sortedBy) {
         return docS.getAllPersonalCustomer(idPersonalTrainer, page, size, sortedBy);
     }*/
+    @PostMapping("/me/uploadImg")
+    @ResponseStatus(HttpStatus.OK)
+    public String uploadImgProfile(@AuthenticationPrincipal UserDetails me,
+                                   @RequestParam("avatar") MultipartFile file) throws IOException {
+        return docS.uploadImgProfile(file,me.getUsername());
+    }
+    @GetMapping("/me/profileImg")
+    @ResponseStatus(HttpStatus.OK)
+    public ImgResponse imgProfile(@AuthenticationPrincipal UserDetails me){
+        return docS.profImg(me.getUsername());
+    }
+
 
     @DeleteMapping("/diet")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteDiet(@RequestParam Long idDieta){
+    public void deleteDiet(@RequestParam Long idDieta) {
         docS.deletDiet(idDieta);
     }
 }

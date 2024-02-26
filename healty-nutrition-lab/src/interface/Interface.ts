@@ -1,4 +1,5 @@
 import React, {SetStateAction} from "react";
+import {IconType} from "react-icons";
 
 export interface Pazienti{
     content:[]
@@ -84,4 +85,14 @@ export interface DietModalProps{
     isOpened:boolean
     setIsOpen:React.Dispatch<React.SetStateAction<boolean>>
     diet:Diet
+}
+
+export interface CardProps{
+    heading:string,
+    description:string,
+    icon:IconType,
+    className:string
+}
+export interface RespImg{
+    imgUrl:string
 }

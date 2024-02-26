@@ -1,7 +1,11 @@
 package org.federicopoggi.backendhealthynutritionlab.service;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import jakarta.mail.MessagingException;
+import jakarta.mail.Multipart;
 import org.federicopoggi.backendhealthynutritionlab.DTOResponse.DietResponse;
+import org.federicopoggi.backendhealthynutritionlab.DTOResponse.ImgResponse;
 import org.federicopoggi.backendhealthynutritionlab.DTOResponse.ResponseDoctor;
 import org.federicopoggi.backendhealthynutritionlab.DtoPayload.DietPayload;
 import org.federicopoggi.backendhealthynutritionlab.DtoPayload.DoctorPaylodSave;
@@ -19,7 +23,9 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
@@ -45,6 +51,7 @@ public class DoctorService {
 
     PdfService pdfService;
 
+    Cloudinary cloudinary;
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
@@ -57,7 +64,7 @@ public class DoctorService {
                          DietDAO dt,
                          EmailService es,
                          JdbcTemplate jdbcTemplate,
-                         PdfService pdfService) {
+                         PdfService pdfService,Cloudinary cloudinary) {
         this.nutritionistDAO = nutritionistDAO;
         this.pt = pt;
         this.bc = bc;
@@ -68,6 +75,7 @@ public class DoctorService {
         this.es = es;
         this.jdbcTemplate = jdbcTemplate;
         this.pdfService = pdfService;
+        this.cloudinary=cloudinary;
     }
 
 
@@ -228,4 +236,16 @@ public class DoctorService {
         return newDiet;
     }
 
+    public String uploadImgProfile(MultipartFile file,String email) throws IOException {
+        String url=(String) cloudinary.uploader().upload(file.getBytes(), ObjectUtils.emptyMap()).get("url");
+        Doc d= dc.findByEmail(email).orElseThrow(()-> new NotFoundException("Dottore con email " + email + " non trovato"));
+        d.setUrlImg(url);
+        dc.save(d);
+
+        return "Immagine caricata con successo";
+    }
+    public ImgResponse profImg(String email){
+        Doc d=dc.findByEmail(email).orElseThrow(()-> new NotFoundException("Dottore con email " + email + " non trovato"));
+        return new ImgResponse(d.getUrlImg()) ;
+    }
 }

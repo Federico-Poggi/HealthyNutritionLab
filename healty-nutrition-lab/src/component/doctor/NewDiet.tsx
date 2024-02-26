@@ -1,10 +1,11 @@
 import {Dropdown, Label} from "flowbite-react";
 import {useEffect, useState} from "react";
-import {Alimento, AssignDiet, Paziente} from "../../interface/Interface.ts";
+import {Alimento, AssignDiet, CardProps, Paziente} from "../../interface/Interface.ts";
 import {ModalDiet} from "./ModalDiet.tsx";
 import {useParams} from "react-router-dom";
 import {PiBowlFood} from "react-icons/pi";
 import {RxPaperPlane} from "react-icons/rx";
+import {IconType} from "react-icons";
 
 export function NewDiet(paziente: Paziente) {
     const [tipoDieta, setTipo] = useState<string>("")
@@ -14,12 +15,13 @@ export function NewDiet(paziente: Paziente) {
         dietType: '',
         alimentoAndQuantita: []
     })
+    const [kcal, setKcal] = useState<number>(0);
     const [modalOpen, setModalOpen] = useState<boolean>(false)
     const [alimentiDietaSelected, setAlimentiDieta] = useState<Array<Alimento>>([])
     const {idCustomer} = useParams()
     const URL = `http://localhost:5174/doctor/me/diet?idCustomer=${paziente.idCliente}`
     const token = localStorage.getItem('token')
-
+    let lastInput = 0;
     const pushDiet = async () => {
         try {
             const resp = await fetch(URL, {
@@ -89,6 +91,29 @@ export function NewDiet(paziente: Paziente) {
         }));
     };
 
+    /*const kcalCalculate = (al: Alimento, quantity: number) => {
+        if(isNaN(quantity)){
+            quantity=0;
+        }
+        const edibile = (al.parteEdibile * quantity) / 100;
+        const kcalPeEdibile = (edibile * al.kcal) / 100;//Mi trovo le kcal totali per la quantita assegnata di parte edibile
+        const kcalTot=Math.ceil(kcal+kcalPeEdibile);
+        setKcal(kcalTot);
+    }*/
+    function Card1({heading, description, icon, className}: CardProps) {
+        return (
+            <>
+                <div className={`flex gap-4 rounded-xl shadow-sm p-6 ${className}`}>
+                    <div className="min-w-max">{icon}</div>
+                    <div className="space-y-2">
+                        <h3 className="text-[22px] font-semibold">{heading}</h3>
+                        <p className="leading-8 text-gray-500 font-normal">{description}</p>
+                    </div>
+                </div>
+            </>
+        );
+    }
+
     return (
         <div className="w-full overflow-y-auto">
             <div
@@ -105,47 +130,47 @@ export function NewDiet(paziente: Paziente) {
                 </div>
             </div>
             <section className={"flex justify-evenly mt-16"}>
-            <span className={"flex items-center"}>
-                        <Label className={"text-white font-medium mx-4"}>Tipologia</Label>
-                        <Dropdown label={tipoDieta || 'TIPO DIETA'} inline>
-                            <Dropdown.Item onClick={() => {
-                                setTipologia("DIMAGRIMENTO")
-                            }}>DIMAGRIMENTO</Dropdown.Item>
-                            <Dropdown.Item onClick={() => {
-                                setTipologia("MASSA MUSCOLARE")
-                            }}>MASSA MUSCOLARE</Dropdown.Item>
-                            <Dropdown.Item onClick={() => {
-                                setTipologia("VEGANA")
-                            }}>VEGANA</Dropdown.Item>
-                            <Dropdown.Item onClick={() => {
-                                setTipologia("VEGETARIANA")
-                            }}>VEGETARIANA</Dropdown.Item>
-                            <Dropdown.Item onClick={() => {
-                                setTipologia("ALTRO")
-                            }}>ALTRO...</Dropdown.Item>
-                        </Dropdown>
-                        </span>
                 <span className={"flex items-center"}>
-                        <Label className={"text-white mx-4"}>Durata</Label>
-                        <Dropdown label={durata || "DURATA"} inline size="sm">
-                            <Dropdown.Item
-                                onClick={() => {
-                                    setDur("BIMESTRALE")
-                                }}
-                            >BIMESTRALE</Dropdown.Item>
-                            <Dropdown.Item
-                                onClick={() => {
-                                    setDur("MENSILE")
-                                }}
-                            >MENSILE</Dropdown.Item>
-                            <Dropdown.Item
-                                onClick={() => {
-                                    setDur("SETTIMANALE")
-                                }}
-                            >SETTIMANALE</Dropdown.Item>
+                    <Label className={"text-white font-medium mx-4"}>Tipologia</Label>
+                    <Dropdown label={tipoDieta || 'TIPO DIETA'} inline>
+                        <Dropdown.Item onClick={() => {
+                            setTipologia("DIMAGRIMENTO")
+                        }}>DIMAGRIMENTO</Dropdown.Item>
+                        <Dropdown.Item onClick={() => {
+                            setTipologia("MASSA MUSCOLARE")
+                        }}>MASSA MUSCOLARE</Dropdown.Item>
+                        <Dropdown.Item onClick={() => {
+                            setTipologia("VEGANA")
+                        }}>VEGANA</Dropdown.Item>
+                        <Dropdown.Item onClick={() => {
+                            setTipologia("VEGETARIANA")
+                        }}>VEGETARIANA</Dropdown.Item>
+                        <Dropdown.Item onClick={() => {
+                            setTipologia("ALTRO")
+                        }}>ALTRO...</Dropdown.Item>
+                    </Dropdown>
+                </span>
+                <span className={"flex items-center"}>
+                    <Label className={"text-white mx-4"}>Durata</Label>
+                    <Dropdown label={durata || "DURATA"} inline size="sm">
+                        <Dropdown.Item
+                            onClick={() => {
+                                setDur("BIMESTRALE")
+                            }}
+                        >BIMESTRALE</Dropdown.Item>
+                        <Dropdown.Item
+                            onClick={() => {
+                                setDur("MENSILE")
+                            }}
+                        >MENSILE</Dropdown.Item>
+                        <Dropdown.Item
+                            onClick={() => {
+                                setDur("SETTIMANALE")
+                            }}
+                        >SETTIMANALE</Dropdown.Item>
 
-                        </Dropdown>
-                        </span>
+                    </Dropdown>
+                </span>
                 <button onClick={() => setModalOpen(true)} className={"text-white flex text-sm items-center"}>
                     <PiBowlFood className=""/>
                     <p className="px-2"> Aggiungi alimento</p>
@@ -157,7 +182,7 @@ export function NewDiet(paziente: Paziente) {
                        alimentiDietaSelected={alimentiDietaSelected}
                        setAlimentiDieta={setAlimentiDieta}/>
 
-            <div className="w-full my-5 max-h-full" >
+            <div className="w-full my-5 max-h-full">
                 <table className="table-auto text-center overflow-y-auto mx-auto">
                     <thead>
                     <tr>
@@ -169,23 +194,23 @@ export function NewDiet(paziente: Paziente) {
                     {alimentiDietaSelected.map((a, index) => {
                         return (
                             <tr key={index}
-                                className={`ring-1 ring-green-800 text-[12px] shadow-lg rounded-xl bg-green-500 bg-opacity-10 h-[50px] `}>
+                                className={``}>
                                 <td>
-                                    <p className={"text-white font-medium "}>{a.name}</p>
+                                    <p className={"text-white text-sm font-medium lowercase first-letter:uppercase"}>{a.name}</p>
                                 </td>
                                 <td>
                                     <input type={"text"}
                                            className="w-1/2 bg-gray-800 h-[2em] border-0 outline-none"
                                            onChange={(e) => {
-                                               const v = e.target.value
+                                               const v = e.target.value;
                                                const newV = parseInt(v);
+
                                                if (newV <= 0 || isNaN(newV)) {
                                                    e.target.value = '';
                                                } else {
-                                                   changeInput(newV, a.idAlimento)
+                                                   changeInput(newV, a.idAlimento);
                                                }
-                                           }}
-                                    />
+                                           }}/>
                                 </td>
                             </tr>
                         )

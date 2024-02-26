@@ -10,22 +10,37 @@ export function TrainingPlan() {
 
     return (
         <>
-            <div className = {"flex justify-around flex-grow h-1/2"}>
-                <div className = {"max-h-[70vh] rounded-2xl  overflow-y-auto p-0 border border-gray-700 mt-5"}>
-                    <Table hoverable className = {"relative border-gray-700 "}>
-                        <TableHead className = {"sticky top-0"}>
-                            <TableHeadCell className = {"bg-gray-800 text-gray-400"}>TIPO DIETA</TableHeadCell>
-                            <TableHeadCell className = {"bg-gray-800 text-gray-400"}>STATO DIETA</TableHeadCell>
-                            <TableHeadCell className = {"bg-gray-800 text-gray-400"}>DATA
-                                                                                     ASSEGNAZIONE</TableHeadCell>
-                            <TableHeadCell className = {"bg-gray-800 text-gray-400"}>DATA
-                                                                                     SCADENZA</TableHeadCell>
-                            <TableHeadCell className = {"bg-gray-800 text-gray-400"}>KCAL TOTALI</TableHeadCell>
-                            <TableHeadCell  className = {"bg-gray-800 text-gray-400"}>DOWNLOAD</TableHeadCell>
-                        </TableHead>
-                    </Table>
-                </div>
+            <div className="max-h-[50%] h-1/2 bg-[#413F42] w-full bg-opacity-35 rounded-xl p-2 overflow-y-auto">
+                <h2 className="p-3 bg-[#545454] bg-opacity-[30%] rounded-xl">Schede Allenamento</h2>
+                <table className="table table-auto w-full mt-5">
+                    <thead>
+                    <tr className="text-center">
+                        <th>Tipo</th>
+                        <th>Stato</th>
+                        <th>Data Assegnazione</th>
+                        <th>Data Scadenza</th>
+                        <th>Kcal Totali</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                  {/*  {dietList.dietList.map((d) => (
+                        <tr className="text-center hover:bg-[#545454] hover:bg-opacity-[8%] hover:text-[#17CF97] font-medium text-[90%] li cursor-pointer transition-all duration-100]"
+                            key={d.dietId}
+                            onClick={() => {
+                                setSelected(!selected)
+                                setThisDietId(d.dietId)
+                            }}
+                        >
+                            <td>{d.dietType}</td>
+                            <td>{checkData(d.expirationDate)}</td>
+                            <td>{convertToDate(d.issueDate)}</td>
+                            <td>{convertToDate(d.expirationDate)}</td>
+                            <td>{d.kcalTot}</td>
+                        </tr>
+                    ))}*/}
+                    </tbody>
+                </table>
             </div>
-        </>
-    );
-}
+            </>
+            );
+            }

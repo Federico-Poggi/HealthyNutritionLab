@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.apachecommons.CommonsLog;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -44,6 +45,9 @@ public class Customer implements UserDetails {
     @Column(name = "user_role")
     @Enumerated(EnumType.STRING)
     Role role;
+
+    @Column(name = "profile_img")
+    String urlImg;
 
     @ManyToOne
     @JsonBackReference

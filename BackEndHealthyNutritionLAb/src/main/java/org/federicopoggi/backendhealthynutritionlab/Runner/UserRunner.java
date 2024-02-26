@@ -19,16 +19,12 @@ public class UserRunner implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-       /* us.deleteAll();*/
-       /* Doc admin=new Doc();
+        /*Doc admin=new Doc();
         admin.setName("admin");
         admin.setSurname("admin");
         admin.setEmail("admin@admin.com");
         admin.setPassword(bp.encode("admin123"));
         admin.setRole(Role.ADMIN);
-        dc.save(admin)*/;
-
-
-
+        dc.save(admin);*/
     }
 }
