@@ -9,14 +9,14 @@ import java.util.List;
 
 @Service
 public class AlimentoService {
-
     AlimentoDAO al;
+
     @Autowired
     public AlimentoService(AlimentoDAO al) {
         this.al = al;
     }
 
-    public List<Alimento> getAll(){
+    public List<Alimento> getAll() {
         return al.findAll();
     }
 
