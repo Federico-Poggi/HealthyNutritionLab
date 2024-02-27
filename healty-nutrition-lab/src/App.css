@@ -3,31 +3,340 @@
 
 /*NAVBAR STYLE*/
 
-#navbar{
+/*
+:root{
+    margin: 0;
+    padding: 0;
     width: 100vw;
-    border-bottom:1px solid rgba(114, 114, 114, 0.32);
+    --tw-bg-opacity: 1;
+    --tw-bg-white: #ffffff;
 }
-#navbar-brand{
+*/
+
+
+
+
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-ms-clear {
+    display: none;
+}
+
+.modal-open{
+    overflow: hidden;
+}
+
+
+
+@keyframes slideIn {
+    from {
+        transform: translateY(100%);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+.loginModal{
+    animation: slideIn 1.2s forwards, fadeIn 0.8s forwards;
+}
+
+#navbar {
+    border-bottom: 1px solid rgba(114, 114, 114, 0.32);
+}
+
+#navbar-brand {
     font-family: 'Inter', sans-serif;
     font-weight: 600;
-   /* padding: 0 40px;*/
+    /* padding: 0 40px;*/
 }
-#navigation-option{
+
+#navigation-option {
     font-family: 'Inter', sans-serif;
 }
-#navigation-option p{
+
+#navigation-option p {
     padding: 0 20px;
     font-weight: 600;
 }
-#navigation-option p:hover{
+
+#navigation-option p:hover {
     color: #C9F31D;
     cursor: pointer;
     scale: 1.2;
     transition: all 0.1s linear;
 }
-#registration-login button{
+
+#registration-login button {
     font-family: 'Inter', sans-serif;
-    font-size: 17px;
+    font-size: 15px;
     font-weight: 600;
-    margin:0 20px;
+    display: flex;
+    justify-content: space-evenly;
 }
+
+/*HOME PAGE*/
+#title-home {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+}
+
+#logoipsum{
+    color: #757575;
+}
+#header-home p {
+    color: rgba(140, 140, 140, 0.91);
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+}
+.btn-home{
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    border-radius: 9px;
+    background: transparent;
+    box-shadow:0 0 10px rgba(146, 255, 30, 0.55);
+    border: 1px solid rgba(146, 255, 30, 0.47);
+    color: white;
+}
+.btn-home:hover{
+    background:#C9F31D;
+    font-weight: 600;
+    color: #313131;
+    transition: all 0.3s ease-in-out;
+}
+#collaboration{
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+}
+#img-sport{
+    border-radius: 20px;
+    box-shadow: 0 0 20px rgba(146, 255, 30, 0.55)
+}
+
+#img-container-home{
+    border-radius: 20px;
+}
+#offers-section-home{
+    font-family: 'Inter', sans-serif;
+    color: rgba(229, 229, 229, 0.8);
+}
+#offers-section-home h2{
+    font-weight: 700;
+}
+#offers-section-home p{
+    color: rgba(117, 117, 117, 0.75);
+    font-weight: 500;
+}
+.list-offers{
+    font-family: 'Inter', sans-serif;
+    color: rgba(117, 117, 117, 0.75);
+    font-weight: 400;
+    line-height: 3;
+}
+#discover-more{
+    font-family: 'Inter', sans-serif;
+    color: rgba(104, 238, 9, 0.75);
+    font-weight: 600;
+}
+#footer-icon{
+    color: #2c2c2c;
+}
+#footer-brand{
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    color: #c4c4c4;
+}
+#footer-slogan{
+    font-family: 'Inter', sans-serif;
+    color: #3f3f3f;
+    font-weight: 500;
+}
+
+.icon-social{
+    margin: 0 5px;
+}
+
+.footer-link{
+    font-family: 'Inter', sans-serif;
+    color: #757575;
+    font-weight: 700;
+}
+
+#learn-section{
+    color:#c4c4c4;
+    font-weight: 700;
+}
+#learn-section p{
+    color: #505050;
+    font-weight: 500;
+}
+
+.title-card{
+    font-weight:700;
+    color: #C4C4C4;
+}
+
+#contact-space{
+    font-family: 'Inter', sans-serif;
+    color: #c9c9c9;
+    font-weight: 700;
+}
+.contact-us{
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    color: #4b4a4a;
+}
+
+.contact-p{
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    color: #c9c9c9;
+}
+.icon-section{
+    color: #c5f5b7;
+}
+
+/*LOGIN*/
+.input-container {
+    width: 100%;
+    z-index: 2;
+    @supports (mix-blend-mode: darken) {
+        position: relative;
+        mix-blend-mode: lighten;
+        .label-form {
+            position: absolute;
+            left: 1rem;
+            top: -0.40rem;
+            background: #000;
+        }
+    }
+}
+    .label-form {
+        padding: 0 0.2em;
+        margin-bottom: 0.9em;
+        text-transform: uppercase;
+        font-size: 0.5rem;
+        letter-spacing: 0.1em;
+        color: #ccd;
+        color: rgba(255, 255, 255, 0.89);
+        cursor: pointer;
+    }
+.input-form {
+    color: rgba(201, 243, 29, 0.87);
+    font-size: 0.8rem;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    line-height: 1;
+    outline: none;
+    height: calc(1em + 1.6em + 0.5em);
+    padding: 0.5em 1em;
+    border: 0.1em solid transparent;
+    background-image: linear-gradient(#000, #000),
+    linear-gradient(120deg, #1ad0ac 0%, #0e4a85 50%, #99ff00 100%);
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+    border-radius: 10px;
+    background-size: 200% 100%;
+    transition: background-position 0.8s ease-in-out;
+
+    &:hover {
+        background-position: 100% 0;
+    }
+
+    &:focus {
+        outline: 1px dashed #C9F31D;
+        outline-offset: 0.2em;
+    }
+}
+
+#login-brand{
+    background-image: url("./assets/loinimg.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(99, 100, 99, 0.27);
+    }
+
+}
+
+#name-brand {
+    font-family:'Inter', sans-serif;
+    font-weight: 600;
+    position: relative;
+    color: #8e8f8d;
+    letter-spacing: 2px;
+
+}
+
+/*REGISTRATION FORM*/
+#registration-form{
+    font-family:'Inter', sans-serif;
+}
+#registration-form h2{
+    font-weight: 700;
+}
+#sideBar-user{
+    background: rgba(41, 41, 47, 0.63);
+}
+
+#pagination-nutritionist button{
+    background: transparent;
+    color: #b2b2b2;
+    font-weight: normal;
+}
+#pagination-nutritionist button:hover{
+    color: #ffea00;}
+
+#side{
+    background-color: #2c2c2c !important;
+}
+.side-bar{
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    color: #c9c9c9;
+}
+.side-bar p:hover{
+    cursor: pointer;
+    color:#579614;
+}
+.nav-open{
+    margin-left: 5%;
+
+}
+
+@keyframes modalOpen {
+    from{
+        transform: scale(0);
+
+    }
+    to{
+        transform: scale(1);
+
+    }
+}
+
+.modal{
+    animation: modalOpen 0.3s forwards;
+}
+
+#main-personal{
+    background-size: 100% 100%;
+    background-position: 0px 0px;
+    background-image: linear-gradient(307deg, #2c2c2c 8%, #232121 55%, #2a3122 99%);
+}
+

@@ -1,15 +1,22 @@
+import theme from "tailwindcss/defaultTheme.js";
+
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ["./src/**/*.{js,jsx,ts,tsx}"],
-  theme: {
-    extend: {
-      screens:{
-        /*'xs': {'max':'570px'}*/
-        'desktop':{'min':'1440px'},
-        'tablet':{'min':'810px', 'max':'1440px'},
-        'phone':{'max': '810px'}
-      }
+    content: ["./src/**/*.{js,jsx,ts,tsx}", "node_modules/flowbite-react/lib/esm/**/*.js"],
+    theme: {
+        extend: {
+            screens: {
+                'desktop': {'min': '1241px'},
+                'tablet': {'min': '768px', 'max': '1240px'},
+                'phone': {'max': '767px'}
+            }
+        },
     },
-  },
-  plugins: [],
+    plugins: [
+        // eslint-disable-next-line no-undef
+        require('flowbite/plugin'),
+        // eslint-disable-next-line no-undef
+        require("daisyui")
+    ],
+    darkMode:"class"
 };

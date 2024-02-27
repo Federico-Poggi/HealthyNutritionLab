@@ -4,4 +4,20 @@
 
 :root{
     background-color: #121212ff;
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    --tw-bg-opacity: 1;
+    --bg-opacity: 1;
+    --tw-bg-white: #ffffff;
+    font-family: 'Inter', sans-serif;
 }
+
+
+*::-webkit-scrollbar {
+    width:0;
+}
+
+
+
+

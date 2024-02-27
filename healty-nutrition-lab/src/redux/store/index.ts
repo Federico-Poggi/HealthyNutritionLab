@@ -1,12 +1,23 @@
-import {configureStore} from '@reduxjs/toolkit';
-import counterReducer from '../reducers'
+import {combineReducers, configureStore, Store} from '@reduxjs/toolkit';
+import loginReducer from "../reducers/modalReducer.js";
+import userReducer from "../reducers/userReducer.ts";
+import alimentiDatasetReducer from "../reducers/alimentiDatasetReducer.ts";
 
-export const store = configureStore({
-    reducer: {
-        counter: counterReducer,
-    },
+
+export type RootStore=ReturnType<typeof bigReducer>
+
+
+const bigReducer = combineReducers({
+    loginModalState:loginReducer,
+    user:userReducer,
+    alimentiDataSet:alimentiDatasetReducer
 })
 
+export type AppStore = Store<RootStore>;
 
-export type AppDispatch=typeof store.dispatch
-export type RootState=ReturnType<typeof store.getState>
+ const store = configureStore({
+    reducer: bigReducer,
+});
+
+export default store;
+
