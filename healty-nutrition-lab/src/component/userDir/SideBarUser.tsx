@@ -11,16 +11,17 @@ import {RespImg} from "../../interface/Interface.ts";
 import {Simulate} from "react-dom/test-utils";
 import select = Simulate.select;
 import {name} from "tailwindcss";
+import {NewProfileImgModal} from "./NewProfileImgModal.tsx";
 
 export function SideBarUser() {
+    const urlUploadImg = 'http://localhost:5174/user/me/imgUpload'
     const NAVIGATE = useNavigate();
     const DISPATCH = useDispatch();
     const urlImg = 'http://localhost:5174/user/me/imgProfile'
-    const urlUploadImg='http://localhost:5174/user/me/imgUpload'
     const token = localStorage.getItem('token')
     const [imgProf, setImgProf] = useState<string>()
-    const param:string="avatar";
-    const [fileSelec,setFile]=useState<File>()
+    const [open,setOpen]=useState<boolean>(false)
+
     const logOut = () => {
         localStorage.removeItem('token')
         localStorage.removeItem("Role")
@@ -66,39 +67,9 @@ export function SideBarUser() {
 
     }
 
-    const uploadImg=async ()=>{
-        try {
-            const formData=new FormData();
-            formData.append("avatar",fileSelec);
-
-            const resp = await fetch(urlUploadImg, {
-                method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                },
-                body:formData
-            })
-            if (!resp.ok) {
-                throw new Error("error")
-            } else {
-                const img: RespImg = await resp.json();
-                setImgProf(img.imgUrl);
-                return img;
-            }
-        } catch (Err) {
-            console.log(Err)
-        }
+    const openDIalog=()=>{
+        setOpen(!open);
     }
-
-    const setIm= (ev:ChangeEvent<HTMLInputElement>)=>{
-        const file=ev.target.files;
-        if(file){
-            setFile(file[0]);
-        }else {
-            return;
-        }
-    }
-
 
     return (
         <>
@@ -123,13 +94,6 @@ export function SideBarUser() {
                         </span>
                         <span
                             className="flex items-center py-2 px-1 hover:bg-[#545454] hover:bg-opacity-[8%] hover:text-[#17CF97] rounded-lg">
-                            <TbLayoutDashboard/>
-                            <p className="px-2 cursor-pointer text-[15px] "
-                               onClick={() => NAVIGATE("tabelle-nutrizionali")}
-                            >Diete</p>
-                        </span>
-                        <span
-                            className="flex items-center py-2 px-1 hover:bg-[#545454] hover:bg-opacity-[8%] hover:text-[#17CF97] rounded-lg">
                             <PiArticleLight/>
                             <p className="px-2 text-[15px]">Articoli</p>
                         </span>
@@ -148,7 +112,9 @@ export function SideBarUser() {
                 <footer className="">
                     <div className=" flex flex-col w-full">
                         <span
-                            className="py-3 px-1 flex items-center hover:bg-[#545454] hover:bg-opacity-[8%] hover:text-[#17CF97] rounded-lg">
+                            className="py-3 px-1 flex items-center hover:bg-[#545454] hover:bg-opacity-[8%] hover:text-[#17CF97] rounded-lg cursor-pointer"
+                            onClick={openDIalog}
+                        >
                         <BiImageAlt size={20}/>
                             <p className="px-2 text-[15px]">Immagine Profilo</p>
                             </span>
@@ -161,8 +127,7 @@ export function SideBarUser() {
                             <p className="px-2 text-[15px]">LogOut</p>
                         </span>
                         <span>
-                            <input type="file" onChange={setIm}/>
-                            <button onClick={uploadImg}>Click</button>
+                            <NewProfileImgModal open= {open} setIsOpen={()=>setOpen(!open)} setImgProf={()=>setImgProf} url={urlUploadImg}/>
                         </span>
                     </div>
                 </footer>
