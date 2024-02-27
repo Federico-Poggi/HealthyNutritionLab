@@ -20,8 +20,7 @@ export function ModalDiet({isOpenProps, onClose, alimentiDietaSelected, setAlime
         }
         data()
     }, []);
-
-    /*FUNZIONI*/
+    
     const alimenti: Alimento[] = useSelector((state: RootStore) => {
         return state.alimentiDataSet.content
     })

@@ -1,8 +1,6 @@
 import {useEffect, useState} from "react";
 import {DietaList} from "../../interface/Interface.ts";
 import {Badge} from "flowbite-react";
-import {useDownload} from "../../interface/funzioni.ts";
-
 import {ModalDietSelected} from "./ModalDietSelected.tsx";
 import {format, isAfter} from "date-fns";
 
@@ -12,7 +10,6 @@ export function AssigedDiet() {
     const [thisDietId, setThisDietId] = useState<number>()
     const URLDiets = `http://localhost:5174/user/me/diets`
     const token = localStorage.getItem('token');
-    const dowloadFile=useDownload()
 
     useEffect(() => {
         const fetchDiet =async ()=>{

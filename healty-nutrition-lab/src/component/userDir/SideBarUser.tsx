@@ -1,16 +1,12 @@
 import {IoHomeOutline, IoLogOut} from "react-icons/io5";
-import {BiImageAlt, BiLogOut} from "react-icons/bi";
+import {BiImageAlt} from "react-icons/bi";
 import {useNavigate} from "react-router-dom";
 import {notLoggedAction} from "../../redux/action";
 import {useDispatch} from "react-redux";
-import {TbLayoutDashboard} from "react-icons/tb";
 import {PiArticleLight} from "react-icons/pi";
 import {RxDashboard} from "react-icons/rx";
-import {ChangeEvent, ReactEventHandler, useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import {RespImg} from "../../interface/Interface.ts";
-import {Simulate} from "react-dom/test-utils";
-import select = Simulate.select;
-import {name} from "tailwindcss";
 import {NewProfileImgModal} from "./NewProfileImgModal.tsx";
 
 export function SideBarUser() {

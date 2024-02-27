@@ -1,8 +1,7 @@
 import {Dropdown, Label} from "flowbite-react";
 import {useEffect, useState} from "react";
-import {Alimento, AssignDiet, CardProps, Paziente} from "../../interface/Interface.ts";
+import {Alimento, AssignDiet, Paziente} from "../../interface/Interface.ts";
 import {ModalDiet} from "./ModalDiet.tsx";
-import {useParams} from "react-router-dom";
 import {PiBowlFood} from "react-icons/pi";
 import {RxPaperPlane} from "react-icons/rx";
 

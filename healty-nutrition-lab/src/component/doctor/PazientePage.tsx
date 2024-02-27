@@ -3,12 +3,10 @@ import {useEffect, useState} from "react";
 import {
     Badge
 } from "flowbite-react";
-
-
-import {AssignDiet, Diet, Paziente} from "../../interface/Interface.ts";
+import {Diet, Paziente} from "../../interface/Interface.ts";
 import {NewDiet} from "./NewDiet.tsx";
 import {HiX} from "react-icons/hi";
-import {format, formatDate, isAfter, isBefore} from "date-fns";
+import {format, isAfter} from "date-fns";
 
 export function PazientePage() {
     const {idCustomer} = useParams()

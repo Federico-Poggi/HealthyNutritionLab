@@ -1,4 +1,3 @@
-//Login Page nel momento del login ricavarsi il ruolo
 import Logo from '../../assets/Logo.svg'
 import imgLogin from '../../assets/loinimg.jpg'
 import {RxCross2} from "react-icons/rx";
@@ -7,12 +6,6 @@ import {useDispatch, useSelector} from 'react-redux';
 import {closeAction, loggedUserAction} from "../../redux/action";
 import {NavigateFunction, useNavigate} from "react-router-dom";
 import {RootStore} from "../../redux/store";
-
-interface StateLogin {
-    loginModalState: {
-        isOpened: boolean
-    }
-}
 
 interface Login {
     email: string

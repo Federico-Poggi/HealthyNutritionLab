@@ -12,9 +12,7 @@ interface StateLog {
 }
 
 function Nav() {
-
     const navigate = useNavigate();
-    /*const isOpen=useSelector((state:RootState)=>{return state.loginModalState.isOpen})*/
     const dispatch = useDispatch();
     const isLogged = useSelector((state: StateLog) => {
         return state.user.logged

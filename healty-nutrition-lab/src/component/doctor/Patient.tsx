@@ -2,12 +2,9 @@ import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {RootStore} from "../../redux/store";
 import {getPatientAll} from "../../redux/action";
-import {useNavigate, useParams} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {CheckState, DocPatient, Pazienti} from "../../interface/Interface.ts";
 
-interface StatePatient {
-    patient: []
-}
 
 export function Patient() {
     const [page, setPage] = useState<number>(0)
