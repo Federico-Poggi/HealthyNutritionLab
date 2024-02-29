@@ -16,7 +16,7 @@
 2. [x] Possibilità di scrivere articoli;
 
 #### ⚒️ <span style="color:#007B00">In Progress....</span> 
- 1. [ ] Sviluppo di un sistema di appuntamenti 
+1. [ ] Sviluppo di un sistema di appuntamenti 
 <hr/>
     
 2. [ ] Implementazione di un sistema anche per Personal-Trainer
@@ -27,7 +27,7 @@
         un primo colloquio
 <hr/>
 
-4. [ ] Sistemazione della grafica grafica
+4. [ ] Sistemazione della grafica 
 
 ### Tecnologie utilizzate
 
@@ -57,4 +57,8 @@
 
 `Cloudinary` → <span style="color:#BA6DE2">**_Caricamento immagini in cloud_**</span>
 
+## Comandi
 
+(`npm install`) → **_Scaricare le dipendenze progetto_**
+
+(`npm run dev`) → **_Avviare previw del sito_**
