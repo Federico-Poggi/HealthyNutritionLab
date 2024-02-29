@@ -124,3 +124,17 @@ export interface Doctor {
     urlImg: string
     customers: any[]
 }
+
+export interface RootArticle{
+    content: Article[]
+}
+export interface Article{
+    id:number
+    title: string
+    content: string
+    urlImg: string
+    authorsName: string[]
+}
+export interface ArticleProps{
+    article:Article
+}

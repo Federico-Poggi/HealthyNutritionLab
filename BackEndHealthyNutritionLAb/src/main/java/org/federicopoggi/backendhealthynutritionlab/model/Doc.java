@@ -44,6 +44,7 @@ public class Doc implements UserDetails {
     @Column(name = "profile_img")
     String urlImg;
 
+
     @Override
     @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {

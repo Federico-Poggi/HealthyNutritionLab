@@ -4,7 +4,6 @@ import org.federicopoggi.backendhealthynutritionlab.DtoPayload.ArticleGetRespons
 import org.federicopoggi.backendhealthynutritionlab.DtoPayload.ArticlePayload;
 import org.federicopoggi.backendhealthynutritionlab.DtoPayload.ArticleResponse;
 import org.federicopoggi.backendhealthynutritionlab.Exception.BadRequestException;
-import org.federicopoggi.backendhealthynutritionlab.model.Article;
 import org.federicopoggi.backendhealthynutritionlab.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -36,6 +35,11 @@ public class ArticleController {
       return articleService.getAllArticle(page,size,sortedBy);
    }
 
+   @GetMapping("/single")
+   @ResponseStatus(HttpStatus.OK)
+   public ArticleGetResponse findBy(@RequestParam Long id) throws IOException {
+      return articleService.find(id);
+   }
 
    @PostMapping("/insert")
    @ResponseStatus(HttpStatus.OK)

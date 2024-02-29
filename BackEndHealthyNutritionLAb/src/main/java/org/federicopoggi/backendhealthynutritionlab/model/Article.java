@@ -16,6 +16,8 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Entity
 @Table(name = "articoli")
@@ -28,13 +30,13 @@ public class Article {
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    private Long id;
 
-   @Column(name = "title", unique = true)
+   @Column(name = "title")
    private String title;
    @Column(name = "image_article")
    private String imageArticle;
    @Column(name = "content")
    private String content;
-   @OneToMany
+   @ManyToMany
    List<Doc> autori=new ArrayList<>();
 
 
@@ -42,6 +44,10 @@ public class Article {
       String CONTENT_PATH="src/main/java/ArticlesFile/";
       String fileName=title.replaceAll("\\s","_") + ".txt";
       String filePathContent=CONTENT_PATH +fileName;
+
+
+     /* Pattern pat=Pattern.compile("(Sottotitolo \\d+)\n(.*?)\n\n", Pattern.DOTALL);
+      Matcher matcher=pat.matcher(content);*/
 
       try(BufferedWriter writer=new BufferedWriter(new FileWriter(filePathContent))){
          writer.write(content);

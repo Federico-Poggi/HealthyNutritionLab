@@ -35,7 +35,6 @@ class BackEndHealthyNutritionLAbApplicationTests {
       System.out.println(contentValue);
       System.out.print(filePath);
       assertEquals(content,contentValue);
-
    }
 
 }
