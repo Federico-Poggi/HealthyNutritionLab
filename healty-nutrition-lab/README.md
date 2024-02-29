@@ -1,12 +1,14 @@
-# HEALTHYNUTRITIONLAB
+# 🥑 # HEALTHYNUTRITIONLAB
 
 **HealthyNutritionLab** è un'aplicazione che offre la possibilità a chi è registrato, di essere assegnato ad un nutrizionista o personal trainer, che si occuperà di assegnargli diete o schede d'allenamento in base alle richieste dell'utente; Alla creazione del servizio scelto l'utente sarà in grado tramite l'area personale di visualizzare le schede assegnategli e nel contempo ricevera una mail con le info della scheda;
 
 ## Funzionalità disponibili 
     
-- Registrazione utente ➡ Automaticamente diventerà un cliente
-- Login utente
-- Login per i dottori che lavorano nell'azienta
+* Registrazione utente ➡ Automaticamente diventerà un cliente 
+* Login utente
+* Login per i dottori che lavorano nell'azienta
+
+## Per i dottori:
 
 
 If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
