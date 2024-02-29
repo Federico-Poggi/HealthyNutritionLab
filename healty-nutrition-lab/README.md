@@ -5,9 +5,9 @@ diete o schede d'allenamento in base alle richieste dell'utente; Alla creazione 
 
 ## Funzionalità disponibili 
     
-    - Registrazione utente -> Automaticamente diventerà un cliente
-    - Login utente
-    - Login per i dottori che lavorano nell'azienta
+- Registrazione utente -> Automaticamente diventerà un cliente
+- Login utente
+- Login per i dottori che lavorano nell'azienta
 
 
 If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
