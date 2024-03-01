@@ -51,8 +51,10 @@ export function ArticleWrapper() {
     }
     return (
         <>
-            <div className="mx-auto p-3 h-screen fixed w-screen flex">
-                <div className="w-2/3 p-3 bg-[#414141] bg-opacity-25 mx-auto overflow-y-auto flex rounded-xl flex-wrap ">
+            <div className="h-[89vh] mt-2 w-2/3 p-3 bg-[#414141]  bg-opacity-25 mx-auto rounded-xl">
+                <h2 className="p-3 text-xl font-medium">I nostri articoli</h2>
+                <div
+                    className="overflow-y-auto  flex flex-wrap justify-evenly">
                     {
                         article.content.map(a => (
                             <CardArticle key={a.id} article={a}/>
@@ -61,8 +63,6 @@ export function ArticleWrapper() {
 
                 </div>
             </div>
-
-
         </>
     );
 }

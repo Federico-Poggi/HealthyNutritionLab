@@ -1,13 +1,56 @@
 import {Patient} from "./Patient.tsx";
 import {Calendar} from "./Calendar.tsx";
+import {AllMyArticle, MyArticle} from "./MyArticle.tsx";
+import {useEffect, useState} from "react";
+
+
+
 
 export const MainDocPage = () => {
+    const[page,setPage]=useState<number>(0);
+    const[size,setSize]=useState<number>(20);
+    const [sortedBy,setSortedBy]=useState<string>("id");
+    const [myArticle,setMyArticle]=useState<AllMyArticle>()
+
+    const UrlMyArticles=`http://localhost:5174/api/article/me/myArticle?page=${page}&size=${size}&sortedBy=${sortedBy}`
+    const token=localStorage.getItem('token');
+
+    useEffect(() => {
+        allMyArticle();
+    }, []);
+
+    console.log(myArticle?.content)
+    const allMyArticle=async ()=>{
+        try {
+            const all=await fetch(UrlMyArticles,{
+                method:'GET',
+                headers:{
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            if(!all.ok){
+                return all.json();
+            }
+            else{
+                setMyArticle(await all.json())
+            }
+
+        }catch (err){
+            console.log(err);
+        }
+    }
+
+
     return (
         <>
             <div className={"flex w-[100%]"}>
             <Patient/>
-            <div className="flex grow px-2">
+            <div className="flex flex-col grow px-2">
                 <Calendar/>
+                <div className="h-1/2">
+                    <MyArticle article={myArticle}/>
+                </div>
             </div>
             </div>
         </>

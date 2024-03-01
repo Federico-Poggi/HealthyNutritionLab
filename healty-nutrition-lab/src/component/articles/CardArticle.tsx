@@ -16,7 +16,7 @@ export function CardArticle({article}: ArticleProps) {
         <>
 
             <div
-                className="relative bg-gray-800 max-w-60 flex flex-col rounded-xl h-[250px] bg-center bg-cover bg-no-repeat hover:text-[#B7F803] hover:text-opacity-70"
+                className="relative bg-gray-800 h-[250px] mt-2 max-w-60 flex flex-col rounded-xl bg-center bg-cover bg-no-repeat hover:text-[#B7F803] hover:text-opacity-70"
                 style={{backgroundImage: `url(${article.urlImg})`}}>
                 <div
                     className=" rounded-t-xl w-full h-full bg-black opacity-0 transition-opacity duration-300 hover:opacity-60 flex justify-center ">

@@ -15,6 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -51,7 +52,15 @@ public class ArticleService {
                    .add(found);
       }
       articleDAO.save(newArticle);
+
       return new ArticleResponse(newArticle.getId());
+   }
+
+   public Page<Article> myArticle(UserDetails u,int page,int size,String sortedBy){
+      String mail=u.getUsername();
+      Doc me=docDAO.findByEmail(mail).orElseThrow();
+      Pageable p=PageRequest.of(page,size,Sort.by(sortedBy));
+      return articleDAO.getMyArticle(me.getIdDoctor(),p);
    }
 
    public void assignImg(Long id, MultipartFile img) throws NotFoundException, IOException {

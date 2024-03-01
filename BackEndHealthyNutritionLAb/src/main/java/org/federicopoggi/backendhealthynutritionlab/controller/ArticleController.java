@@ -4,11 +4,14 @@ import org.federicopoggi.backendhealthynutritionlab.DtoPayload.ArticleGetRespons
 import org.federicopoggi.backendhealthynutritionlab.DtoPayload.ArticlePayload;
 import org.federicopoggi.backendhealthynutritionlab.DtoPayload.ArticleResponse;
 import org.federicopoggi.backendhealthynutritionlab.Exception.BadRequestException;
+import org.federicopoggi.backendhealthynutritionlab.model.Article;
 import org.federicopoggi.backendhealthynutritionlab.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -32,7 +35,7 @@ public class ArticleController {
    public Page<ArticleGetResponse> getAll(@RequestParam(defaultValue = "0") int page,
                                           @RequestParam(defaultValue = "30") int size,
                                           @RequestParam(defaultValue = "id") String sortedBy) throws IOException {
-      return articleService.getAllArticle(page,size,sortedBy);
+      return articleService.getAllArticle(page, size, sortedBy);
    }
 
    @GetMapping("/single")
@@ -40,6 +43,17 @@ public class ArticleController {
    public ArticleGetResponse findBy(@RequestParam Long id) throws IOException {
       return articleService.find(id);
    }
+
+
+   @GetMapping("/me/myArticle")
+   @ResponseStatus(HttpStatus.OK)
+   public Page<Article> getMyArticle(@AuthenticationPrincipal UserDetails u,
+                                     @RequestParam(defaultValue = "0") int page,
+                                     @RequestParam(defaultValue = "20") int size,
+                                     @RequestParam(defaultValue = "id") String sortedBy) {
+      return articleService.myArticle(u,page,size,sortedBy);
+   }
+
 
    @PostMapping("/insert")
    @ResponseStatus(HttpStatus.OK)

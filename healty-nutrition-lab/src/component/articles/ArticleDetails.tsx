@@ -48,11 +48,18 @@ export function ArticleDetails() {
                 <div className="w-full h-[200px] bg-cover bg-no-repeat bg-center" style={{backgroundImage: `url(${article?.urlImg})`}}>
                 </div>
                 <div className="p-5">
-                <h2 className="text-2xl font-bold">{article?.title}</h2>
-                <text>
-                    {article!=undefined&&decode(article.content)}
-                </text>
+                    <h2 className="text-2xl font-bold">{article?.title}</h2>
+                    <text>
+                        {article != undefined && decode(article.content)}
+                    </text>
+                    <p className="pt-2">Autori:</p>
+                    <p>{article?.authorsName.map((item) => (
+                        <div>
+                            {item}
+                        </div>
+                    ))}</p>
                 </div>
+
             </div>
         </>
     );
