@@ -71,8 +71,9 @@ public class ArticleController {
    @ResponseStatus(HttpStatus.OK)
    @PreAuthorize("hasAuthority('NUTRITIONIST') or hasAuthority('PERSONAL_TRAINER')")
    public void asignImage(@RequestParam("imgArticle") MultipartFile imgArticle,
-                          @RequestParam("idArticolo") Long idArticolo) throws IOException {
-      articleService.assignImg(idArticolo, imgArticle);
+                          @RequestParam("idArticolo") String idArticolo) throws IOException {
+      Long idAr=Long.parseLong(idArticolo);
+      articleService.assignImg(idAr, imgArticle);
    }
 
 

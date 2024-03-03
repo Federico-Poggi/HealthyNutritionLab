@@ -138,3 +138,11 @@ export interface Article{
 export interface ArticleProps{
     article:Article
 }
+export interface MeDoc {
+    idDoctor: number
+    name: string
+    surname: string
+    cellNumber: string
+    email: string
+    role: string
+}

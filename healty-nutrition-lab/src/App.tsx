@@ -17,6 +17,7 @@ import {RegisterForm} from "./component/Registration/RegisterForm.tsx";
 
 import {ArticleWrapper} from "./component/articles/ArticleWrapper.tsx";
 import {ArticleDetails} from "./component/articles/ArticleDetails.tsx";
+import {WriteArticle} from "./component/articles/WriteArticle.tsx";
 
 
 interface TokenString {
@@ -100,7 +101,6 @@ function App() {
                     <Route path="/" element={<Home/>}/>
                     <Route path="register" element={<RegisterForm/>}/>
                     <Route path="articles" element={<ArticleWrapper/>}>
-
                         </Route>
                     <Route path={`articles/:id`} element={<ArticleDetails/>}/>
                 </Route>
@@ -111,6 +111,7 @@ function App() {
                     <Route path={"tabelle-nutrizionali"} element={<TabelleNutrizionali/>}/>
                     <Route path={`pazienti/:idCustomer`} element={<PazientePage/>}/>
                     <Route path={"diete"} element={<AssigedDiet/>}/>
+                    <Route path="write" element={<WriteArticle/>}/>
                 </Route>
             </Routes>
         </BrowserRouter>

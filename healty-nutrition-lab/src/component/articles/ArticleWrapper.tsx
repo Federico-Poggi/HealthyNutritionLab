@@ -1,7 +1,5 @@
 import {useEffect, useState} from "react";
 import {RootArticle} from "../../interface/Interface.ts";
-import {Articles} from "./Articles.tsx";
-import {Route, Routes} from "react-router-dom";
 import {CardArticle} from "./CardArticle.tsx";
 
 export function ArticleWrapper() {

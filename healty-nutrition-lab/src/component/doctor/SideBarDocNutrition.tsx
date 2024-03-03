@@ -7,7 +7,7 @@ import {notLoggedAction} from "../../redux/action";
 import {TbLayoutDashboard} from "react-icons/tb";
 import {BiImageAlt} from "react-icons/bi";
 import {RxDashboard} from "react-icons/rx";
-import {RespImg} from "../../interface/Interface.ts";
+import {MeDoc, RespImg} from "../../interface/Interface.ts";
 import {NewProfileImgModal} from "../userDir/NewProfileImgModal.tsx";
 
 
@@ -17,8 +17,11 @@ export function SideBarDocNutrition() {
     const [isOpen, setIsOpen] = useState<boolean>(false)
     const urlImg = 'http://localhost:5174/doctor/me/profileImg'
     const uploadImg = 'http://localhost:5174/doctor/me/uploadImg'
+    const myProf='http://localhost:5174/doctor/me'
+
     const token = localStorage.getItem('token')
     const [imgProf, setImgProf] = useState<string>()
+    const [myProfile,setMyProfile]=useState<MeDoc>()
     const logOut = () => {
         localStorage.removeItem('token')
         localStorage.removeItem("Role")
@@ -27,7 +30,30 @@ export function SideBarDocNutrition() {
     }
     useEffect(() => {
         profileImg();
+        getMe();
     }, []);
+
+    const getMe=()=>{
+        try {
+            fetch(myProf,{
+                method:'GET',
+                headers:{
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+                .then((e)=>{
+                    if(e.ok){
+                        return e.json();
+                    }
+                })
+                .then((me:MeDoc)=>{
+                    setMyProfile(me);
+                })
+        }catch (err){
+            console.log(err);
+        }
+    }
 
     const profileImg = async () => {
         try {
@@ -68,8 +94,8 @@ export function SideBarDocNutrition() {
                             </svg>
                         }
                         <span>
-                            <h3 className="text-[12px]">Nome Cognome</h3>
-                            <h3 className="text-[12px]">Ruolo</h3>
+                            <h3 className="text-[12px]">{myProfile?.name} {myProfile?.surname}</h3>
+                            <h3 className="text-[12px]">{myProfile?.role}</h3>
                         </span>
 
                     </div>
@@ -83,7 +109,9 @@ export function SideBarDocNutrition() {
                             >Tabelle Nutrizionali</p>
                         </span>
                         <span
-                            className="flex items-center py-2 px-1 hover:bg-[#545454] hover:bg-opacity-[8%] hover:text-[#17CF97] rounded-lg">
+                            className="flex items-center py-2 px-1 hover:bg-[#545454] hover:bg-opacity-[8%] hover:text-[#17CF97] rounded-lg"
+
+                        onClick={()=>{NAVIGATE("write")}}>
                             <PiArticleLight/>
                             <p className="px-2 text-[15px]">Articoli</p>
                         </span>
