@@ -1,9 +1,6 @@
 import './App.css'
 
 import {BrowserRouter, redirect, Route, Routes, useParams} from "react-router-dom";
-import Home from "./component/home/Home.tsx";
-import {Articles} from "./component/articles/Articles.tsx";
-import {RegisterForm} from "./component/Registration/RegisterForm.tsx";
 import {PersonalArea} from "./component/personalArea/PersonalArea.tsx";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect} from "react";
@@ -15,6 +12,12 @@ import {PazientePage} from "./component/doctor/PazientePage.tsx";
 import {AssigedDiet} from "./component/userDir/AssigedDiet.tsx";
 import {DashboardDoc} from "./component/personalArea/DashboardDoc.tsx";
 import {DashboardUser} from "./component/personalArea/DashboardUser.tsx";
+import Home from "./component/home/Home.tsx";
+import {RegisterForm} from "./component/Registration/RegisterForm.tsx";
+
+import {ArticleWrapper} from "./component/articles/ArticleWrapper.tsx";
+import {ArticleDetails} from "./component/articles/ArticleDetails.tsx";
+import {WriteArticle} from "./component/articles/WriteArticle.tsx";
 
 
 interface TokenString {
@@ -63,7 +66,6 @@ function App() {
             body: JSON.stringify(body)
         })
             .then((response: Response) => {
-                /*console.log(JSON.stringify(body))*/
                 if (response.status === 200) {
                     dispatch(loggedUserAction(role))
                 } else {
@@ -79,8 +81,6 @@ function App() {
         try {
             if (token != null) {
                 const decoded: JwtPayload = jwtDecode(token);
-                /*console.log(decoded);
-                console.log(((decoded as JwtPayload)).Role)*/
                 role = ((decoded as JwtPayload)).Role
             }
         } catch (er) {
@@ -92,12 +92,18 @@ function App() {
             redirect("/")
         }
     }
-    const {idCustomer} = useParams<{ idCustomer: string }>();
+    const {idCustomer, id} = useParams<{ idCustomer: string,id:string }>();
     return (
 
         <BrowserRouter>
             <Routes>
-                <Route path={"/"} element={<LayoutDoctor/>}/>
+                <Route path={"/"} element={<LayoutDoctor/>}>
+                    <Route path="/" element={<Home/>}/>
+                    <Route path="register" element={<RegisterForm/>}/>
+                    <Route path="articles" element={<ArticleWrapper/>}>
+                        </Route>
+                    <Route path={`articles/:id`} element={<ArticleDetails/>}/>
+                </Route>
                 <Route path={"personalArea"} element={<PersonalArea/>}>
                     {role === "CUSTOMER" && <Route path={""} element={<DashboardUser/>}/>}
                     {(role === "PERSONAL_TRAINER" || role === "NUTRITIONIST") &&
@@ -105,6 +111,7 @@ function App() {
                     <Route path={"tabelle-nutrizionali"} element={<TabelleNutrizionali/>}/>
                     <Route path={`pazienti/:idCustomer`} element={<PazientePage/>}/>
                     <Route path={"diete"} element={<AssigedDiet/>}/>
+                    <Route path="write" element={<WriteArticle/>}/>
                 </Route>
             </Routes>
         </BrowserRouter>

@@ -5,11 +5,12 @@ import {DashboardDoc} from "./DashboardDoc.tsx";
 import {useParams, useRoutes} from "react-router-dom";
 
 
+
 export function PersonalArea() {
     const role = useSelector((state: RootStore) => state.user.role)
     const {idCustomer} = useParams()
     const routesDoc = useRoutes([
-        {path: '*', element: <DashboardDoc/>},
+        {path: '*', element: <DashboardDoc/>}
     ])
 
 

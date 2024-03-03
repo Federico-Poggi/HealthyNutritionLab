@@ -5,6 +5,7 @@ import {TabelleNutrizionali} from "../doctor/TabelleNutrizionali.tsx";
 import {AssigedDiet} from "../userDir/AssigedDiet.tsx";
 import {NavDoctor} from "../doctor/NavDoctor.tsx";
 import {MainDocPage} from "../doctor/MainDocPage.tsx";
+import {WriteArticle} from "../articles/WriteArticle.tsx";
 
 export function DashboardDoc() {
     const {idCustomer} = useParams();
@@ -13,7 +14,8 @@ export function DashboardDoc() {
         {path: `pazienti/${idCustomer}`, element: <PazientePage/>},
         {path: "tabelle-nutrizionali", element: <TabelleNutrizionali/>},
         {path: 'pazienti/:idCustomer', element: <PazientePage/>},
-        {path: 'diete', element: <AssigedDiet/>}
+        {path: 'diete', element: <AssigedDiet/>},
+        {path:'write', element:<WriteArticle/>}
     ])
     return (
         <>

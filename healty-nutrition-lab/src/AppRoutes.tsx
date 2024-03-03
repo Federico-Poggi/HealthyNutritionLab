@@ -1,7 +1,7 @@
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import {LayoutDoctor} from "./component/LayoutDoctor.tsx";
 import Home from "./component/home/Home.tsx";
-import {Articles} from "./component/articles/Articles.tsx";
+
 import {RegisterForm} from "./component/Registration/RegisterForm.tsx";
 import {PersonalArea} from "./component/personalArea/PersonalArea.tsx";
 import {DashboardUser} from "./component/personalArea/DashboardUser.tsx";
@@ -23,7 +23,7 @@ export const AppRoutes = ({role, idCustomer}:StateThis) => {
                 <Routes>
                     <Route path="/" element={<LayoutDoctor/>}>
                         <Route path="/"element={<Home/>}/>
-                        <Route path={"articles"} element={<Articles/>}/>
+                        {/*<Route path={"articles"} element={<Articles/>}/>*/}
                         <Route path={"register"} element={<RegisterForm/>}/>
                     </Route>
                     <Route path={"personalArea"} element={<PersonalArea/>}>
