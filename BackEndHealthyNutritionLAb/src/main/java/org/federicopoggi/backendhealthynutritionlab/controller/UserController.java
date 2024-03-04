@@ -9,6 +9,7 @@ import org.federicopoggi.backendhealthynutritionlab.service.DoctorService;
 import org.federicopoggi.backendhealthynutritionlab.service.UserSevice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/user")
@@ -38,6 +40,18 @@ public class UserController {
         this.us = us;
     }
     /*GETT MAPPING*/
+
+    @GetMapping("/me")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<?> getMe(@AuthenticationPrincipal UserDetails userDetails) {
+        if (userDetails != null) {
+            return ResponseEntity.of(Optional.ofNullable(userDetails));
+        } else {
+            return ResponseEntity.status(401)
+                                 .body("Utente non autenticato effettuare il login");
+        }
+
+    }
 
     //Funzione da modificare
     @GetMapping
