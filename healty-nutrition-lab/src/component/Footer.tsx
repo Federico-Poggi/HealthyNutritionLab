@@ -3,13 +3,14 @@ import {FaFacebookSquare} from "react-icons/fa";
 import {IoLogoInstagram} from "react-icons/io5";
 import {FaLinkedin} from "react-icons/fa6";
 import Logo from '../assets/Logo.svg'
+import { FaGithub } from "react-icons/fa";
 
 export function Footer() {
     const date:Date=new Date();
     const year:number=date.getFullYear();
     return (
         <>
-            <div className = {"flex desktop:justify-evenly desktop:p-12 h-[200px]"}>
+            <div className = {"flex desktop:justify-evenly desktop:p-10 h-[200px]"}>
                 <div className = {"desktop:w-2/12 "}>
                     <span className={"flex"}>
                         <img src={Logo} alt={"logo"} className={"desktop:w-[20px] tablet:w-[20px] mr-2"}/>
@@ -23,7 +24,8 @@ export function Footer() {
                         <CiTwitter size = {20} className = {"icon-social"}/>
                         <FaFacebookSquare size = {20} className = {"icon-social"}/>
                         <IoLogoInstagram size = {20} className = {"icon-social"}/>
-                        <FaLinkedin size = {20} className = {"icon-social"}/>
+                        <a href="https://www.linkedin.com/in/federico-poggi-full-stack-developer/"><FaLinkedin size = {20} className = {"icon-social"}/></a>
+                        <a href="https://github.com/Federico-Poggi"><FaGithub size={20} className={"icon-social"}/></a>
                     </span>
                 </div>
                 <div className = {"desktop:text-[15px] tablet:text-[15px] footer-link w-1/6"}>

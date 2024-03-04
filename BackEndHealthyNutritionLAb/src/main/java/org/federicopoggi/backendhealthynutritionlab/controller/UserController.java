@@ -89,7 +89,6 @@ public class UserController {
         return us.getMyImg(me.getUsername());
     }
 
-
     /*POST MAPPING*/
 
     @PostMapping("/me/imgUpload")
