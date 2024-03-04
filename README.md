@@ -9,7 +9,7 @@
  * [x] Registrazione utente ➡ Automaticamente diventerà un cliente
  * [x] Login utente
  * [x] Visualizzare articoli scritti dai dottori
- * [x] Login per i dottori che lavorano nell'azienta****
+ * [x] Login per i dottori che lavorano nell'azienta
 
 #### <span style="color:#3199CA">‍⚕️ Per i dottori:</span> 
 1. [x] Possibilità in base ai clienti assegnati di prescrivere diete;
