@@ -35,7 +35,7 @@ function Nav() {
                     <p>Contact</p>
                 </div>
                 {isLogged ? <div id = {"registration-login"}
-                                 className = {"desktop:2/12 tablet:w-3/12 phone:hidden tablet:flex desktop:flex justify-center items-center"}>
+                                 className = {"desktop:2/12 tablet:w-3/12 phone:hidden tablet:flex desktop:flex justify-center items-center cursor-pointer"}>
                     <p onClick={()=>navigate("/personalArea")}>Area Personale</p>
                 </div> : <div id = {"registration-login"}
                               className = {"desktop:2/12 tablet:w-3/12 phone:hidden tablet:flex desktop:flex justify-center items-center"}>

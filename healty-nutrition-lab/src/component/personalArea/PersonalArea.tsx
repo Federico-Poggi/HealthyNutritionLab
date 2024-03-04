@@ -2,13 +2,12 @@ import {DashboardUser} from "./DashboardUser.tsx";
 import {useSelector} from "react-redux";
 import {RootStore} from "../../redux/store";
 import {DashboardDoc} from "./DashboardDoc.tsx";
-import {useParams, useRoutes} from "react-router-dom";
+import {useRoutes} from "react-router-dom";
 
 
 
 export function PersonalArea() {
     const role = useSelector((state: RootStore) => state.user.role)
-    const {idCustomer} = useParams()
     const routesDoc = useRoutes([
         {path: '*', element: <DashboardDoc/>}
     ])

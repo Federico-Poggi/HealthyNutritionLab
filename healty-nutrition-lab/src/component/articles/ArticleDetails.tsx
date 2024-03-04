@@ -1,10 +1,6 @@
 import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {Article} from "../../interface/Interface.ts";
-import {Simulate} from "react-dom/test-utils";
-import error = Simulate.error;
-
-type props = string;
 
 export function ArticleDetails() {
     const {id} = useParams();

@@ -33,11 +33,11 @@ public class EmailService {
       ms.setTo(userMail);
       ms.setSubject("Benvenuto e grazie della registarzione");
 
-      File res = new File("src/main/java/org/federicopoggi/backendhealthynutritionlab/LogoPerMail.jpg");
+      File res = new File("src/main/java/org/federicopoggi/backendhealthynutritionlab/directoryTemplate/LogoPerMail.jpg");
       ms.addAttachment("logo", res);
 
       String htmlContent = "<html><body>" + "<h1>Registrazione effettuata con successo</h1>" + "<p>Grazie per " +
-              "esserti registrato, ora sara possibile iniziare un percorso con HealthyNutritionLab</p>" + "<p>Buona" + " continazione,</p>  <p>Lo Staff di HealthyNutritionLab</p>" + "<img src='cid:logo'/>" + "</body" + "></html>";
+              "esserti registrato, ora sara possibile iniziare un percorso con HealthyNutritionLab</p>" + "<p>Buona" + " continuazione,</p>  <p>Lo Staff di HealthyNutritionLab</p>" + "<img src='cid:logo'/>" + "</body" + "></html>";
       ms.setText(htmlContent, true);
 
 

@@ -117,5 +117,9 @@ public class ArticleService {
       }
    }
 
+   public void deleteArticle(Long idArticolo){
+      Article a=articleDAO.findById(idArticolo).orElseThrow();
+      articleDAO.delete(a);
+   }
 
 }

@@ -19,7 +19,7 @@ public class UserRunner implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        /*Doc admin=new Doc();
+       /* Doc admin=new Doc();
         admin.setName("admin");
         admin.setSurname("admin");
         admin.setEmail("admin@admin.com");

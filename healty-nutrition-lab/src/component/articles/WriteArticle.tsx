@@ -19,16 +19,7 @@ export function WriteArticle() {
     const [title, setTitle] = useState<string>('');
     const [text, setText] = useState<string>('');
     const [imgArticle, setImgArticle] = useState<File>();
-    const [idArticolo, setIdArticolo] = useState<number>();
     const URLInsert = 'http://localhost:5174/api/article/insert';
-    const URLimg = `http://localhost:5174/api/article/uploadArticleImage?idArticolo=${idArticolo}`
-    const [urlImg, setUrl] = useState<string | null | undefined>()
-    const [newArticle, setNewArticle] = useState<NewArticle>({
-        title: '',
-        text: '',
-        autoriEmail: []
-    })
-
 
     const NAV=useNavigate();
 
@@ -55,13 +46,12 @@ export function WriteArticle() {
                     }
                 })
                 .then((id:ResponseId) => {
-                    setIdArticolo(id.idArticolo);
-                    console.log(id.idArticolo);
+                    return id.idArticolo;
+                })
+                .then((id) => {
+                    allegaImmagine(id);
+                })
 
-                })
-                .then(() => {
-                    allegaImmagine();
-                })
         } catch (err) {
             console.log(err)
         }
@@ -69,11 +59,11 @@ export function WriteArticle() {
 
     }
 
-    const allegaImmagine = () => {
+    const allegaImmagine = (id:number) => {
         try {
             const formData = new FormData();
             formData.append('imgArticle', imgArticle)
-            fetch(URLimg, {
+            fetch(`http://localhost:5174/api/article/uploadArticleImage?idArticolo=${id}`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${token}`

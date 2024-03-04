@@ -146,3 +146,15 @@ export interface MeDoc {
     email: string
     role: string
 }
+
+export interface MeUser{
+    idCliente: number
+    name: string
+    surname: string
+    cellNumber: string
+    email: string
+    password: string
+    birthday: any
+    role: string
+    urlImg: string
+}

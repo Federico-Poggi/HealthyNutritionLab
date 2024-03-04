@@ -6,7 +6,7 @@ import {useDispatch} from "react-redux";
 import {PiArticleLight} from "react-icons/pi";
 import {RxDashboard} from "react-icons/rx";
 import {useEffect, useState} from "react";
-import {RespImg} from "../../interface/Interface.ts";
+import {MeDoc, MeUser, RespImg} from "../../interface/Interface.ts";
 import {NewProfileImgModal} from "./NewProfileImgModal.tsx";
 
 export function SideBarUser() {
@@ -17,7 +17,8 @@ export function SideBarUser() {
     const token = localStorage.getItem('token')
     const [imgProf, setImgProf] = useState<string>()
     const [open,setOpen]=useState<boolean>(false)
-
+    const myProf=`http://localhost:5174/user/me`
+    const [myProfile,setMyProfile]=useState<MeUser>()
     const logOut = () => {
         localStorage.removeItem('token')
         localStorage.removeItem("Role")
@@ -26,7 +27,31 @@ export function SideBarUser() {
     }
     useEffect(() => {
         profileImg();
+        getMe()
     }, []);
+
+    const getMe=()=>{
+        try {
+            fetch(myProf,{
+                method:'GET',
+                headers:{
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+                .then((e)=>{
+                    if(e.ok){
+                        return e.json();
+                    }
+                })
+                .then((me:MeUser)=>{
+                    setMyProfile(me);
+                })
+        }catch (err){
+            console.log(err);
+        }
+    }
+
 
     const profileImg = async () => {
         try {
@@ -74,8 +99,8 @@ export function SideBarUser() {
                     <div className="flex items-center pb-5 relative">
                         {checkImg(imgProf)}
                         <span>
-                            <h3 className="text-[12px]">Nome Cognome</h3>
-                            <h3 className="text-[12px]">Ruolo</h3>
+                            <h3 className="text-[12px]">{myProfile?.name} {myProfile?.surname}</h3>
+                            <h3 className="text-[12px]">{myProfile?.role}</h3>
                         </span>
 
                     </div>

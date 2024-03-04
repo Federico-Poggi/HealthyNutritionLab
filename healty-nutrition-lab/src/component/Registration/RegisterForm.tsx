@@ -1,4 +1,7 @@
 import {useState} from "react";
+import {useDispatch} from "react-redux";
+import {loggedUserAction} from "../../redux/action";
+import {useNavigate} from "react-router-dom";
 
 interface Register {
     name: string
@@ -15,6 +18,7 @@ interface Login {
 
 interface DataLoginResponse {
     token: string
+    role:string
 }
 
 export function RegisterForm() {
@@ -32,6 +36,8 @@ export function RegisterForm() {
         password: ""
     })
 
+    const DISPATCH=useDispatch();
+    const NAV=useNavigate();
     const changeRegister = (event: React.ChangeEvent<HTMLInputElement>, name: keyof Register) => {
         const value = event.target.value;
         setRegisterForm((prevState) => ({
@@ -66,12 +72,16 @@ export function RegisterForm() {
     }
 
     const loginFunctin = () => {
+        const loginState={
+            email:registerForm.mail,
+            password:registerForm.password
+        }
         fetch(APIUrlLogin, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(login)
+            body: JSON.stringify(loginState)
         })
             .then((response: Response) => {
                 if (response.ok) {
@@ -80,6 +90,9 @@ export function RegisterForm() {
             })
             .then((data: DataLoginResponse) => {
                 localStorage.setItem("token", data.token);
+                localStorage.setItem("Role", data.role);
+                DISPATCH(loggedUserAction(data.role));
+                NAV("/personalArea")
             })
             .catch((error: Error) => {
                 console.log(error);

@@ -12,10 +12,7 @@ export function ArticleWrapper() {
     const [article, setArticle] = useState<RootArticle>({
         content: [],
     })
-
-    const [text, setText] = useState<string>('');
-
-
+    
     const decode = (base64: string) => {
         const articlesText = atob(base64);
         return articlesText;

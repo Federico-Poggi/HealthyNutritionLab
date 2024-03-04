@@ -76,5 +76,12 @@ public class ArticleController {
       articleService.assignImg(idAr, imgArticle);
    }
 
+   @DeleteMapping
+   @ResponseStatus(HttpStatus.OK)
+   @PreAuthorize("hasAuthority('NUTRITIONIST') or hasAuthority('PERSONAL_TRAINER')")
+   public void deleteArticle(@RequestParam("idArticolo") String idArticolo){
+      Long id=Long.parseLong(idArticolo);
+      articleService.deleteArticle(id);
+   }
 
 }

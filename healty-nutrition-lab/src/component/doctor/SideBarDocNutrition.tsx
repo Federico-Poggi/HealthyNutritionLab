@@ -113,7 +113,7 @@ export function SideBarDocNutrition() {
 
                         onClick={()=>{NAVIGATE("write")}}>
                             <PiArticleLight/>
-                            <p className="px-2 text-[15px]">Articoli</p>
+                            <p className="px-2 text-[15px] cursor-pointer">Articoli</p>
                         </span>
                         <span
                             className="flex items-center cursor-pointer py-2 px-1 hover:bg-[#545454] hover:bg-opacity-[8%] hover:text-[#17CF97] rounded-lg">

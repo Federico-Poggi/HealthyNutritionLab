@@ -19,7 +19,7 @@ public class RunnerDb implements CommandLineRunner {
     EsercizioDAO esercizioDAO;
     @Override
     public void run(String... args) throws Exception {
-       /* File fileAl = new File("src/main/java/org/federicopoggi/backendhealthynutritionlab/DbAl.xlsx");
+        /*File fileAl = new File("src/main/java/org/federicopoggi/backendhealthynutritionlab/DbAl.xlsx");
         CsvReader csvReader = new CsvReader();
         csvReader.saveAlimenti(fileAl,alimentoDAO);
         File file=new File("src/main/java/org/federicopoggi/backendhealthynutritionlab/gymDataEx.csv");
