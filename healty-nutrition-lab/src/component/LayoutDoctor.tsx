@@ -4,6 +4,7 @@ import {LoginPage} from "./login/LoginPage.tsx";
 import {Footer} from "./Footer.tsx";
 
 
+
 export function LayoutDoctor() {
 
     return (
@@ -14,6 +15,7 @@ export function LayoutDoctor() {
                 <Outlet/>
                 <LoginPage/>
                 <Footer/>
+
             </main>
             {/*<hr className={"my-12 opacity-5"}/>
             <Footer/>*/}
