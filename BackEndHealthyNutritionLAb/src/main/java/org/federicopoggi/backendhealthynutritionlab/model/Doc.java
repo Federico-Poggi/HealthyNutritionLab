@@ -45,7 +45,7 @@ public class Doc implements UserDetails {
     @Column(name = "profile_img")
     String urlImg;
 
-    @OneToMany(mappedBy = "doc", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany( cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Reservation> reservationsList = new ArrayList<>();
 
     @Override

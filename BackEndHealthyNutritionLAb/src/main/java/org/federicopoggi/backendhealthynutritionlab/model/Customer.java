@@ -1,6 +1,7 @@
 package org.federicopoggi.backendhealthynutritionlab.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -57,14 +58,14 @@ public class Customer implements UserDetails {
    @JsonBackReference
    private Nutritionist nutritionist;
 
-   @OneToMany(fetch = FetchType.EAGER, mappedBy = "customer")
+   @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer")
    @JsonManagedReference
    List<Diet> diets;
 
    @OneToMany(fetch = FetchType.EAGER)
    List<TrainingPlan> trainingPlans;
 
-   @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+   @OneToMany(orphanRemoval = true)
    private List<Reservation> reservationsList = new ArrayList<>();
 
    @Override
