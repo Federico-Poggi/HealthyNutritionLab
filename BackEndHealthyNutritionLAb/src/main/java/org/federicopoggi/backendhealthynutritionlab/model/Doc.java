@@ -45,6 +45,9 @@ public class Doc implements UserDetails {
     @Column(name = "profile_img")
     String urlImg;
 
+    @OneToMany(mappedBy = "doc", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private List<Reservation> reservationsList = new ArrayList<>();
+
     @Override
     @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {

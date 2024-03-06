@@ -27,7 +27,7 @@ export function LoginPage() {
         email: "",
         password: ""
     })
-    const [loginSucces, setSuccess] = useState<boolean>(true)
+
     const [show,setShow]=useState<boolean>(false);
     const navigate: NavigateFunction = useNavigate();
 
