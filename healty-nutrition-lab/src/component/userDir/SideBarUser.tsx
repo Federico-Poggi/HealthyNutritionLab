@@ -18,7 +18,17 @@ export function SideBarUser() {
     const [imgProf, setImgProf] = useState<string>()
     const [open,setOpen]=useState<boolean>(false)
     const myProf=`http://localhost:5174/user/me`
-    const [myProfile,setMyProfile]=useState<MeUser>()
+    const [myProfile,setMyProfile]=useState<MeUser>({
+        idCliente: 0,
+        name: '',
+        surname: '',
+        cellNumber: '',
+        email: '',
+        password: '',
+        birthday: '',
+        role: '',
+        urlImg: '',
+    })
     const logOut = () => {
         localStorage.removeItem('token')
         localStorage.removeItem("Role")
@@ -26,8 +36,10 @@ export function SideBarUser() {
         NAVIGATE("/")
     }
     useEffect(() => {
+
         profileImg();
         getMe()
+        console.log(myProfile?.name)
     }, []);
 
     const getMe=()=>{
@@ -45,7 +57,8 @@ export function SideBarUser() {
                     }
                 })
                 .then((me:MeUser)=>{
-                    setMyProfile(me);
+                    setMyProfile(()=>me);
+                    console.log(me);
                 })
         }catch (err){
             console.log(err);
