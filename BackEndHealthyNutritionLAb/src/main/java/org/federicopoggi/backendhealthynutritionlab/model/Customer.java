@@ -58,15 +58,12 @@ public class Customer implements UserDetails {
    @JsonBackReference
    private Nutritionist nutritionist;
 
-   @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer")
+   @OneToMany(fetch = FetchType.EAGER, mappedBy = "customer")
    @JsonManagedReference
    List<Diet> diets;
 
    @OneToMany(fetch = FetchType.EAGER)
    List<TrainingPlan> trainingPlans;
-
-   @OneToMany(orphanRemoval = true)
-   private List<Reservation> reservationsList = new ArrayList<>();
 
    @Override
    public Collection<? extends GrantedAuthority> getAuthorities() {

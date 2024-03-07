@@ -4,6 +4,7 @@ import com.lowagie.text.DocumentException;
 import jakarta.mail.MessagingException;
 import org.federicopoggi.backendhealthynutritionlab.DTOResponse.DietResponse;
 import org.federicopoggi.backendhealthynutritionlab.DTOResponse.ImgResponse;
+import org.federicopoggi.backendhealthynutritionlab.DTOResponse.ReservationsResponseDTO;
 import org.federicopoggi.backendhealthynutritionlab.DtoPayload.DietPayload;
 import org.federicopoggi.backendhealthynutritionlab.model.Alimento;
 import org.federicopoggi.backendhealthynutritionlab.model.Customer;
@@ -71,10 +72,10 @@ import java.util.Optional;
     /* ------- GET PER OTTENERE GLI APPUNTAMENTI ------- */
     @GetMapping("/me/reservation")
     @ResponseStatus(HttpStatus.OK)
-    public Page<Reservation> getMyReservation(@AuthenticationPrincipal UserDetails userDetails,
-                                              @RequestParam(defaultValue = "0") int page,
-                                              @RequestParam(defaultValue = "10") int size,
-                                              @RequestParam(defaultValue = "id") String sortedBy) {
+    public Page<ReservationsResponseDTO> getMyReservation(@AuthenticationPrincipal UserDetails userDetails,
+                                                          @RequestParam(defaultValue = "0") int page,
+                                                          @RequestParam(defaultValue = "10") int size,
+                                                          @RequestParam(defaultValue = "id") String sortedBy) {
         return reservationService.getMyReservation(userDetails.getUsername(),page, size, sortedBy);
     }
     /* ---- GET PER OTTENERE TUTTI I PAZIENTI DI UN DETERMINATO DOTTORE -------*/

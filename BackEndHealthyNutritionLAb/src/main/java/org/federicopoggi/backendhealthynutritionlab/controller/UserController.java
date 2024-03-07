@@ -1,9 +1,6 @@
 package org.federicopoggi.backendhealthynutritionlab.controller;
 
-import org.federicopoggi.backendhealthynutritionlab.DTOResponse.ImgResponse;
-import org.federicopoggi.backendhealthynutritionlab.DTOResponse.UrlImgProfile;
-import org.federicopoggi.backendhealthynutritionlab.DTOResponse.UserDietResponse;
-import org.federicopoggi.backendhealthynutritionlab.DTOResponse.UserDoctorRespons;
+import org.federicopoggi.backendhealthynutritionlab.DTOResponse.*;
 import org.federicopoggi.backendhealthynutritionlab.model.Customer;
 import org.federicopoggi.backendhealthynutritionlab.model.Reservation;
 import org.federicopoggi.backendhealthynutritionlab.service.DoctorService;
@@ -70,10 +67,10 @@ public class UserController {
 
     @GetMapping("/me/reservation")
     @ResponseStatus(HttpStatus.OK)
-    public Page<Reservation> getMyReservation(@AuthenticationPrincipal UserDetails userDetails,
-                                              @RequestParam(defaultValue = "0") int page,
-                                              @RequestParam(defaultValue = "10") int size,
-                                              @RequestParam(defaultValue = "id") String sortedBy) {
+    public Page<ReservationCustomerDTO> getMyReservation(@AuthenticationPrincipal UserDetails userDetails,
+                                                          @RequestParam(defaultValue = "0") int page,
+                                                          @RequestParam(defaultValue = "10") int size,
+                                                          @RequestParam(defaultValue = "id") String sortedBy) {
         return reservationService.getCustomerReservationString(userDetails.getUsername(),page, size, sortedBy);
     }
 
