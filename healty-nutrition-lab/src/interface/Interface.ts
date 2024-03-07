@@ -158,3 +158,22 @@ export interface MeUser{
     role: string
     urlImg: string
 }
+
+export type ReservationType = DoctorReservation|CustomerReservation;
+export interface Reservation {
+    content: DoctorReservation[]
+}
+
+export interface DoctorReservation {
+    reservationDate: number[]
+    nameCustomer: string
+    surnameCustomer: string
+    emailCustomer: string
+    idCustomer: number
+}
+export interface CustomerReservation {
+    reservationDate: number[]
+    nameDoctor: string
+    mailDoctor: string
+    idDoctor: number
+}

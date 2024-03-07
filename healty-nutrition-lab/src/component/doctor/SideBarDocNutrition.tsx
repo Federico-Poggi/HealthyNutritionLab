@@ -21,7 +21,14 @@ export function SideBarDocNutrition() {
 
     const token = localStorage.getItem('token')
     const [imgProf, setImgProf] = useState<string>()
-    const [myProfile,setMyProfile]=useState<MeDoc>()
+    const [myProfile,setMyProfile]=useState<MeDoc>({
+        idDoctor: 0,
+        name: '',
+        surname: '',
+        cellNumber: '',
+        email: '',
+        role: ''
+    })
     const logOut = () => {
         localStorage.removeItem('token')
         localStorage.removeItem("Role")
@@ -49,6 +56,7 @@ export function SideBarDocNutrition() {
                 })
                 .then((me:MeDoc)=>{
                     setMyProfile(me);
+                    console.log(myProfile)
                 })
         }catch (err){
             console.log(err);

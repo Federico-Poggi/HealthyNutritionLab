@@ -45,7 +45,7 @@ public class Diet {
     @Enumerated(EnumType.STRING)
     DietType dietType;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(
             name = "dieta_alimento_quantita", joinColumns = @JoinColumn(name = "dieta_id"))
     @MapKeyJoinColumn(name = "alimento_name")

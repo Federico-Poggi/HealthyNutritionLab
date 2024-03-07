@@ -1,6 +1,7 @@
 package org.federicopoggi.backendhealthynutritionlab.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -63,9 +64,6 @@ public class Customer implements UserDetails {
 
    @OneToMany(fetch = FetchType.EAGER)
    List<TrainingPlan> trainingPlans;
-
-   @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-   private List<Reservation> reservationsList = new ArrayList<>();
 
    @Override
    public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -4,11 +4,15 @@ import com.lowagie.text.DocumentException;
 import jakarta.mail.MessagingException;
 import org.federicopoggi.backendhealthynutritionlab.DTOResponse.DietResponse;
 import org.federicopoggi.backendhealthynutritionlab.DTOResponse.ImgResponse;
+import org.federicopoggi.backendhealthynutritionlab.DTOResponse.ReservationsResponseDTO;
 import org.federicopoggi.backendhealthynutritionlab.DtoPayload.DietPayload;
 import org.federicopoggi.backendhealthynutritionlab.model.Alimento;
 import org.federicopoggi.backendhealthynutritionlab.model.Customer;
+import org.federicopoggi.backendhealthynutritionlab.model.Reservation;
+import org.federicopoggi.backendhealthynutritionlab.model.Role;
 import org.federicopoggi.backendhealthynutritionlab.repository.AlimentoDAO;
 import org.federicopoggi.backendhealthynutritionlab.service.DoctorService;
+import org.federicopoggi.backendhealthynutritionlab.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -41,12 +45,14 @@ import java.util.Optional;
 
     DoctorService docS;
 
+    ReservationService reservationService;
     AlimentoDAO ad;
 
     @Autowired
-    public DoctorController(DoctorService docS, AlimentoDAO ad) {
+    public DoctorController(DoctorService docS, AlimentoDAO ad,ReservationService rs) {
         this.docS = docS;
         this.ad = ad;
+        this.reservationService=rs;
     }
 
     // GETMAPPING
@@ -63,7 +69,15 @@ import java.util.Optional;
         }
 
     }
-
+    /* ------- GET PER OTTENERE GLI APPUNTAMENTI ------- */
+    @GetMapping("/me/reservation")
+    @ResponseStatus(HttpStatus.OK)
+    public Page<ReservationsResponseDTO> getMyReservation(@AuthenticationPrincipal UserDetails userDetails,
+                                                          @RequestParam(defaultValue = "0") int page,
+                                                          @RequestParam(defaultValue = "10") int size,
+                                                          @RequestParam(defaultValue = "id") String sortedBy) {
+        return reservationService.getMyReservation(userDetails.getUsername(),page, size, sortedBy);
+    }
     /* ---- GET PER OTTENERE TUTTI I PAZIENTI DI UN DETERMINATO DOTTORE -------*/
     @GetMapping("/me/patients")
     @ResponseStatus(HttpStatus.OK)

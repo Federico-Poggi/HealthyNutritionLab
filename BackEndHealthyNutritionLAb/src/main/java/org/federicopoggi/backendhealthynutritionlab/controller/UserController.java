@@ -1,13 +1,13 @@
 package org.federicopoggi.backendhealthynutritionlab.controller;
 
-import org.federicopoggi.backendhealthynutritionlab.DTOResponse.ImgResponse;
-import org.federicopoggi.backendhealthynutritionlab.DTOResponse.UrlImgProfile;
-import org.federicopoggi.backendhealthynutritionlab.DTOResponse.UserDietResponse;
-import org.federicopoggi.backendhealthynutritionlab.DTOResponse.UserDoctorRespons;
+import org.federicopoggi.backendhealthynutritionlab.DTOResponse.*;
 import org.federicopoggi.backendhealthynutritionlab.model.Customer;
+import org.federicopoggi.backendhealthynutritionlab.model.Reservation;
 import org.federicopoggi.backendhealthynutritionlab.service.DoctorService;
+import org.federicopoggi.backendhealthynutritionlab.service.ReservationService;
 import org.federicopoggi.backendhealthynutritionlab.service.UserSevice;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -31,13 +31,14 @@ public class UserController {
      * */
 
     DoctorService doctorService;
-
+    ReservationService reservationService;
     UserSevice us;
 
     @Autowired
-    public UserController(DoctorService doctorService, UserSevice us) {
+    public UserController(DoctorService doctorService, UserSevice us,ReservationService rs) {
         this.doctorService = doctorService;
         this.us = us;
+        this.reservationService=rs;
     }
     /*GETT MAPPING*/
 
@@ -62,6 +63,15 @@ public class UserController {
     @GetMapping("/{idCustomer}")
     public Customer getById(@PathVariable Long idCustomer) {
         return us.findById(idCustomer);
+    }
+
+    @GetMapping("/me/reservation")
+    @ResponseStatus(HttpStatus.OK)
+    public Page<ReservationCustomerDTO> getMyReservation(@AuthenticationPrincipal UserDetails userDetails,
+                                                          @RequestParam(defaultValue = "0") int page,
+                                                          @RequestParam(defaultValue = "10") int size,
+                                                          @RequestParam(defaultValue = "id") String sortedBy) {
+        return reservationService.getCustomerReservationString(userDetails.getUsername(),page, size, sortedBy);
     }
 
     @GetMapping("/me/diets")
@@ -97,6 +107,8 @@ public class UserController {
             throws IOException {
         return us.uploadImg(me.getUsername(), file);
     }
+
+
 
 
 }
