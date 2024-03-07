@@ -2,7 +2,6 @@ import {IoMdArrowBack} from "react-icons/io";
 import {IoMdArrowForward} from "react-icons/io";
 import {useEffect, useState} from "react";
 import {format, isToday} from "date-fns";
-import {Reservations} from "./Reservations.tsx";
 import {CustomerReservation, DoctorReservation, Reservation, ReservationType} from "../../interface/Interface.ts";
 
 export type ReservationPage = DoctorReservation | CustomerReservation;

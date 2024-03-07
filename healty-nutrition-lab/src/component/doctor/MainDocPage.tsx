@@ -34,7 +34,6 @@ export const MainDocPage = () => {
             } else {
                 setMyArticle(await all.json())
             }
-            console.log(reservation);
         } catch (err) {
             console.log(err);
         }
@@ -51,8 +50,8 @@ export const MainDocPage = () => {
                 <Patient/>
                 <div className="flex flex-col grow px-2">
                     <Calendar/>
-                    <div className="h-1/2">
-                        <MyArticle article={myArticle}/>
+                    <div className="w-full h-1/2 flex justify-center items-center bg-[#413F42] bg-opacity-35 rounded-xl mt-3">
+                        <h2 className="text_fill">HealthyNutritionLab</h2>
                     </div>
                 </div>
             </div>
